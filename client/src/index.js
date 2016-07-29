@@ -1,3 +1,4 @@
+var Map = require('./map');
 
 
 window.onload = function(){
@@ -66,7 +67,9 @@ var sendSearchRequests = function() {
 
   }
 }
-
+var center = {lat: 51.507351, lng: -0.127758};
+var map = new Map(center);
+  
 
 }
 
