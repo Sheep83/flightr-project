@@ -1,9 +1,53 @@
 window.onload = function(){
-  // console.log('window loaded');
 
-  var url_ss = "http://partners.api.skyscanner.net/apiservices/browsedates/v1.0/GB/GBP/en-GB/LON/JFK/2016-08-02/2016-08-04?apiKey=prtl6749387986743898559646983194"
+  var button = document.getElementById('button');
+  button.onclick = function(){
+    origin = document.getElementById('origin').value;
+    destination = document.getElementById('destination').value;
+    startDate = document.getElementById('start-date').value;
+    endDate = document.getElementById('end-date').value;
+    noRooms = document.getElementById('no-rooms');
+    noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
+    sendOriginRequest();
+  }
+};
 
-  var url_exp = "http://terminal2.expedia.com/x/mhotels/search?city=berlin&checkInDate=2016-12-15&checkOutDate=2016-12-17&sortOrder=true&room1=2&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos"
+var sendOriginRequest = function() {
+  var url_origin = "http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/GB/GBP/en-GB?query=" + origin + "&apiKey=co666659065635714271429118382522";
+
+  var req_origin = new XMLHttpRequest();
+  req_origin.open("GET", url_origin);
+  req_origin.send(null);
+
+  req_origin.onload = function() {
+    var res_origin = JSON.parse(req_origin.responseText);
+    console.log(res_origin);
+    ss_origin = res_origin.Places[0].CityId.substring(0, 3);
+    console.log(ss_origin);
+    sendDestinationRequest();
+  }
+}
+
+var sendDestinationRequest = function() {
+  var url_destination = "http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/GB/GBP/en-GB?query=" + destination + "&apiKey=co666659065635714271429118382522";
+
+  var req_destination = new XMLHttpRequest();
+  req_destination.open("GET", url_destination);
+  req_destination.send(null);
+
+  req_destination.onload = function(){
+    var res_destination = JSON.parse(req_destination.responseText);
+    console.log(res_destination);
+    ss_destination = res_destination.Places[0].CityId.substring(0, 3)
+    console.log(ss_destination);
+    sendSearchRequests();
+  }
+}
+
+var sendSearchRequests = function() {
+  var url_ss = "http://partners.api.skyscanner.net/apiservices/browsedates/v1.0/GB/GBP/en-GB/" + ss_origin + "/" + ss_destination + "/" + startDate + "/" + endDate + "?apiKey=co666659065635714271429118382522";
+
+  var url_exp = "http://terminal2.expedia.com/x/mhotels/search?city=berlin&checkInDate=2016-12-15&checkOutDate=2016-12-17&sortOrder=true&room1=2&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos";
 
   var req_ss = new XMLHttpRequest();
   req_ss.open("GET", url_ss);
@@ -13,6 +57,7 @@ window.onload = function(){
     var res_ss = JSON.parse(req_ss.responseText);
     console.log(res_ss);
   }
+
   var req_exp = new XMLHttpRequest();
   req_exp.open("GET", url_exp);
   // request.setRequestHeader('accept', 'application/json');
@@ -20,11 +65,6 @@ window.onload = function(){
   req_exp.onload = function(){
     var res_exp = JSON.parse(req_exp.responseText);
     console.log(res_exp);
-
     console.log(res_exp.hotelList[0].lowRateInfo.total);
   }
-
-  
-
 }
-
