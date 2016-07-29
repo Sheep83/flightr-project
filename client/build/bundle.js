@@ -57,18 +57,18 @@
 	  req_ss.send(null);
 	  req_ss.onload = function(){
 	    var res_ss = JSON.parse(req_ss.responseText);
-	    console.log(res_ss);
+	    console.log(res_ss.Places[0].CityName);
 	  }
-	  var req_exp = new XMLHttpRequest();
-	  req_exp.open("GET", url_exp);
-	  // request.setRequestHeader('accept', 'application/json');
-	  req_exp.send(null);
-	  req_exp.onload = function(){
-	    var res_exp = JSON.parse(req_exp.responseText);
-	    console.log(res_exp);
+	  // var req_exp = new XMLHttpRequest();
+	  // req_exp.open("GET", url_exp);
+	  // // request.setRequestHeader('accept', 'application/json');
+	  // req_exp.send(null);
+	  // req_exp.onload = function(){
+	  //   var res_exp = JSON.parse(req_exp.responseText);
+	  //   console.log(res_exp);
 	
-	    console.log(res_exp.hotelList[0].lowRateInfo.total);
-	  }
+	  //   console.log(res_exp.hotelList[0].lowRateInfo.total);
+	  // }
 	
 	  
 	

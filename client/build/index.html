@@ -6,10 +6,20 @@
 
 </head>
 <body>
-  <p>Hello World</p>
-  <input id="origin" placeholder="origin">
-  <input id='destination' placeholder="destination">
-  <button type="button" id="button">Submit</button>
+ <form id="user-form">
+    <input id="origin" placeholder="origin">
+    <input id='destination' placeholder="destination">
+    <input type="date" id="start-date" placeholder="Check-in date">
+    <input type="date" id="end-date" placeholder="Check-out date">
+    <select name="no_rooms" id="no_rooms">
+      <option value="1" selected="selected">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <button type="button" id="button">Submit</button>
+  </form>
 
 </body>
 </html>
