@@ -1,4 +1,7 @@
+
+
 window.onload = function(){
+
 
   var button = document.getElementById('button');
   button.onclick = function(){
@@ -60,5 +63,11 @@ var sendSearchRequests = function() {
   req_exp.onload = function(){
     var res_exp = JSON.parse(req_exp.responseText);
     console.log(res_exp);
+
   }
 }
+
+
+}
+
+
