@@ -1,10 +1,8 @@
-var Map = require('./map.js')
+var Map = require('./map.js');
 
 window.onload = function(){
   // console.log('window loaded');
  
-
-
   var url_ss = "http://partners.api.skyscanner.net/apiservices/browsedates/v1.0/GB/GBP/en-GB/LON/JFK/2016-08-02/2016-08-04?apiKey=prtl6749387986743898559646983194"
 
   var url_exp = "http://terminal2.expedia.com/x/mhotels/search?city=berlin&checkInDate=2016-12-15&checkOutDate=2016-12-17&sortOrder=true&room1=2&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos"
