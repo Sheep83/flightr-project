@@ -42,10 +42,14 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
+	var Map = __webpack_require__(1)
+	
 	window.onload = function(){
 	  // console.log('window loaded');
+	 
+	
 	
 	  var url_ss = "http://partners.api.skyscanner.net/apiservices/browsedates/v1.0/GB/GBP/en-GB/LON/JFK/2016-08-02/2016-08-04?apiKey=prtl6749387986743898559646983194"
 	
@@ -68,13 +72,28 @@
 	    console.log(res_exp);
 	
 	    console.log(res_exp.hotelList[0].lowRateInfo.total);
+	   
 	  }
-	
+	  var center = {lat: 51.507351, lng: -0.127758};
+	  var map = new Map(center);
 	  
 	
 	}
 	
 
+
+/***/ },
+/* 1 */
+/***/ function(module, exports) {
+
+	var Map = function(latlng){
+	  this.map = new google.maps.Map(document.getElementById('map'),{
+	    center: latlng,
+	    zoom:18
+	  })
+	}
+	
+	module.exports = Map;
 
 /***/ }
 /******/ ]);

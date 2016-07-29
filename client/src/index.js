@@ -1,5 +1,9 @@
+var Map = require('./map.js')
+
 window.onload = function(){
   // console.log('window loaded');
+ 
+
 
   var url_ss = "http://partners.api.skyscanner.net/apiservices/browsedates/v1.0/GB/GBP/en-GB/LON/JFK/2016-08-02/2016-08-04?apiKey=prtl6749387986743898559646983194"
 
@@ -22,8 +26,10 @@ window.onload = function(){
     console.log(res_exp);
 
     console.log(res_exp.hotelList[0].lowRateInfo.total);
+   
   }
-
+  var center = {lat: 51.507351, lng: -0.127758};
+  var map = new Map(center);
   
 
 }
