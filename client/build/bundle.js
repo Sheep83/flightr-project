@@ -58,7 +58,7 @@
 	    sendOriginRequest();
 	  }
 	
-	  var center = {lat: 51.507351, lng: -0.127758};
+	  var center = {lat: 55.9533, lng: -3.1883};
 	  var map = new Map(center);
 	};
 	
@@ -123,7 +123,7 @@
 	var Map = function(latlng){
 	  this.map = new google.maps.Map(document.getElementById('map'),{
 	    center: latlng,
-	    zoom:18
+	    zoom: 14
 	  })
 	}
 	
