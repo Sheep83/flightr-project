@@ -1,3 +1,4 @@
+var Map = require('./map');
 window.onload = function(){
 
   var button = document.getElementById('button');
@@ -14,6 +15,9 @@ window.onload = function(){
     var map = new Map(center);
     console.log(map);
   }
+
+  var center = {lat: 55.9533, lng: -3.1883};
+  var map = new Map(center);
 };
 
 var sendOriginRequest = function() {
@@ -64,10 +68,19 @@ var sendSearchRequests = function() {
   req_exp.onload = function(){
     var res_exp = JSON.parse(req_exp.responseText);
     console.log(res_exp);
-    displayResults();
+    displayFlightResults();
+    displayHotelResults();
   }
 }
 
-var displayResults = function() {
+var displayFlightResults = function() {
+  var flightResult1 = document.getElementById("flight1");
+  var flightResult2 = document.getElementById("flight2");
+  var flightResult3 = document.getElementById("flight3");
+  var flightResult4 = document.getElementById("flight4");
+  var flightResult5 = document.getElementById("flight5");
+}
+
+var displayHotelResults = function() {
   
 }

@@ -42,8 +42,9 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
+	var Map = __webpack_require__(1);
 	window.onload = function(){
 	
 	  var button = document.getElementById('button');
@@ -60,6 +61,9 @@
 	    var map = new Map(center);
 	    console.log(map);
 	  }
+	
+	  var center = {lat: 55.9533, lng: -3.1883};
+	  var map = new Map(center);
 	};
 	
 	var sendOriginRequest = function() {
@@ -110,14 +114,36 @@
 	  req_exp.onload = function(){
 	    var res_exp = JSON.parse(req_exp.responseText);
 	    console.log(res_exp);
-	    displayResults();
+	    displayFlightResults();
+	    displayHotelResults();
 	  }
 	}
 	
-	var displayResults = function() {
+	var displayFlightResults = function() {
+	  var flightResult1 = document.getElementById("flight1");
+	  var flightResult2 = document.getElementById("flight2");
+	  var flightResult3 = document.getElementById("flight3");
+	  var flightResult4 = document.getElementById("flight4");
+	  var flightResult5 = document.getElementById("flight5");
+	}
+	
+	var displayHotelResults = function() {
 	  
 	}
 
+
+/***/ },
+/* 1 */
+/***/ function(module, exports) {
+
+	var Map = function(latlng){
+	  this.map = new google.maps.Map(document.getElementById('map'),{
+	    center: latlng,
+	    zoom: 14
+	  })
+	}
+	
+	module.exports = Map;
 
 /***/ }
 /******/ ]);

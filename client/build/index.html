@@ -2,8 +2,9 @@
 <html>
 <head>
   <title>Flightr</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
   <script type="text/javascript" src="bundle.js"></script>
-
 </head>
 <body>
   <form id="user-form">
@@ -19,6 +20,23 @@
       <option value="5">5</option>
     </select>
     <button type="button" id="button">Submit</button>
+    <div id='map'></div>
+    <div id='combined-results'>
+      <div id='flight-results'>
+        <div id='flight-result1'>
+        <div id='flight-result2'>
+        <div id='flight-result3'>
+        <div id='flight-result4'>
+        <div id='flight-result5'>
+      </div>
+      <div id='hotel-results'>
+        <div id='hotel-result1'>
+        <div id='hotel-result2'>
+        <div id='hotel-result3'>
+        <div id='hotel-result4'>
+        <div id='hotel-result5'>
+      </div>
+    </div>
   </form>
   <div id="map"></div>
 </body>
