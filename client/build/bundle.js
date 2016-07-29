@@ -55,6 +55,10 @@
 	    noRooms = document.getElementById('no-rooms');
 	    noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
 	    sendOriginRequest();
+	
+	    var center = {lat: 55.9533, lng: -3.1883};
+	    var map = new Map(center);
+	    console.log(map);
 	  }
 	};
 	
@@ -106,8 +110,14 @@
 	  req_exp.onload = function(){
 	    var res_exp = JSON.parse(req_exp.responseText);
 	    console.log(res_exp);
+	    displayResults();
 	  }
 	}
+	
+	var displayResults = function() {
+	  
+	}
+
 
 /***/ }
 /******/ ]);
