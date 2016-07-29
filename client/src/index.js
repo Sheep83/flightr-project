@@ -1,8 +1,5 @@
 var Map = require('./map');
-
-
 window.onload = function(){
-
 
   var button = document.getElementById('button');
   button.onclick = function(){
@@ -14,6 +11,9 @@ window.onload = function(){
     noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
     sendOriginRequest();
   }
+
+  var center = {lat: 51.507351, lng: -0.127758};
+  var map = new Map(center);
 };
 
 var sendOriginRequest = function() {
@@ -67,10 +67,4 @@ var sendSearchRequests = function() {
 
   }
 }
-var center = {lat: 51.507351, lng: -0.127758};
-var map = new Map(center);
-  
-
-}
-
 
