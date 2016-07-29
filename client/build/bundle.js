@@ -110,8 +110,21 @@
 	  req_exp.onload = function(){
 	    var res_exp = JSON.parse(req_exp.responseText);
 	    console.log(res_exp);
-	
+	    displayFlightResults();
+	    displayHotelResults();
 	  }
+	}
+	
+	var displayFlightResults = function() {
+	  var flightResult1 = document.getElementById("flight1");
+	  var flightResult2 = document.getElementById("flight2");
+	  var flightResult3 = document.getElementById("flight3");
+	  var flightResult4 = document.getElementById("flight4");
+	  var flightResult5 = document.getElementById("flight5");
+	}
+	
+	var displayHotelResults = function() {
+	  
 	}
 	
 
