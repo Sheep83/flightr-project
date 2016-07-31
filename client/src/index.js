@@ -52,7 +52,7 @@ var sendDestinationRequest = function() {
 var sendSearchRequests = function() {
   var url_ss = "http://partners.api.skyscanner.net/apiservices/browsedates/v1.0/GB/GBP/en-GB/" + ss_origin + "/" + ss_destination + "/" + startDate + "/" + endDate + "?apiKey=co666659065635714271429118382522";
 
-  var url_exp = "http://terminal2.expedia.com/x/mhotels/search?city=" + origin + "&checkInDate=" + startDate + "&checkOutDate=" + endDate + "&room1=" + noRoomsValue + "&resultsPerPage=-1&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos";
+  var url_exp = "http://terminal2.expedia.com/x/mhotels/search?city=" + destination + "&checkInDate=" + startDate + "&checkOutDate=" + endDate + "&room1=" + noRoomsValue + "&resultsPerPage=-1&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos";
 
   var req_ss = new XMLHttpRequest();
   req_ss.open("GET", url_ss);
@@ -78,7 +78,7 @@ var sendSearchRequests = function() {
 
 
 var displayFlightResults = function() {
-  var displayFlightsArray = createDisplayHandles();
+  var displayFlightsArray = createDisplayHandles(5, "flight");
 
   for (var i = 0; i < displayFlightsArray.length; i++) {
     if (res_ss.Quotes[i]) { // if there is a valid quote then print it
@@ -88,7 +88,7 @@ var displayFlightResults = function() {
         var airlineName = getAirlineName(airlineID);
 
         var flightResultDetails = {"price": res_ss.Quotes[i].MinPrice, "direct": res_ss.Quotes[i].Direct, "outboundDate": res_ss.Dates.OutboundDates[0].PartialDate, "inboundDate": res_ss.Dates.InboundDates[0].PartialDate, "airline": airlineName}
-        addResultToPage(flightResultDetails, displayFlightsArray, i);
+        addFlightResultToPage(flightResultDetails, displayFlightsArray, i);
       } else {
         continue;
       }
@@ -96,14 +96,17 @@ var displayFlightResults = function() {
   }
 }
 
-// gets a handle on the divs used to display the flight results
-var createDisplayHandles = function() {
+// gets a handle on the divs used to display the flight and hotel results
+var createDisplayHandles = function(size, type) {
   var resultsArray = [];
-  resultsArray[0] = document.getElementById("flight-result1");
-  resultsArray[1] = document.getElementById("flight-result2");
-  resultsArray[2] = document.getElementById("flight-result3");
-  resultsArray[3] = document.getElementById("flight-result4");
-  resultsArray[4] = document.getElementById("flight-result5");
+
+  for (var i = 0; i < size; i++) {
+    if (type === "flight") {
+      resultsArray[i] = document.getElementById('flight-result' + (i + 1));
+    } else {
+      resultsArray[i] = document.getElementById('hotel-result' + (i + 1));
+    }
+  }
   return resultsArray;
 }
 
@@ -117,7 +120,7 @@ var getAirlineName = function(airlineID) {
   }
 }
 
-var addResultToPage = function(flight, results, index) {
+var addFlightResultToPage = function(flight, results, index) {
   results[index].innerHTML += "<p><b>" + flight.airline + "</b></p>";
   results[index].innerHTML += "<p>" + "£" + flight.price + "</p>";
   if (flight.direct) {
@@ -130,5 +133,23 @@ var addResultToPage = function(flight, results, index) {
 }
 
 var displayHotelResults = function() {
+  var displayHotelsArray = createDisplayHandles(10);
 
+  for (var i = 0; i < displayHotelsArray.length; i++) {
+    if (res_exp.hotelList[i]) { // if there is a valid quote then print it
+        var hotelImageURL = res_exp.hotelList[i].largeThumbnailUrl;
+        var hotelImage = "http://images.travelnow.com" + hotelImageURL
+
+        var hotelResultDetails = {"name": res_exp.hotelList[i].name, "description": res_exp.hotelList[i].shortDescription, "image": hotelImage, "guestRating": res_exp.hotelList[i].hotelGuestRating, "starRating": res_exp.hotelList[i].hotelStarRating, "lat": res_exp.hotelList[i].latitude, "long": res_exp.hotelList[i].longitude}
+        addHotelResultToPage(hotelResultDetails, displayHotelsArray, i);
+      }
+  }
+}
+
+var addHotelResultToPage = function(hotel, results, index) {
+  results[index].innerHTML += "<p><b>" + hotel.name + "</b></p>";
+  results[index].innerHTML += "<img src=" + hotel.image + ">";
+  results[index].innerHTML += "<p>" + hotel.description + "</p>";
+  results[index].innerHTML += "<p>" + "Guest rating: " + hotel.guestRating + "</p>";
+  results[index].innerHTML += "<p>" + "Star rating: " + hotel.starRating + "</p>";
 }
