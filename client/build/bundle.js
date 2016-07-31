@@ -145,12 +145,18 @@
 	// gets a handle on the divs used to display the flight and hotel results
 	var createDisplayHandles = function(size, type) {
 	  var resultsArray = [];
+	  // these are global so not overwritten on each click
+	  userSelectedFlights = [];
+	  userSelectedHotels = [];
 	
 	  for (var i = 0; i < size; i++) {
 	    if (type === "flight") {
 	      resultsArray[i] = document.getElementById('flight-result' + (i + 1));
+	      resultsArray[i].onclick=function(e){ selectedItem(e) };
+	      // NEED TO STOP THIS REGISTERING CLICK WHEN CHILD ELEMENTS ARE CLICKED
 	    } else {
 	      resultsArray[i] = document.getElementById('hotel-result' + (i + 1));
+	      resultsArray[i].onclick=function(e){ selectedItem(e) };
 	    }
 	  }
 	  return resultsArray;
@@ -198,6 +204,28 @@
 	  results[index].innerHTML += "<p>" + hotel.description + "</p>";
 	  results[index].innerHTML += "<p>" + "Guest rating: " + hotel.guestRating + "</p>";
 	  results[index].innerHTML += "<p>" + "Star rating: " + hotel.starRating + "</p>";
+	}
+	
+	var selectedItem = function(e) {
+	  if (String(e.target.id).substring(0,6) === "flight") {
+	    userSelectedFlights.push(e.target.innerHTML);
+	  } else if (String(e.target.id.parentNode).substring(0,6) === "flight") {
+	    userSelectedHotels.push(e.target.parentNode.innerHTML);
+	  } else if (String(e.target.id).substring(0,5) === "hotel") {
+	    userSelectedHotels.push(e.target.innerHTML);
+	  } else if (String(e.target.id.parentNode).substring(0,5) === "hotel") {
+	    userSelectedHotels.push(e.target.parentNode.innerHTML);
+	  }
+	
+	  // if a flight and a hotel are both selected then add a button
+	  if (userSelectedFlights.length !== 0 && userSelectedHotels.length !== 0) {
+	    var addOptionsDiv = document.getElementById('add-selected-button');
+	    var addOptionsButton = document.createElement('button');
+	    addOptionsDiv.appendChild(addOptionsButton);
+	
+	    // need to add on click to button
+	    // when clicked the selected items should be displayed in a div
+	  }
 	}
 
 /***/ },
