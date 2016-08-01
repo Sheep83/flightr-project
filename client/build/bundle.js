@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Place = __webpack_require__(2);
+	var Place = __webpack_require__(1);
 	
 	window.onload = function(){
 	  var place = new Place();
@@ -158,8 +158,7 @@
 
 
 /***/ },
-/* 1 */,
-/* 2 */
+/* 1 */
 /***/ function(module, exports) {
 
 	var Place = function(){
