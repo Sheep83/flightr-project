@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Map = __webpack_require__(1);
+	var Map = __webpack_require__(2);
 	window.onload = function(){
 	
 	  var button = document.getElementById('button');
@@ -133,7 +133,8 @@
 
 
 /***/ },
-/* 1 */
+/* 1 */,
+/* 2 */
 /***/ function(module, exports) {
 
 	var Map = function(latlng){
