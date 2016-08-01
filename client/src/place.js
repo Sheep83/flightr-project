@@ -1,19 +1,17 @@
 var Place = function(){
-this.places=[]
-this.onUpdate = null;
-this.storageKey='event';
+  this.places=[]
 }
 Place.prototype = {
  populate : function(destination){
    var url = "http://terminal2.expedia.com/x/activities/search?location=" + destination + "&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos";
-   console.log(url);
    var request = new XMLHttpRequest();
    request.open("GET", url);
    request.onload = function(){
      var jsonString = request.responseText;
      var info = JSON.parse(jsonString);
-     console.log(info)
-     this.places = info;
+   
+     this.places.push(info);
+     console.log(places)
      var location=[]
      var arr=[]
      for (var i=0;i<info.activities.length;i++){

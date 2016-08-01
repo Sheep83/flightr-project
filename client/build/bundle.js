@@ -48,6 +48,7 @@
 	var Place = __webpack_require__(2)
 	window.onload = function(){
 	  var place = new Place();
+	
 	  var button = document.getElementById('button');
 	  button.onclick = function(){
 	    origin = document.getElementById('origin').value;
@@ -58,17 +59,17 @@
 	    noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
 	    sendOriginRequest();
 	    place.populate(destination);
+	    console.log(place.places)
 	
 	    var center = {lat: 55.9533, lng: -3.1883};
-	    var map = new Map(center);
-	    console.log(map);
+	    var map = new Map(center);  
 	  }
 	
 	  locations = place.get()
 	     
 	
-	  var center = {lat: 55.9533, lng: -3.1883};
-	  var map = new Map(center);
+	  // var center = {lat: 55.9533, lng: -3.1883};
+	  // var map = new Map(center);
 	};
 	
 	var sendOriginRequest = function() {
@@ -95,18 +96,20 @@
 	  req_destination.onload = function(){
 	    var res_destination = JSON.parse(req_destination.responseText);
 	    ss_destination = res_destination.Places[0].CityId.substring(0, 3)
-	    console.log(ss_destination);
+	  
 	    initMap();
 	    sendSearchRequests();
 	  }
 	}
 	
 	function initMap() {
+	  // Markers={}
 	  var myLatLng = {lat: -25.363, lng: 131.044};
 	  var map = new google.maps.Map(document.getElementById('map'), {
 	    zoom: 4,
 	    center: myLatLng
 	  })
+	  infowindow = new google.maps.InfoWindow();
 	  var bounds = new google.maps.LatLngBounds();
 	  for (i = 0; i < locations.length; i++){
 	    var marker = new google.maps.Marker({
@@ -116,9 +119,26 @@
 	    });
 	    bounds.extend(marker.position);
 	    map.fitBounds(bounds);
+	    google.maps.event.addListener(marker, 'click',(function(marker,i){
+	     return function(){
+	      infowindow.setContent(locations[i][0]);
+	      infowindow.setOptions({maxWidth: 200});
+	      infowindow.open(map, marker)
+	    }
+	  })(marker,i));
+	    // Markers[locations[i][4]] = marker;
 	  }
-	
+	  // locate(0)
 	}
+	
+	// function locate() {
+	//   // var myMarker = Markers[marker_id];
+	//   // // var markerPosition = myMarker.getPosition();
+	//   // // map.setCenter(markerPosition);
+	//   // google.maps.event.trigger(myMarker, 'click');
+	// }
+	
+	
 	
 	var sendSearchRequests = function() {
 	  var url_ss = "http://partners.api.skyscanner.net/apiservices/browsedates/v1.0/GB/GBP/en-GB/" + ss_origin + "/" + ss_destination + "/" + startDate + "/" + endDate + "?apiKey=co666659065635714271429118382522";
@@ -130,7 +150,7 @@
 	  req_ss.send(null);
 	  req_ss.onload = function(){
 	    var res_ss = JSON.parse(req_ss.responseText);
-	    console.log(res_ss);
+	 
 	  }
 	
 	  var req_exp = new XMLHttpRequest();
@@ -138,7 +158,7 @@
 	  req_exp.send(null);
 	  req_exp.onload = function(){
 	    var res_exp = JSON.parse(req_exp.responseText);
-	    console.log(res_exp);
+	   
 	    displayFlightResults();
 	    displayHotelResults();
 	  }
@@ -175,21 +195,19 @@
 /***/ function(module, exports) {
 
 	var Place = function(){
-	this.places=[]
-	this.onUpdate = null;
-	this.storageKey='event';
+	  this.places=[]
 	}
 	Place.prototype = {
 	 populate : function(destination){
 	   var url = "http://terminal2.expedia.com/x/activities/search?location=" + destination + "&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos";
-	   console.log(url);
 	   var request = new XMLHttpRequest();
 	   request.open("GET", url);
 	   request.onload = function(){
 	     var jsonString = request.responseText;
 	     var info = JSON.parse(jsonString);
-	     console.log(info)
-	     this.places = info;
+	   
+	     this.places.push(info);
+	     console.log(places)
 	     var location=[]
 	     var arr=[]
 	     for (var i=0;i<info.activities.length;i++){
