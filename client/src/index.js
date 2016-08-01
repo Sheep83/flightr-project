@@ -1,6 +1,7 @@
 var Map = require('./map');
+var Place = require('./place')
 window.onload = function(){
-
+  var place = new Place();
   var button = document.getElementById('button');
   button.onclick = function(){
     origin = document.getElementById('origin').value;
@@ -10,11 +11,15 @@ window.onload = function(){
     noRooms = document.getElementById('no-rooms');
     noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
     sendOriginRequest();
+    place.populate(destination);
 
     var center = {lat: 55.9533, lng: -3.1883};
     var map = new Map(center);
     console.log(map);
   }
+
+  locations = place.get()
+     
 
   var center = {lat: 55.9533, lng: -3.1883};
   var map = new Map(center);
@@ -45,8 +50,28 @@ var sendDestinationRequest = function() {
     var res_destination = JSON.parse(req_destination.responseText);
     ss_destination = res_destination.Places[0].CityId.substring(0, 3)
     console.log(ss_destination);
+    initMap();
     sendSearchRequests();
   }
+}
+
+function initMap() {
+  var myLatLng = {lat: -25.363, lng: 131.044};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 4,
+    center: myLatLng
+  })
+  var bounds = new google.maps.LatLngBounds();
+  for (i = 0; i < locations.length; i++){
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
+      map: map,
+      title: locations[i][0]
+    });
+    bounds.extend(marker.position);
+    map.fitBounds(bounds);
+  }
+
 }
 
 var sendSearchRequests = function() {
