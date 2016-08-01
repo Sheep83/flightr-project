@@ -1,7 +1,8 @@
-var Map = require('./map');
-var Place = require('./place')
+var Place = require('./place');
+
 window.onload = function(){
   var place = new Place();
+
 
   var button = document.getElementById('button');
   button.onclick = function(){
@@ -12,14 +13,18 @@ window.onload = function(){
     noRooms = document.getElementById('no-rooms');
     noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
     sendOriginRequest();
+    // var center = {lat: 55.9533, lng: -3.1883};
+    // var map = new Map(center);  
     place.populate(destination);
-    console.log(place.places)
+  
 
-    var center = {lat: 55.9533, lng: -3.1883};
-    var map = new Map(center);  
+    // locations = place.get()
+  
+
+   
   }
 
-  locations = place.get()
+ 
      
 
   // var center = {lat: 55.9533, lng: -3.1883};
@@ -51,39 +56,39 @@ var sendDestinationRequest = function() {
     var res_destination = JSON.parse(req_destination.responseText);
     ss_destination = res_destination.Places[0].CityId.substring(0, 3)
   
-    initMap();
+  
     sendSearchRequests();
   }
 }
 
-function initMap() {
-  // Markers={}
-  var myLatLng = {lat: -25.363, lng: 131.044};
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 4,
-    center: myLatLng
-  })
-  infowindow = new google.maps.InfoWindow();
-  var bounds = new google.maps.LatLngBounds();
-  for (i = 0; i < locations.length; i++){
-    var marker = new google.maps.Marker({
-      position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
-      map: map,
-      title: locations[i][0]
-    });
-    bounds.extend(marker.position);
-    map.fitBounds(bounds);
-    google.maps.event.addListener(marker, 'click',(function(marker,i){
-     return function(){
-      infowindow.setContent(locations[i][0]);
-      infowindow.setOptions({maxWidth: 200});
-      infowindow.open(map, marker)
-    }
-  })(marker,i));
-    // Markers[locations[i][4]] = marker;
-  }
-  // locate(0)
-}
+// function initMap() {
+//   // Markers={}
+//   var myLatLng = {lat: -25.363, lng: 131.044};
+//   var map = new google.maps.Map(document.getElementById('map'), {
+//     zoom: 4,
+//     center: myLatLng
+//   })
+//   infowindow = new google.maps.InfoWindow();
+//   var bounds = new google.maps.LatLngBounds();
+//   for (i = 0; i < locations.length; i++){
+//     var marker = new google.maps.Marker({
+//       position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
+//       map: map,
+//       title: locations[i][0]
+//     });
+//     bounds.extend(marker.position);
+//     map.fitBounds(bounds);
+//     google.maps.event.addListener(marker, 'click',(function(marker,i){
+//      return function(){
+//       infowindow.setContent(locations[i][0]);
+//       infowindow.setOptions({maxWidth: 200});
+//       infowindow.open(map, marker)
+//     }
+//   })(marker,i));
+//     // Markers[locations[i][4]] = marker;
+//   }
+//   // locate(0)
+// }
 
 // function locate() {
 //   // var myMarker = Markers[marker_id];
@@ -104,8 +109,6 @@ var sendSearchRequests = function() {
   req_ss.send(null);
   req_ss.onload = function(){
     var res_ss = JSON.parse(req_ss.responseText);
-<<<<<<< HEAD
- 
   }
 
   var req_exp = new XMLHttpRequest();
@@ -118,9 +121,8 @@ var sendSearchRequests = function() {
     displayHotelResults();
   }
 }
-=======
-    console.log(res_ss.Places[0].CityName);
-  }
+
+    // console.log(res_ss.Places[0].CityName);
   // var req_exp = new XMLHttpRequest();
   // req_exp.open("GET", url_exp);
   // // request.setRequestHeader('accept', 'application/json');
@@ -131,7 +133,7 @@ var sendSearchRequests = function() {
 
   //   console.log(res_exp.hotelList[0].lowRateInfo.total);
   // }
->>>>>>> nico
+
 
 var displayFlightResults = function() {
   var flightResult1 = document.getElementById("flight1");

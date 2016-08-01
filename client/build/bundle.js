@@ -44,10 +44,11 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Map = __webpack_require__(1);
-	var Place = __webpack_require__(2)
+	var Place = __webpack_require__(2);
+	
 	window.onload = function(){
 	  var place = new Place();
+	
 	
 	  var button = document.getElementById('button');
 	  button.onclick = function(){
@@ -58,14 +59,18 @@
 	    noRooms = document.getElementById('no-rooms');
 	    noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
 	    sendOriginRequest();
+	    // var center = {lat: 55.9533, lng: -3.1883};
+	    // var map = new Map(center);  
 	    place.populate(destination);
-	    console.log(place.places)
+	  
 	
-	    var center = {lat: 55.9533, lng: -3.1883};
-	    var map = new Map(center);  
+	    // locations = place.get()
+	  
+	
+	   
 	  }
 	
-	  locations = place.get()
+	 
 	     
 	
 	  // var center = {lat: 55.9533, lng: -3.1883};
@@ -97,39 +102,39 @@
 	    var res_destination = JSON.parse(req_destination.responseText);
 	    ss_destination = res_destination.Places[0].CityId.substring(0, 3)
 	  
-	    initMap();
+	  
 	    sendSearchRequests();
 	  }
 	}
 	
-	function initMap() {
-	  // Markers={}
-	  var myLatLng = {lat: -25.363, lng: 131.044};
-	  var map = new google.maps.Map(document.getElementById('map'), {
-	    zoom: 4,
-	    center: myLatLng
-	  })
-	  infowindow = new google.maps.InfoWindow();
-	  var bounds = new google.maps.LatLngBounds();
-	  for (i = 0; i < locations.length; i++){
-	    var marker = new google.maps.Marker({
-	      position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
-	      map: map,
-	      title: locations[i][0]
-	    });
-	    bounds.extend(marker.position);
-	    map.fitBounds(bounds);
-	    google.maps.event.addListener(marker, 'click',(function(marker,i){
-	     return function(){
-	      infowindow.setContent(locations[i][0]);
-	      infowindow.setOptions({maxWidth: 200});
-	      infowindow.open(map, marker)
-	    }
-	  })(marker,i));
-	    // Markers[locations[i][4]] = marker;
-	  }
-	  // locate(0)
-	}
+	// function initMap() {
+	//   // Markers={}
+	//   var myLatLng = {lat: -25.363, lng: 131.044};
+	//   var map = new google.maps.Map(document.getElementById('map'), {
+	//     zoom: 4,
+	//     center: myLatLng
+	//   })
+	//   infowindow = new google.maps.InfoWindow();
+	//   var bounds = new google.maps.LatLngBounds();
+	//   for (i = 0; i < locations.length; i++){
+	//     var marker = new google.maps.Marker({
+	//       position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
+	//       map: map,
+	//       title: locations[i][0]
+	//     });
+	//     bounds.extend(marker.position);
+	//     map.fitBounds(bounds);
+	//     google.maps.event.addListener(marker, 'click',(function(marker,i){
+	//      return function(){
+	//       infowindow.setContent(locations[i][0]);
+	//       infowindow.setOptions({maxWidth: 200});
+	//       infowindow.open(map, marker)
+	//     }
+	//   })(marker,i));
+	//     // Markers[locations[i][4]] = marker;
+	//   }
+	//   // locate(0)
+	// }
 	
 	// function locate() {
 	//   // var myMarker = Markers[marker_id];
@@ -150,8 +155,6 @@
 	  req_ss.send(null);
 	  req_ss.onload = function(){
 	    var res_ss = JSON.parse(req_ss.responseText);
-<<<<<<< HEAD
-	 
 	  }
 	
 	  var req_exp = new XMLHttpRequest();
@@ -164,9 +167,8 @@
 	    displayHotelResults();
 	  }
 	}
-=======
-	    console.log(res_ss.Places[0].CityName);
-	  }
+	
+	    // console.log(res_ss.Places[0].CityName);
 	  // var req_exp = new XMLHttpRequest();
 	  // req_exp.open("GET", url_exp);
 	  // // request.setRequestHeader('accept', 'application/json');
@@ -177,7 +179,7 @@
 	
 	  //   console.log(res_exp.hotelList[0].lowRateInfo.total);
 	  // }
->>>>>>> nico
+	
 	
 	var displayFlightResults = function() {
 	  var flightResult1 = document.getElementById("flight1");
@@ -193,26 +195,45 @@
 
 
 /***/ },
-/* 1 */
-/***/ function(module, exports) {
-
-	var Map = function(latlng){
-	  this.map = new google.maps.Map(document.getElementById('map'),{
-	    center: latlng,
-	    zoom: 14
-	  })
-	}
-	
-	module.exports = Map;
-
-/***/ },
+/* 1 */,
 /* 2 */
 /***/ function(module, exports) {
 
 	var Place = function(){
-	  this.places=[]
+	
 	}
+	
+	
 	Place.prototype = {
+	
+	  initMap: function(locations) {
+	    // Markers={}
+	    var myLatLng = {lat: -25.363, lng: 131.044};
+	    var map = new google.maps.Map(document.getElementById('map'), {
+	      zoom: 4,
+	      center: myLatLng
+	    })
+	    infowindow = new google.maps.InfoWindow();
+	    var bounds = new google.maps.LatLngBounds();
+	    for (i = 0; i < locations.length; i++){
+	      var marker = new google.maps.Marker({
+	        position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
+	        map: map,
+	        title: locations[i][0]
+	      });
+	      bounds.extend(marker.position);
+	      map.fitBounds(bounds);
+	      google.maps.event.addListener(marker, 'click',(function(marker,i){
+	       return function(){
+	        infowindow.setContent(locations[i][0]);
+	        infowindow.setOptions({maxWidth: 200});
+	        infowindow.open(map, marker)
+	      }
+	    })(marker,i));
+	      // Markers[locations[i][4]] = marker;
+	    }
+	  },
+	
 	 populate : function(destination){
 	   var url = "http://terminal2.expedia.com/x/activities/search?location=" + destination + "&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos";
 	   var request = new XMLHttpRequest();
@@ -220,32 +241,26 @@
 	   request.onload = function(){
 	     var jsonString = request.responseText;
 	     var info = JSON.parse(jsonString);
-	   
-	     this.places.push(info);
-	     console.log(places)
+	
 	     var location=[]
 	     var arr=[]
 	     for (var i=0;i<info.activities.length;i++){
-	               var coor = info.activities[i].latLng.split(',')
-	               var lat = parseFloat(coor[0])
-	               var lang = parseFloat(coor[1])
-	               arr=[]
-	               arr.push(info.activities[i].title)
-	               arr.push(lat)
-	               arr.push(lang)
-	               location.push(arr)
-	             }
-	             localStorage.setItem('event', JSON.stringify(location))
-	           }
+	       var coor = info.activities[i].latLng.split(',')
+	       var lat = parseFloat(coor[0])
+	       var lang = parseFloat(coor[1])
+	       arr=[]
+	       arr.push(info.activities[i].title)
+	       arr.push(lat)
+	       arr.push(lang)
+	       location.push(arr)
+	     }     
+	     this.initMap(location);
+	   }.bind(this);
 	
-	           request.send(null);
-	         },
-	         get:function(){
-	           var event = localStorage.getItem('event')
-	           return JSON.parse(event)
-	         }
+	  request.send(null);
+	 }
 	
-	       }
+	}
 	
 	module.exports = Place;
 
