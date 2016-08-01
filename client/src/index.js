@@ -1,5 +1,6 @@
 var SavedSearch = require('./saved_search/saved_search');
 var Map = require('./map');
+var Place = require('./place');
 
 //not added iains stuff to state
 var state = {
@@ -13,6 +14,8 @@ var state = {
 }
 
 window.onload = function(){
+
+  var place = new Place();
 
   var button = document.getElementById('button');
   var packageButton = document.getElementById('package-button');
@@ -28,6 +31,7 @@ window.onload = function(){
     // var center = {lat: 55.9533, lng: -3.1883};
     // var map = new Map(center);
     // console.log(map);
+    place.populate(destination);
   }
 
   packageButton.onclick = function(){
@@ -40,8 +44,8 @@ window.onload = function(){
     }
   }
 
-  var center = {lat: 55.9533, lng: -3.1883};
-  var map = new Map(center);
+  // var center = {lat: 55.9533, lng: -3.1883};
+  // var map = new Map(center);
 };
 
 var sendOriginRequest = function() {
