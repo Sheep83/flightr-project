@@ -19,12 +19,9 @@ var state = {
 }
 
 
+
+
 window.onload = function(){
-  var place = new Place();
-
-
-  var place = new Place();
-
   var button = document.getElementById('button');
   var packageButton = document.getElementById('package-button');
   button.onclick = function(){
@@ -36,18 +33,36 @@ window.onload = function(){
     noRooms = document.getElementById('no-rooms');
     noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
     sendOriginRequest();
-
+    var place = new Place();
     place.populate(destination);
+    dest=[]
+    arr=[]
+    setTimeout(function(){
+     for(i=0; i<state.hotelsSelect.length;i++){
+        arr.push(state.hotelsSelect[i].name);
+        arr.push(parseFloat(state.hotelsSelect[i].latitude));
+        arr.push(parseFloat(state.hotelsSelect[i].longitude));
+        arr.push(state.hotelsSelect[i].shortDescription)
+        dest.push(arr)
+        arr=[]
+     }  
+     console.log(state.hotelsSelect)
+     populatehotel(dest)
+    },6000);
+    function populatehotel(arr){
+      place.initMap(dest)
+      console.log(dest)
+    }
+   
 
 
 
 
 
 
-    // var center = {lat: 55.9533, lng: -3.1883};
-    // var map = new Map(center);
-    // console.log(map);
-    place.populate(destination);
+  //   // var center = {lat: 55.9533, lng: -3.1883};
+  //   // var map = new Map(center);
+  
   }
 
   packageButton.onclick = function(){
@@ -160,7 +175,7 @@ var sendSearchRequests = function() {
     loadCharts();
     // NEW STUFF
     
-    console.log(res_exp);
+    // console.log(res_exp);
 
     displayFlightResults();
     displayHotelResults();
@@ -223,7 +238,7 @@ var createDisplayHandles = function(size, type) {
       state.resultsArray[i].onclick=function(e){ selectedItem(e) };
     }
   }
-  console.log("resultsArray:", state.resultsArray);
+  // console.log("resultsArray:", state.resultsArray);
   return state.resultsArray;
 }
 
@@ -266,7 +281,7 @@ var displayHotelResults = function() {
           var hotelResultDetails = {"name": res_exp.hotelList[i].name, "description": res_exp.hotelList[i].shortDescription, "image": hotelImage, "guestRating": res_exp.hotelList[i].hotelGuestRating, "starRating": res_exp.hotelList[i].hotelStarRating, "lat": res_exp.hotelList[i].latitude, "long": res_exp.hotelList[i].longitude, "price": res_exp.hotelList[i].lowRateInfo.total}
           state.hotelsSelect.push(hotel);
           // console.log(state.hotelsSelect);
-          console.log(state.hotelsSelect);
+          // place.hotel(state.hotelsSelect)
           addHotelResultToPage(hotelResultDetails, displayHotelsArray, i);
         }
       }

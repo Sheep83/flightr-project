@@ -65,12 +65,9 @@
 	}
 	
 	
+	
+	
 	window.onload = function(){
-	  var place = new Place();
-	
-	
-	  var place = new Place();
-	
 	  var button = document.getElementById('button');
 	  var packageButton = document.getElementById('package-button');
 	  button.onclick = function(){
@@ -82,18 +79,36 @@
 	    noRooms = document.getElementById('no-rooms');
 	    noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
 	    sendOriginRequest();
-	
+	    var place = new Place();
 	    place.populate(destination);
+	    dest=[]
+	    arr=[]
+	    setTimeout(function(){
+	     for(i=0; i<state.hotelsSelect.length;i++){
+	        arr.push(state.hotelsSelect[i].name);
+	        arr.push(parseFloat(state.hotelsSelect[i].latitude));
+	        arr.push(parseFloat(state.hotelsSelect[i].longitude));
+	        arr.push(state.hotelsSelect[i].shortDescription)
+	        dest.push(arr)
+	        arr=[]
+	     }  
+	     console.log(state.hotelsSelect)
+	     populatehotel(dest)
+	    },6000);
+	    function populatehotel(arr){
+	      place.initMap(dest)
+	      console.log(dest)
+	    }
+	   
 	
 	
 	
 	
 	
 	
-	    // var center = {lat: 55.9533, lng: -3.1883};
-	    // var map = new Map(center);
-	    // console.log(map);
-	    place.populate(destination);
+	  //   // var center = {lat: 55.9533, lng: -3.1883};
+	  //   // var map = new Map(center);
+	  
 	  }
 	
 	  packageButton.onclick = function(){
@@ -206,7 +221,7 @@
 	    loadCharts();
 	    // NEW STUFF
 	    
-	    console.log(res_exp);
+	    // console.log(res_exp);
 	
 	    displayFlightResults();
 	    displayHotelResults();
@@ -269,7 +284,7 @@
 	      state.resultsArray[i].onclick=function(e){ selectedItem(e) };
 	    }
 	  }
-	  console.log("resultsArray:", state.resultsArray);
+	  // console.log("resultsArray:", state.resultsArray);
 	  return state.resultsArray;
 	}
 	
@@ -312,7 +327,7 @@
 	          var hotelResultDetails = {"name": res_exp.hotelList[i].name, "description": res_exp.hotelList[i].shortDescription, "image": hotelImage, "guestRating": res_exp.hotelList[i].hotelGuestRating, "starRating": res_exp.hotelList[i].hotelStarRating, "lat": res_exp.hotelList[i].latitude, "long": res_exp.hotelList[i].longitude, "price": res_exp.hotelList[i].lowRateInfo.total}
 	          state.hotelsSelect.push(hotel);
 	          // console.log(state.hotelsSelect);
-	          console.log(state.hotelsSelect);
+	          // place.hotel(state.hotelsSelect)
 	          addHotelResultToPage(hotelResultDetails, displayHotelsArray, i);
 	        }
 	      }
@@ -457,85 +472,110 @@
 /***/ function(module, exports) {
 
 	var Place = function(){
-	
+	var myLatLng = {lat: -25.363, lng: 131.044};
+	this.map = new google.maps.Map(document.getElementById('map'), {
+	    zoom: 4,
+	    center: myLatLng
+	  })
 	}
 	
 	
 	Place.prototype = {
 	
+	  // hotel: function(hotel){
+	  //   infowindow = new google.maps.InfoWindow();
+	  //   var bounds = new google.maps.LatLngBounds();
+	  //  for(i=0; i<hotel.length;i++){
+	  //   var marker = new google.maps.Marker({
+	  //     position: new google.maps.LatLng(parseFloat(hotel[i].longitude), parseFloat(hotel[i].latitude)),
+	  //     map: this.map
+	  //   });
+	  //   bounds.extend(marker.position);
+	  //   this.map.fitBounds(bounds);
+	      
+	  //  }
+	   
+	  // },
 	
-	  initMap: function(locations) {
-	    // Markers={}
-	    var myLatLng = {lat: -25.363, lng: 131.044};
-	    var map = new google.maps.Map(document.getElementById('map'), {
-	      zoom: 4,
-	      center: myLatLng
-	    })
-	    infowindow = new google.maps.InfoWindow();
-	    var bounds = new google.maps.LatLngBounds();
-	    for (i = 0; i < locations.length; i++){
-	      var marker = new google.maps.Marker({
-	        position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
-	        map: map,
-	        title: locations[i][0]
-	      });
-	      bounds.extend(marker.position);
-	      map.fitBounds(bounds);
-	      google.maps.event.addListener(marker, 'click',(function(marker,i){
-	       return function(){
-	        infowindow.setContent(locations[i][0]);
-	        infowindow.setOptions({maxWidth: 200});
-	        infowindow.open(map, marker)
-	      }
-	    })(marker,i));
-	      // Markers[locations[i][4]] = marker;
-	    }
-	  },
 	
-	 populate : function(destination){
-	   var url = "http://terminal2.expedia.com/x/activities/search?location=" + destination + "&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos";
-	   var request = new XMLHttpRequest();
-	   request.open("GET", url);
-	   request.onload = function(){
-	     var jsonString = request.responseText;
-	     var info = JSON.parse(jsonString);
+	 //  initMap: function(locations) {
+	 //    // var myLatLng = {lat: -25.363, lng: 131.044};
+	 //    // this.map = new google.maps.Map(document.getElementById('map'), {
+	 //    //   zoom: 4,
+	 //    //   center: myLatLng
+	 //    // })
+	 //    infowindow = new google.maps.InfoWindow();
+	 //    var bounds = new google.maps.LatLngBounds();
+	 //    for (i = 0; i < locations.length; i++){
+	 //      var marker = new google.maps.Marker({
+	 //        position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
+	 //        map: this.map,
+	 //        title: locations[i][0]
+	 //      });
+	 //      bounds.extend(marker.position);
+	 //      map.fitBounds(bounds);
+	 //      google.maps.event.addListener(marker, 'click',(function(marker,i){
+	 //       return function(){
+	 //        infowindow.setContent(locations[i][0]);
+	 //        infowindow.setOptions({maxWidth: 200});
+	 //        infowindow.open(map, marker)
+	 //      }
+	 //    })(marker,i));
+	    
+	 //    }
+	 //  },
 	
-	     var location=[]
-	     var arr=[]
-	     for (var i=0;i<info.activities.length;i++){
-	       var coor = info.activities[i].latLng.split(',')
-	       var lat = parseFloat(coor[0])
-	       var lang = parseFloat(coor[1])
-	       arr=[]
-	       arr.push(info.activities[i].title)
-	       arr.push(lat)
-	       arr.push(lang)
-	       location.push(arr)
-	     }     
-	     this.initMap(location);
-	   }.bind(this);
+	 // populate : function(destination){
+	 //   var url = "http://terminal2.expedia.com/x/activities/search?location=" + destination + "&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos";
+	 //   var request = new XMLHttpRequest();
+	 //   request.open("GET", url);
+	 //   request.onload = function(){
+	 //     var jsonString = request.responseText;
+	 //     var info = JSON.parse(jsonString);
 	
-	  request.send(null);
-	 },
+	 //     var location=[]
+	 //     var arr=[]
+	 //     for (var i=0;i<info.activities.length;i++){
+	 //       var coor = info.activities[i].latLng.split(',')
+	 //       var lat = parseFloat(coor[0])
+	 //       var lang = parseFloat(coor[1])
+	 //       arr=[]
+	 //       arr.push(info.activities[i].title)
+	 //       arr.push(lat)
+	 //       arr.push(lang)
+	 //       location.push(arr)
+	 //     }     
+	 //     this.initMap(location);
+	 //   }.bind(this);
+	
+	 //  request.send(null);
+	 // }
 	
 	 initMap: function(locations) {
+	    console.log(locations)
 	   // Markers={}
-	   var myLatLng = {lat: -25.363, lng: 131.044};
-	   var map = new google.maps.Map(document.getElementById('map'), {
-	     zoom: 4,
-	     center: myLatLng
-	   })
+	   // var myLatLng = {lat: -25.363, lng: 131.044};
+	   // var map = new google.maps.Map(document.getElementById('map'), {
+	   //   zoom: 4,
+	   //   center: myLatLng
+	   // })
 	   infowindow = new google.maps.InfoWindow();
 	   var bounds = new google.maps.LatLngBounds();
 	   for (i = 0; i < locations.length; i++){
 	     var marker = new google.maps.Marker({
 	       position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
-	       map: map,
+	       map: this.map,
 	       title: locations[i][0],
 	     });
+	     if (locations.length>3){
+	      
 	     marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+	     }else
+	     {
+	      marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
+	     }
 	     bounds.extend(marker.position);
-	     map.fitBounds(bounds);
+	     this.map.fitBounds(bounds);
 	     google.maps.event.addListener(marker, 'click',(function(marker,i){
 	      return function(){
 	       infowindow.setContent(locations[i][0]);
