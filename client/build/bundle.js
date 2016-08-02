@@ -44,13 +44,13 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-	var Place = __webpack_require__(3);
 	
-=======
-	var SavedSearch = __webpack_require__(1);
-	var Map = __webpack_require__(2);
-	var Place = __webpack_require__(3);
+	var Place = __webpack_require__(1);
+	
+	
+	var SavedSearch = __webpack_require__(2);
+	var Map = __webpack_require__(3);
+	var Place = __webpack_require__(1);
 	
 	//not added iains stuff to state
 	var state = {
@@ -63,7 +63,7 @@
 	  "latLng": [],
 	}
 	
->>>>>>> develop
+	
 	window.onload = function(){
 	  var place = new Place();
 	
@@ -80,20 +80,14 @@
 	    noRooms = document.getElementById('no-rooms');
 	    noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
 	    sendOriginRequest();
-	  
+	
 	    place.populate(destination);
-	  
 	
-	 
-	  
 	
-<<<<<<< HEAD
-	   
-	  }
 	
-	 
-	     
-=======
+	
+	
+	
 	    // var center = {lat: 55.9533, lng: -3.1883};
 	    // var map = new Map(center);
 	    // console.log(map);
@@ -109,7 +103,7 @@
 	      // NEED TO SAVE TO DB
 	    }
 	  }
->>>>>>> develop
+	
 	
 	  // var center = {lat: 55.9533, lng: -3.1883};
 	  // var map = new Map(center);
@@ -139,12 +133,10 @@
 	  req_destination.onload = function(){
 	    var res_destination = JSON.parse(req_destination.responseText);
 	    ss_destination = res_destination.Places[0].CityId.substring(0, 3)
-<<<<<<< HEAD
+	
 	  
 	  
-=======
-	    // console.log(ss_destination);
->>>>>>> develop
+	
 	    sendSearchRequests();
 	  }
 	}
@@ -160,31 +152,31 @@
 	  req_ss.open("GET", url_ss);
 	  req_ss.send(null);
 	  req_ss.onload = function(){
-<<<<<<< HEAD
+	
 	    var res_ss = JSON.parse(req_ss.responseText);
-=======
+	
 	    res_ss = JSON.parse(req_ss.responseText);
-	    console.log(res_ss);
->>>>>>> develop
+	
+	
 	  }
 	
 	  var req_exp = new XMLHttpRequest();
 	  req_exp.open("GET", url_exp);
 	  req_exp.send(null);
 	  req_exp.onload = function(){
-<<<<<<< HEAD
+	
 	    var res_exp = JSON.parse(req_exp.responseText);
 	   
-=======
+	
 	    res_exp = JSON.parse(req_exp.responseText);
-	    console.log(res_exp);
->>>>>>> develop
+	  
+	
 	    displayFlightResults();
 	    displayHotelResults();
 	  }
 	}
 	
-<<<<<<< HEAD
+	
 	    // console.log(res_ss.Places[0].CityName);
 	  // var req_exp = new XMLHttpRequest();
 	  // req_exp.open("GET", url_exp);
@@ -196,11 +188,7 @@
 	
 	  //   console.log(res_exp.hotelList[0].lowRateInfo.total);
 	  // }
-=======
 	
-	
-	
->>>>>>> develop
 	
 	
 	var displayFlightResults = function() {
@@ -287,6 +275,7 @@
 	          var hotelResultDetails = {"name": res_exp.hotelList[i].name, "description": res_exp.hotelList[i].shortDescription, "image": hotelImage, "guestRating": res_exp.hotelList[i].hotelGuestRating, "starRating": res_exp.hotelList[i].hotelStarRating, "lat": res_exp.hotelList[i].latitude, "long": res_exp.hotelList[i].longitude, "price": res_exp.hotelList[i].lowRateInfo.total}
 	          state.hotelsSelect.push(hotel);
 	          // console.log(state.hotelsSelect);
+	          console.log(state.hotelsSelect);
 	          addHotelResultToPage(hotelResultDetails, displayHotelsArray, i);
 	        }
 	      }
@@ -375,18 +364,16 @@
 	// 10. only display 5 hotel search results at one time
 
 /***/ },
-/* 1 */,
-/* 2 */,
-/* 3 */
+/* 1 */
 /***/ function(module, exports) {
 
-<<<<<<< HEAD
 	var Place = function(){
 	
 	}
 	
 	
 	Place.prototype = {
+	
 	
 	  initMap: function(locations) {
 	    // Markers={}
@@ -440,52 +427,7 @@
 	   }.bind(this);
 	
 	  request.send(null);
-	 }
-	
-=======
-	var SavedSearch = function(ssObj, expObj){
-	   console.log(expObj, "HEREEEE");
-	   this.flightDepDate = ssObj.outboundDate,
-	   this.flightRetDate = ssObj.inboundDate,
-	   this.flightCarrier = ssObj.airline,
-	   this.flightPrice = ssObj.price,
-	   this.hotelName =  expObj.localizedName,
-	   this.starRating = expObj.hotelStarRating,
-	   this.hotelPrice = expObj.lowRateInfo.total
-	};
-	
-	SavedSearch.prototype = {
-	   saveToDb: function(saved){
-	     // function to save search to database
-	   }
-	}
-	
-	module.exports = SavedSearch;
-
-/***/ },
-/* 2 */
-/***/ function(module, exports) {
-
-	var Map = function(latlng){
-	  this.map = new google.maps.Map(document.getElementById('map'),{
-	    center: latlng,
-	    zoom: 14
-	  })
->>>>>>> develop
-	}
-	
-	module.exports = Place;
-
-/***/ },
-/* 3 */
-/***/ function(module, exports) {
-
-	var Place = function(){
-	
-	}
-	
-	
-	Place.prototype = {
+	 },
 	
 	 initMap: function(locations) {
 	   // Markers={}
@@ -500,8 +442,9 @@
 	     var marker = new google.maps.Marker({
 	       position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
 	       map: map,
-	       title: locations[i][0]
+	       title: locations[i][0],
 	     });
+	     marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
 	     bounds.extend(marker.position);
 	     map.fitBounds(bounds);
 	     google.maps.event.addListener(marker, 'click',(function(marker,i){
@@ -541,9 +484,46 @@
 	 request.send(null);
 	}
 	
+	
 	}
 	
 	module.exports = Place;
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	var SavedSearch = function(ssObj, expObj){
+	   console.log(expObj, "HEREEEE");
+	   this.flightDepDate = ssObj.outboundDate,
+	   this.flightRetDate = ssObj.inboundDate,
+	   this.flightCarrier = ssObj.airline,
+	   this.flightPrice = ssObj.price,
+	   this.hotelName =  expObj.localizedName,
+	   this.starRating = expObj.hotelStarRating,
+	   this.hotelPrice = expObj.lowRateInfo.total
+	};
+	
+	SavedSearch.prototype = {
+	   saveToDb: function(saved){
+	     // function to save search to database
+	   }
+	}
+	
+	module.exports = SavedSearch;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	var Map = function(latlng){
+	  this.map = new google.maps.Map(document.getElementById('map'),{
+	    center: latlng,
+	    zoom: 14
+	  })
+	}
+	
+	module.exports = Map;
 
 /***/ }
 /******/ ]);

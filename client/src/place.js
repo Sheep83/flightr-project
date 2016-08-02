@@ -5,7 +5,7 @@ var Place = function(){
 
 Place.prototype = {
 
-<<<<<<< HEAD
+
   initMap: function(locations) {
     // Markers={}
     var myLatLng = {lat: -25.363, lng: 131.044};
@@ -58,8 +58,8 @@ Place.prototype = {
    }.bind(this);
 
   request.send(null);
- }
-=======
+ },
+
  initMap: function(locations) {
    // Markers={}
    var myLatLng = {lat: -25.363, lng: 131.044};
@@ -73,8 +73,9 @@ Place.prototype = {
      var marker = new google.maps.Marker({
        position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
        map: map,
-       title: locations[i][0]
+       title: locations[i][0],
      });
+     marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
      bounds.extend(marker.position);
      map.fitBounds(bounds);
      google.maps.event.addListener(marker, 'click',(function(marker,i){
@@ -113,7 +114,7 @@ populate : function(destination){
 
  request.send(null);
 }
->>>>>>> develop
+
 
 }
 

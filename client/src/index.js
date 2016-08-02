@@ -1,7 +1,7 @@
-<<<<<<< HEAD
+
 var Place = require('./place');
 
-=======
+
 var SavedSearch = require('./saved_search/saved_search');
 var Map = require('./map');
 var Place = require('./place');
@@ -17,7 +17,7 @@ var state = {
   "latLng": [],
 }
 
->>>>>>> develop
+
 window.onload = function(){
   var place = new Place();
 
@@ -34,21 +34,14 @@ window.onload = function(){
     noRooms = document.getElementById('no-rooms');
     noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
     sendOriginRequest();
-  
+
     place.populate(destination);
-  
 
-<<<<<<< HEAD
- 
-  
 
-   
-  }
 
- 
-     
 
-=======
+
+
     // var center = {lat: 55.9533, lng: -3.1883};
     // var map = new Map(center);
     // console.log(map);
@@ -65,7 +58,7 @@ window.onload = function(){
     }
   }
 
->>>>>>> develop
+
   // var center = {lat: 55.9533, lng: -3.1883};
   // var map = new Map(center);
 };
@@ -94,12 +87,10 @@ var sendDestinationRequest = function() {
   req_destination.onload = function(){
     var res_destination = JSON.parse(req_destination.responseText);
     ss_destination = res_destination.Places[0].CityId.substring(0, 3)
-<<<<<<< HEAD
+
   
   
-=======
-    // console.log(ss_destination);
->>>>>>> develop
+
     sendSearchRequests();
   }
 }
@@ -115,31 +106,31 @@ var sendSearchRequests = function() {
   req_ss.open("GET", url_ss);
   req_ss.send(null);
   req_ss.onload = function(){
-<<<<<<< HEAD
+
     var res_ss = JSON.parse(req_ss.responseText);
-=======
+
     res_ss = JSON.parse(req_ss.responseText);
-    console.log(res_ss);
->>>>>>> develop
+
+
   }
 
   var req_exp = new XMLHttpRequest();
   req_exp.open("GET", url_exp);
   req_exp.send(null);
   req_exp.onload = function(){
-<<<<<<< HEAD
+
     var res_exp = JSON.parse(req_exp.responseText);
    
-=======
+
     res_exp = JSON.parse(req_exp.responseText);
-    console.log(res_exp);
->>>>>>> develop
+  
+
     displayFlightResults();
     displayHotelResults();
   }
 }
 
-<<<<<<< HEAD
+
     // console.log(res_ss.Places[0].CityName);
   // var req_exp = new XMLHttpRequest();
   // req_exp.open("GET", url_exp);
@@ -151,11 +142,7 @@ var sendSearchRequests = function() {
 
   //   console.log(res_exp.hotelList[0].lowRateInfo.total);
   // }
-=======
 
-
-
->>>>>>> develop
 
 
 var displayFlightResults = function() {
@@ -242,6 +229,7 @@ var displayHotelResults = function() {
           var hotelResultDetails = {"name": res_exp.hotelList[i].name, "description": res_exp.hotelList[i].shortDescription, "image": hotelImage, "guestRating": res_exp.hotelList[i].hotelGuestRating, "starRating": res_exp.hotelList[i].hotelStarRating, "lat": res_exp.hotelList[i].latitude, "long": res_exp.hotelList[i].longitude, "price": res_exp.hotelList[i].lowRateInfo.total}
           state.hotelsSelect.push(hotel);
           // console.log(state.hotelsSelect);
+          console.log(state.hotelsSelect);
           addHotelResultToPage(hotelResultDetails, displayHotelsArray, i);
         }
       }
