@@ -45,12 +45,12 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	var Place = __webpack_require__(1);
+	var Place = __webpack_require__(3);
 	
 	
-	var SavedSearch = __webpack_require__(2);
-	var Map = __webpack_require__(3);
-	var Place = __webpack_require__(1);
+	var SavedSearch = __webpack_require__(1);
+	var Map = __webpack_require__(2);
+	var Place = __webpack_require__(3);
 	
 	//not added iains stuff to state
 	var state = {
@@ -127,18 +127,18 @@
 	  var localResultsArray = [];
 	
 	  for (var i = 0; i < numberOfFlights; i++) {
-	      localResultsArray[i] = document.getElementById('flight-result' + (i)).innerHTML = "";
-	    }
+	    localResultsArray[i] = document.getElementById('flight-result' + (i)).innerHTML = "";
 	  }
+	}
 	
-	  var clearHotelDivs = function() {
-	    var numberOfHotels = 10;
-	    var localResultsArray = [];
+	var clearHotelDivs = function() {
+	  var numberOfHotels = 10;
+	  var localResultsArray = [];
 	
-	    for (var i = 0; i < numberOfHotels; i++) {
-	        localResultsArray[i] = document.getElementById('hotel-result' + (i)).innerHTML = "";
-	      }
-	    }
+	  for (var i = 0; i < numberOfHotels; i++) {
+	    localResultsArray[i] = document.getElementById('hotel-result' + (i)).innerHTML = "";
+	  }
+	}
 	
 	var sendOriginRequest = function() {
 	  var url_origin = "http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/GB/GBP/en-GB?query=" + origin + "&apiKey=co666659065635714271429118382522";
@@ -165,8 +165,8 @@
 	    var res_destination = JSON.parse(req_destination.responseText);
 	    ss_destination = res_destination.Places[0].CityId.substring(0, 3)
 	
-	  
-	  
+	
+	
 	
 	    sendSearchRequests();
 	  }
@@ -196,10 +196,11 @@
 	  req_exp.send(null);
 	  req_exp.onload = function(){
 	
-	    // var res_exp = JSON.parse(req_exp.responseText);
-	   
-	
 	    res_exp = JSON.parse(req_exp.responseText);
+	    var hotelListArray = res_exp.hotelList;
+	    var sorted_hotels = hotelListArray.sort(function(a, b){
+	     return a.lowRateInfo.total - b.lowRateInfo.total;
+	   })
 	
 	
 	    // NEW STUFF
@@ -228,11 +229,11 @@
 	
 	
 	
-	var displayFlightResults = function() {
-	  var displayFlightsArray = createDisplayHandles(5, "flight");
-	  var index = 0;
+	  var displayFlightResults = function() {
+	    var displayFlightsArray = createDisplayHandles(5, "flight");
+	    var index = 0;
 	
-	  for (var i = 0; i < displayFlightsArray.length; i++) {
+	    for (var i = 0; i < displayFlightsArray.length; i++) {
 	    if (res_ss.Quotes[i]) { // if there is a valid quote then print it
 	      // but only if the trip has an inbound and outbound journey
 	      if (res_ss.Quotes[i].InboundLeg && res_ss.Quotes[i].OutboundLeg) {
@@ -306,8 +307,11 @@
 	
 	        // NEED TO UPDATE THIS BASED ON USER BUDGET
 	        var userBudget = 500;
-	
 	        var hotel = res_exp.hotelList[i];
+	        // console.log("hotel list", hotel);
+	
+	
+	
 	        if(hotel.lowRateInfo.averageRate < userBudget){
 	          var hotelResultDetails = {"name": res_exp.hotelList[i].name, "description": res_exp.hotelList[i].shortDescription, "image": hotelImage, "guestRating": res_exp.hotelList[i].hotelGuestRating, "starRating": res_exp.hotelList[i].hotelStarRating, "lat": res_exp.hotelList[i].latitude, "long": res_exp.hotelList[i].longitude, "price": res_exp.hotelList[i].lowRateInfo.total}
 	          state.hotelsSelect.push(hotel);
@@ -349,14 +353,14 @@
 	  //   var cost = eachHotel[i].lowRateInfo.maxNightlyRate;
 	    // var starRating = eachHotel[i].hotelStarRating;
 	
-	  hotelPriceOptions.forEach(function(priceRange) {
-	    priceBracketData.push({
-	      name: "£" + priceRange.minPrice + " - £" + priceRange.maxPrice,
-	      y: priceRange.count
-	    });
-	  }); 
+	    hotelPriceOptions.forEach(function(priceRange) {
+	      priceBracketData.push({
+	        name: "£" + priceRange.minPrice + " - £" + priceRange.maxPrice,
+	        y: priceRange.count
+	      });
+	    }); 
 	
-	  new PieChart("Hotels by Price Range", priceBracketData);
+	    new PieChart("Hotels by Price Range", priceBracketData);
 	  // new LineChart("Hotel Price by Proximity", priceByProximityData);
 	}
 	// NEW STUFF
@@ -454,6 +458,42 @@
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	var SavedSearch = function(ssObj, expObj){
+	   console.log(expObj, "HEREEEE");
+	   this.flightDepDate = ssObj.outboundDate,
+	   this.flightRetDate = ssObj.inboundDate,
+	   this.flightCarrier = ssObj.airline,
+	   this.flightPrice = ssObj.price,
+	   this.hotelName =  expObj.localizedName,
+	   this.starRating = expObj.hotelStarRating,
+	   this.hotelPrice = expObj.lowRateInfo.total
+	};
+	
+	SavedSearch.prototype = {
+	   saveToDb: function(saved){
+	     // function to save search to database
+	   }
+	}
+	
+	module.exports = SavedSearch;
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	var Map = function(latlng){
+	  this.map = new google.maps.Map(document.getElementById('map'),{
+	    center: latlng,
+	    zoom: 14
+	  })
+	}
+	
+	module.exports = Map;
+
+/***/ },
+/* 3 */
 /***/ function(module, exports) {
 
 	var Place = function(){
@@ -577,42 +617,6 @@
 	}
 	
 	module.exports = Place;
-
-/***/ },
-/* 2 */
-/***/ function(module, exports) {
-
-	var SavedSearch = function(ssObj, expObj){
-	   console.log(expObj, "HEREEEE");
-	   this.flightDepDate = ssObj.outboundDate,
-	   this.flightRetDate = ssObj.inboundDate,
-	   this.flightCarrier = ssObj.airline,
-	   this.flightPrice = ssObj.price,
-	   this.hotelName =  expObj.localizedName,
-	   this.starRating = expObj.hotelStarRating,
-	   this.hotelPrice = expObj.lowRateInfo.total
-	};
-	
-	SavedSearch.prototype = {
-	   saveToDb: function(saved){
-	     // function to save search to database
-	   }
-	}
-	
-	module.exports = SavedSearch;
-
-/***/ },
-/* 3 */
-/***/ function(module, exports) {
-
-	var Map = function(latlng){
-	  this.map = new google.maps.Map(document.getElementById('map'),{
-	    center: latlng,
-	    zoom: 14
-	  })
-	}
-	
-	module.exports = Map;
 
 /***/ }
 /******/ ]);
