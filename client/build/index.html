@@ -27,6 +27,14 @@
     <input id='destination' placeholder="Destination" value="New York">
     <input type="date" id="start-date" placeholder="Check-in date" value="2016-09-16">
     <input type="date" id="end-date" placeholder="Check-out date"  value="2016-09-19">
+    <input type="range" min="0" max="500" value="250" step="10" oninput="showValue(this.value)" />
+    <span id="range">250</span>
+    <script type="text/javascript">
+    function showValue(newValue)
+    {
+     document.getElementById("range").innerHTML=newValue;
+    }
+    </script>
     <select name="no-rooms" id="no-rooms">
 
 
@@ -42,7 +50,7 @@
 
     <!--NEW Stuff -->
     <div id="pieChart" width="400" height="400"></div>
-<!--     <div id="lineChart" width="400" height="400"></div> -->
+    <!--     <div id="lineChart" width="400" height="400"></div> -->
     <!--NEW Stuff -->
 
     <div id="saved"></div>
@@ -68,16 +76,12 @@
       </div>
     </div>
     <div id='add-selected-button'>
-    <button type="button" id="package-button">Select these options</button>
-    <div id='user-selected'>
-
-  </form>
-
-  <div id="map"></div>
-  </form>
+      <button type="button" id="package-button">Select these options</button>
+      <div id='user-selected'>
+      </form>
 
 
 
 
-</body>
-</html>
+  </body>
+  </html>

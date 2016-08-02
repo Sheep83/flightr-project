@@ -80,6 +80,7 @@
 	    startDate = document.getElementById('start-date').value;
 	    endDate = document.getElementById('end-date').value;
 	    noRooms = document.getElementById('no-rooms');
+	    budget = document.getElementById('range').innerHTML;
 	    noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
 	    sendOriginRequest();
 	
@@ -100,14 +101,33 @@
 	    if (state.selectedFlight.length === 0 || state.selectedHotel.length === 0) {
 	      alert("You haven't selected a valid flight and hotel. Please try again.");
 	    } else {
+	      console.log("going to save to saved search");
+	      console.log(state.selectedFlight[0]);
+	      console.log(state.selectedHotel[0]);
 	      displaySavedSearch();
+	
 	      // NEED TO SAVE TO DB
 	    }
 	  }
 	
 	
-	  // var center = {lat: 55.9533, lng: -3.1883};
-	  // var map = new Map(center);
+	  var center = {lat: 55.9533, lng: -3.1883};
+	  var map = new Map(center);
+	
+	  // this.setMapCenter = function(){
+	  //   this.setInfoDisplay("block");
+	  //   navigator.geolocation.getCurrentPosition(function(position) {
+	  //     var center = {lat: position.coords.latitude, lng: position.coords.longitude};
+	  //     this.map.map.setCenter(center);
+	  //     this.setInfoDisplay("none");
+	  //   }.bind(this));
+	  // }
+	
+	  // this.setMapCenter = function(){
+	
+	  //     this.map.map.setCenter(center);
+	  //   }.bind(this));
+	  // }
 	};
 	
 	var clearPreviousSearch = function() {
@@ -212,7 +232,7 @@
 	    loadCharts();
 	    // NEW STUFF
 	    
-	    console.log(res_exp);
+	    // console.log(res_exp);
 	
 	    displayFlightResults();
 	    displayHotelResults();
@@ -262,8 +282,8 @@
 	// gets a handle on the divs used to display the flight and hotel results
 	var createDisplayHandles = function(size, type) {
 	  // these are global so not overwritten on each click
-	  userSelectedFlights = [];
-	  userSelectedHotels = [];
+	  // userSelectedFlights = [];
+	  // userSelectedHotels = [];
 	
 	  for (var i = 0; i < size; i++) {
 	    if (type === "flight") {
@@ -275,7 +295,7 @@
 	      state.resultsArray[i].onclick=function(e){ selectedItem(e) };
 	    }
 	  }
-	  console.log("resultsArray:", state.resultsArray);
+	  // console.log("resultsArray:", state.resultsArray);
 	  return state.resultsArray;
 	}
 	
@@ -311,17 +331,15 @@
 	      var hotelImage = "http://images.travelnow.com" + hotelImageURL
 	
 	        // NEED TO UPDATE THIS BASED ON USER BUDGET
-	        var userBudget = 500;
 	        var hotel = res_exp.hotelList[i];
 	        // console.log("hotel list", hotel);
 	
-	
-	
-	        if(hotel.lowRateInfo.averageRate < userBudget){
+	        if(hotel.lowRateInfo.averageRate < parseInt(budget)){
 	          var hotelResultDetails = {"name": res_exp.hotelList[i].name, "description": res_exp.hotelList[i].shortDescription, "image": hotelImage, "guestRating": res_exp.hotelList[i].hotelGuestRating, "starRating": res_exp.hotelList[i].hotelStarRating, "lat": res_exp.hotelList[i].latitude, "long": res_exp.hotelList[i].longitude, "price": res_exp.hotelList[i].lowRateInfo.total}
 	          state.hotelsSelect.push(hotel);
 	          // console.log(state.hotelsSelect);
 	          console.log(state.hotelsSelect);
+	          console.log("BUDGET", typeof budget);
 	          addHotelResultToPage(hotelResultDetails, displayHotelsArray, i);
 	        }
 	      }
@@ -372,9 +390,10 @@
 	
 	//constructs and displays saved search object
 	var displaySavedSearch = function(event){
+	  // console.log("SAVED", saved);
 	
 	  var saved = new SavedSearch(state.selectedFlight[0], state.selectedHotel[0]);
-	  console.log(saved);
+	  console.log("SAVED", saved);
 	  var savedResult = document.getElementById('saved')
 	  savedResult.innerHTML = "";
 	  var carrier = document.createElement('p');
@@ -417,12 +436,24 @@
 	    state.selectedFlight.push(state.flightsSelect[selectedIndex]);
 	  } else if (childElement.substring(0,5) === "hotel") {
 	    state.selectedHotel = [];
+	    console.log("should empty hotel here");
+	    console.log("selected hotel", state.selectedHotel);
 	    selectedIndex = childElement.substring(12,13);
 	    state.selectedHotel.push(state.hotelsSelect[selectedIndex]);
+	    console.log("the index is", selectedIndex);
+	    console.log("child", childElement);
+	    console.log("parent", parentElement);
+	    console.log("the hotel pushed is", state.hotelsSelect[selectedIndex]);
 	  } else if (parentElement.substring(0,5) === "hotel") {
 	    state.selectedHotel = [];
+	    console.log("should empty hotel here");
+	    console.log("selected hotel", state.selectedHotel);
 	    selectedIndex = parentElement.substring(12,13);
 	    state.selectedHotel.push(state.hotelsSelect[selectedIndex]);
+	    console.log("the index is", selectedIndex);
+	    console.log("child", childElement);
+	    console.log("parent", parentElement);
+	    console.log("the hotel pushed is", state.hotelsSelect[selectedIndex]);
 	  }
 	  // console.log("selected flight", state.selectedFlight);
 	  // console.log("selected hotel", state.selectedHotel);
@@ -432,7 +463,6 @@
 	// TO DO LIST:
 	// 2. save the users options to db
 	// 3. add functionality which enables user to retrieve their previous selections (including the date of the search)
-	// 4. maybe add a line chart which shows cost by proximity to city centre, and a pie chart showing the number of hotels
 	// 5. add geolocation so that the initial map defaults to the users location
 	
 	// this.setMapCenter = function(){
@@ -445,21 +475,6 @@
 	// 6. update the map with points of interest for the chosen destination - display this map as soon as the user enters their chosen options - maybe have POI in blue markers and hotels in red markers
 	// 7. style the website - need to add a coloured border around the options that the user selects
 	// 8. tidy up some of the code
-	// 9. sort the hotel results
-	
-	// res_exp.hotelList.sort(compare);
-	
-	// function compare(a, b) {
-	//   if (a.lowRateInfo.total < b.lowRateInfo.total) {
-	//     return -1;
-	//   } else if (a.lowRateInfo.total > b.lowRateInfo.total) {
-	//     return 1;
-	//   } else {
-	//     return 0;
-	//   }
-	// }
-	
-	// 10. only display 5 hotel search results at one time
 
 /***/ },
 /* 1 */
@@ -592,7 +607,8 @@
 /***/ function(module, exports) {
 
 	var SavedSearch = function(ssObj, expObj){
-	   console.log(expObj, "HEREEEE");
+	   console.log(ssObj, "HEREEEE1");
+	   console.log(expObj, "HEREEEE2");
 	   this.flightDepDate = ssObj.outboundDate,
 	   this.flightRetDate = ssObj.inboundDate,
 	   this.flightCarrier = ssObj.airline,

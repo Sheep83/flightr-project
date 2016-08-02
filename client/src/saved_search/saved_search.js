@@ -1,5 +1,6 @@
 var SavedSearch = function(ssObj, expObj){
-   console.log(expObj, "HEREEEE");
+   console.log(ssObj, "HEREEEE1");
+   console.log(expObj, "HEREEEE2");
    this.flightDepDate = ssObj.outboundDate,
    this.flightRetDate = ssObj.inboundDate,
    this.flightCarrier = ssObj.airline,
