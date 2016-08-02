@@ -74,6 +74,7 @@ var clearPreviousSearch = function() {
   state.resultsArray = [];
   clearFlightDivs();
   clearHotelDivs();
+  clearPreviousSelection();
 }
 
 var clearFlightDivs = function() {
@@ -92,6 +93,10 @@ var clearHotelDivs = function() {
   for (var i = 0; i < numberOfHotels; i++) {
     localResultsArray[i] = document.getElementById('hotel-result' + (i)).innerHTML = "";
   }
+}
+
+var clearPreviousSelection = function() {
+    var userSelection = document.getElementById('saved').innerHTML = "";
 }
 
 var sendOriginRequest = function() {
