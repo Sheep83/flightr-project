@@ -15,8 +15,7 @@ SavedSearch.prototype = {
      // AJAX POST to /savedSearches
      //request.send(savedObject)
      var request = new XMLHttpRequest();
-     var url = 'mongodb://localhost:27017/flightr/savedsearches';
-     request.open("POST", url);
+     request.open("POST", '/savedsearches');
      request.setRequestHeader("Content-Type", "application/json");
      console.log(request);
      request.onload = function(){

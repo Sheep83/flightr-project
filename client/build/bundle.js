@@ -64,6 +64,18 @@
 	
 	
 	window.onload = function(){
+	  var request = new XMLHttpRequest();
+	  request.open("GET", '/savedsearches');
+	  request.setRequestHeader("Content-Type", "application/json");
+	  console.log(request);
+	  request.onload = function(){
+	    if(request.status === 200){
+	      var searches = JSON.parse(request.responseText)
+	    }
+	    console.log(searches);
+	  }
+	  request.send(null);
+	  
 	  var place = new Place();
 	
 	
@@ -96,12 +108,13 @@
 	
 	      // NEED TO SAVE TO DB
 	    }
+	
 	  }
+	}
 	
 	
 	  // var center = {lat: 55.9533, lng: -3.1883};
 	  // var map = new Map(center);
-	};
 	
 	var clearPreviousSearch = function() {
 	  state.flightsSelect = [];
@@ -363,6 +376,7 @@
 	
 	  var saved = new SavedSearch(state.selectedFlight[0], state.selectedHotel[0]);
 	  console.log(saved);
+	  saved.saveToDb();
 	  var savedResult = document.getElementById('saved')
 	  savedResult.innerHTML = "";
 	  var carrier = document.createElement('p');
@@ -595,8 +609,7 @@
 	     // AJAX POST to /savedSearches
 	     //request.send(savedObject)
 	     var request = new XMLHttpRequest();
-	     var url = 'mongodb://localhost:27017/flightr/savedsearches';
-	     request.open("POST", url);
+	     request.open("POST", '/savedsearches');
 	     request.setRequestHeader("Content-Type", "application/json");
 	     console.log(request);
 	     request.onload = function(){
