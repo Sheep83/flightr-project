@@ -6,14 +6,7 @@
 
   <!--NEW Stuff -->
   <script src="http://code.highcharts.com/highcharts.js"></script>
-<!--   <script src="./pieChart.js"></script>
-  <script src="../pieChart.js"></script>
-  <script src="./src/pieChart.js"></script>
-  <script src="../src/pieChart.js"></script>
-  <script src="/pieChart.js"></script> -->
   <script src="pieChart.js"></script>
-<!--   <script src="./client/src/pieChart.js"></script>
-  <script src="../client/src/pieChart.js"></script> -->
   <script src="lineChart.js"></script>
   <!--NEW Stuff -->
 
@@ -23,65 +16,69 @@
 <body>
 
   <form id="user-form">
+    <label for="origin">Leaving:</label>
     <input id="origin" placeholder="Origin" value="London">
+    <label for="destination">Destination:</label>
     <input id='destination' placeholder="Destination" value="New York">
+    <label for="start-date">Start Date:</label>
     <input type="date" id="start-date" placeholder="Check-in date" value="2016-09-16">
+    <label for="end-date">End Date:</label>
     <input type="date" id="end-date" placeholder="Check-out date"  value="2016-09-19">
-    <input type="range" min="0" max="500" value="250" step="10" oninput="showValue(this.value)" />
+    <label for="budget">Max Rate Per Night:</label>
+    <input type="range" id="budget" min="0" max="500" value="250" step="10" oninput="showValue(this.value)" />
     <span id="range">250</span>
     <script type="text/javascript">
-    function showValue(newValue)
-    {
-     document.getElementById("range").innerHTML=newValue;
-    }
-    </script>
-    <select name="no-rooms" id="no-rooms">
+      function showValue(newValue)
+      {
+       document.getElementById("range").innerHTML=newValue;
+     }
+   </script>
+   <label for="No-rooms">No. People:</label>
+   <select name="no-rooms" id="no-rooms">
 
 
-      <option value="1" selected="selected">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-    <button type="button" id="button">Submit</button>
+    <option value="1" selected="selected">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+  </select>
+  <button type="button" id="button">Search</button>
 
-    <div id='map'></div>
+  <div id='map'></div>
 
-    <!--NEW Stuff -->
-    <div id="pieChart" width="400" height="400"></div>
-    <!--     <div id="lineChart" width="400" height="400"></div> -->
-    <!--NEW Stuff -->
+  <!--NEW Stuff -->
+  <div id="pieChart" width="400" height="400"></div>
+  <!--     <div id="lineChart" width="400" height="400"></div> -->
+  <!--NEW Stuff -->
 
-    <div id="saved"></div>
-    <div id='combined-results'>
-      <div id='flight-results'>
-        <div id='flight-result0'></div>
-        <div id='flight-result1'></div>
-        <div id='flight-result2'></div>
-        <div id='flight-result3'></div>
-        <div id='flight-result4'></div>
-      </div>
-      <div id='hotel-results'>
-        <div id='hotel-result0'></div>
-        <div id='hotel-result1'></div>
-        <div id='hotel-result2'></div>
-        <div id='hotel-result3'></div>
-        <div id='hotel-result4'></div>
-        <div id='hotel-result5'></div>
-        <div id='hotel-result6'></div>
-        <div id='hotel-result7'></div>
-        <div id='hotel-result8'></div>
-        <div id='hotel-result9'></div>
-      </div>
+  <div id="saved"></div>
+  <div id='combined-results'>
+    <div id='flight-results'>
+      <div id='flight-result0'></div>
+      <div id='flight-result1'></div>
+      <div id='flight-result2'></div>
+      <div id='flight-result3'></div>
+      <div id='flight-result4'></div>
     </div>
-    <div id='add-selected-button'>
-      <button type="button" id="package-button">Select these options</button>
-      <div id='user-selected'>
-      </form>
-
-
-
+    <div id='hotel-results'>
+      <div id='hotel-result0'></div>
+      <div id='hotel-result1'></div>
+      <div id='hotel-result2'></div>
+      <div id='hotel-result3'></div>
+      <div id='hotel-result4'></div>
+      <div id='hotel-result5'></div>
+      <div id='hotel-result6'></div>
+      <div id='hotel-result7'></div>
+      <div id='hotel-result8'></div>
+      <div id='hotel-result9'></div>
+    </div>
+  </div>
+  <div id='add-selected-button'>
+    <button type="button" id="package-button">Select these options</button>
+    <div id='user-selected'>
+    </form>
 
   </body>
   </html>

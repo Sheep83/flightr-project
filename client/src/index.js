@@ -1,7 +1,6 @@
 
 var Place = require('./place');
 
-
 var SavedSearch = require('./saved_search/saved_search');
 var Map = require('./map');
 var Place = require('./place');
@@ -22,9 +21,6 @@ var state = {
 window.onload = function(){
   var place = new Place();
 
-
-  var place = new Place();
-
   var button = document.getElementById('button');
   var packageButton = document.getElementById('package-button');
   button.onclick = function(){
@@ -37,17 +33,6 @@ window.onload = function(){
     budget = document.getElementById('range').innerHTML;
     noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
     sendOriginRequest();
-
-    place.populate(destination);
-
-
-
-
-
-
-    // var center = {lat: 55.9533, lng: -3.1883};
-    // var map = new Map(center);
-    // console.log(map);
     place.populate(destination);
   }
 
@@ -77,11 +62,6 @@ window.onload = function(){
   //   }.bind(this));
   // }
 
-  // this.setMapCenter = function(){
-
-  //     this.map.map.setCenter(center);
-  //   }.bind(this));
-  // }
 };
 
 var clearPreviousSearch = function() {
@@ -116,7 +96,7 @@ var clearHotelDivs = function() {
 }
 
 var clearPreviousSelection = function() {
-    var userSelection = document.getElementById('saved').innerHTML = "";
+  var userSelection = document.getElementById('saved').innerHTML = "";
 }
 
 var sendOriginRequest = function() {
@@ -143,31 +123,20 @@ var sendDestinationRequest = function() {
   req_destination.onload = function(){
     var res_destination = JSON.parse(req_destination.responseText);
     ss_destination = res_destination.Places[0].CityId.substring(0, 3)
-
-
-
-
     sendSearchRequests();
   }
 }
 
-
-
 var sendSearchRequests = function() {
   var url_ss = "http://partners.api.skyscanner.net/apiservices/browsedates/v1.0/GB/GBP/en-GB/" + ss_origin + "/" + ss_destination + "/" + startDate + "/" + endDate + "?apiKey=co666659065635714271429118382522";
 
-  var url_exp = "http://terminal2.expedia.com/x/mhotels/search?city=" + destination + "&checkInDate=" + startDate + "&checkOutDate=" + endDate + "&room1=" + noRoomsValue + "&resultsPerPage=-1&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos";
+  var url_exp = "http://terminal2.expedia.com/x/mhotels/search?city=" + destination + "&checkInDate=" + startDate + "&checkOutDate=" + endDate + "&room1=" + 2 + "&resultsPerPage=-1&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos";
 
   var req_ss = new XMLHttpRequest();
   req_ss.open("GET", url_ss);
   req_ss.send(null);
   req_ss.onload = function(){
-
-    // var res_ss = JSON.parse(req_ss.responseText);
-
     res_ss = JSON.parse(req_ss.responseText);
-
-
   }
 
   var req_exp = new XMLHttpRequest();
@@ -177,36 +146,24 @@ var sendSearchRequests = function() {
 
     res_exp = JSON.parse(req_exp.responseText);
     var hotelListArray = res_exp.hotelList;
+
+    // console.log(hotelListArray);
+    // for (var i = 0; i < hotelListArray.length; i++) {
+    //   if (hotelListArray[i].lowRateInfo === undefined) {
+    //     console.log("this is undefined");
+    //   }
+    // }
+
+   //  console.log("hotelListArray", hotelListArray);
     var sorted_hotels = hotelListArray.sort(function(a, b){
-     return a.lowRateInfo.total - b.lowRateInfo.total;
+        return a.lowRateInfo.total - b.lowRateInfo.total;     
    })
 
-
-    // NEW STUFF
     loadCharts();
-    // NEW STUFF
-    
-    // console.log(res_exp);
-
     displayFlightResults();
     displayHotelResults();
   }
 }
-
-
-    // console.log(res_ss.Places[0].CityName);
-  // var req_exp = new XMLHttpRequest();
-  // req_exp.open("GET", url_exp);
-  // // request.setRequestHeader('accept', 'application/json');
-  // req_exp.send(null);
-  // req_exp.onload = function(){
-  //   var res_exp = JSON.parse(req_exp.responseText);
-  //   console.log(res_exp);
-
-  //   console.log(res_exp.hotelList[0].lowRateInfo.total);
-  // }
-
-
 
   var displayFlightResults = function() {
     var displayFlightsArray = createDisplayHandles(5, "flight");
@@ -235,9 +192,6 @@ var sendSearchRequests = function() {
 
 // gets a handle on the divs used to display the flight and hotel results
 var createDisplayHandles = function(size, type) {
-  // these are global so not overwritten on each click
-  // userSelectedFlights = [];
-  // userSelectedHotels = [];
 
   for (var i = 0; i < size; i++) {
     if (type === "flight") {
@@ -346,7 +300,7 @@ var loadCharts = function() {
 var displaySavedSearch = function(event){
   // console.log("SAVED", saved);
 
-  var saved = new SavedSearch(state.selectedFlight[0], state.selectedHotel[0]);
+  var saved = new SavedSearch(state.selectedFlight[0], state.selectedHotel[0], noRoomsValue);
   console.log("SAVED", saved);
   var savedResult = document.getElementById('saved')
   savedResult.innerHTML = "";
@@ -356,18 +310,31 @@ var displaySavedSearch = function(event){
   var hotelPrice = document.createElement('p');
   var totalPrice = document.createElement('p');
   var starRating = document.createElement('p');
+  var numberPeople = document.createElement('p');
 
   carrier.innerText = "Airline : " + saved.flightCarrier;
   hotelName.innerText = "Hotel : " + saved.hotelName;
-  flightPrice.innerText = "Flight Cost : £" + Math.floor(saved.flightPrice);
-  hotelPrice.innerText = "Accomodation Cost : £" + Math.floor(saved.hotelPrice);
+  numberPeople.innerText = "Number of People : " + saved.numPeople;
+  flightPrice.innerText = "Flight Cost Per Person : £" + Math.floor(saved.flightPrice);
+
+  var numberRooms = 0;
+  if (saved.numPeople == 1 || saved.numPeople == 2) {
+    numberRooms = 1;
+  } else if (saved.numPeople == 3 || saved.numPeople == 4) {
+    numberRooms = 2;
+  } else {
+    numberRooms = 3;
+  }
+  console.log("numPeople", saved.numPeople);
+  hotelPrice.innerText = "Accomodation Cost Per Room (2 people) : £" + Math.floor(saved.hotelPrice);
   starRating.innerHTML = "Hotel Star Rating : " + saved.starRating;
-  var totalCost = Math.floor(saved.flightPrice) + Math.floor(saved.hotelPrice);
+  var totalCost = Math.floor(saved.flightPrice * saved.numPeople) + Math.floor(saved.hotelPrice * numberRooms);
   totalPrice.innerHTML = "Total Package Cost : £" + Math.floor(totalCost);
 
   savedResult.appendChild(carrier);
   savedResult.appendChild(hotelName);
   savedResult.appendChild(starRating);
+  savedResult.appendChild(numberPeople);
   savedResult.appendChild(flightPrice);
   savedResult.appendChild(hotelPrice);
   savedResult.appendChild(totalPrice);
@@ -409,10 +376,7 @@ var selectedItem = function(e) {
     console.log("parent", parentElement);
     console.log("the hotel pushed is", state.hotelsSelect[selectedIndex]);
   }
-  // console.log("selected flight", state.selectedFlight);
-  // console.log("selected hotel", state.selectedHotel);
 }
-
 
 // TO DO LIST:
 // 2. save the users options to db
