@@ -1,7 +1,5 @@
 
 var Place = require('./place');
-
-
 var SavedSearch = require('./saved_search/saved_search');
 var Map = require('./map');
 var Place = require('./place');
@@ -23,7 +21,7 @@ window.onload = function(){
   var place = new Place();
 
 
-  var place = new Place();
+  // var place = new Place();
 
   var button = document.getElementById('button');
   var packageButton = document.getElementById('package-button');
@@ -34,16 +32,10 @@ window.onload = function(){
     startDate = document.getElementById('start-date').value;
     endDate = document.getElementById('end-date').value;
     noRooms = document.getElementById('no-rooms');
+    budget = document.getElementById('range').innerHTML
+    console.log(budget);
     noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
     sendOriginRequest();
-
-    place.populate(destination);
-
-
-
-
-
-
     // var center = {lat: 55.9533, lng: -3.1883};
     // var map = new Map(center);
     // console.log(map);
@@ -55,6 +47,7 @@ window.onload = function(){
       alert("You haven't selected a valid flight and hotel. Please try again.");
     } else {
       displaySavedSearch();
+
       // NEED TO SAVE TO DB
     }
   }
@@ -260,16 +253,16 @@ var displayHotelResults = function() {
       var hotelImage = "http://images.travelnow.com" + hotelImageURL
 
         // NEED TO UPDATE THIS BASED ON USER BUDGET
-        var userBudget = 500;
+        // var userBudget = 500;
         var hotel = res_exp.hotelList[i];
         // console.log("hotel list", hotel);
 
 
 
-        if(hotel.lowRateInfo.averageRate < userBudget){
+        if(hotel.lowRateInfo.averageRate < budget){
           var hotelResultDetails = {"name": res_exp.hotelList[i].name, "description": res_exp.hotelList[i].shortDescription, "image": hotelImage, "guestRating": res_exp.hotelList[i].hotelGuestRating, "starRating": res_exp.hotelList[i].hotelStarRating, "lat": res_exp.hotelList[i].latitude, "long": res_exp.hotelList[i].longitude, "price": res_exp.hotelList[i].lowRateInfo.total}
           state.hotelsSelect.push(hotel);
-          // console.log(state.hotelsSelect);
+          console.log(budget);
           console.log(state.hotelsSelect);
           addHotelResultToPage(hotelResultDetails, displayHotelsArray, i);
         }
@@ -332,7 +325,6 @@ var displaySavedSearch = function(event){
   var hotelPrice = document.createElement('p');
   var totalPrice = document.createElement('p');
   var starRating = document.createElement('p');
-
   carrier.innerText = "Airline : " + saved.flightCarrier;
   hotelName.innerText = "Hotel : " + saved.hotelName;
   flightPrice.innerText = "Flight Cost : £" + Math.floor(saved.flightPrice);
@@ -340,7 +332,6 @@ var displaySavedSearch = function(event){
   starRating.innerHTML = "Hotel Star Rating : " + saved.starRating;
   var totalCost = Math.floor(saved.flightPrice) + Math.floor(saved.hotelPrice);
   totalPrice.innerHTML = "Total Package Cost : £" + Math.floor(totalCost);
-
   savedResult.appendChild(carrier);
   savedResult.appendChild(hotelName);
   savedResult.appendChild(starRating);
@@ -376,6 +367,7 @@ var selectedItem = function(e) {
   // console.log("selected flight", state.selectedFlight);
   // console.log("selected hotel", state.selectedHotel);
 }
+
 
 
 // TO DO LIST:

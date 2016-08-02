@@ -10,9 +10,23 @@ var SavedSearch = function(ssObj, expObj){
 };
 
 SavedSearch.prototype = {
-   saveToDb: function(saved){
+   saveToDb: function(){
      // function to save search to database
+     // AJAX POST to /savedSearches
+     //request.send(savedObject)
+     var request = new XMLHttpRequest();
+     var url = 'mongodb://localhost:27017/flightr/savedsearches';
+     request.open("POST", url);
+     request.setRequestHeader("Content-Type", "application/json");
+     console.log(request);
+     request.onload = function(){
+      if(request.status === 200){
+      }
    }
+   request.send(JSON.stringify(this));
 }
+}
+
+
 
 module.exports = SavedSearch;
