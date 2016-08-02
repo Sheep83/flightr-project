@@ -9,10 +9,10 @@
 <body>
 
   <form id="user-form">
-    <input id="origin" placeholder="Edinburgh">
-    <input id='destination' placeholder="Destination">
-    <input type="date" id="start-date" placeholder="Check-in date">
-    <input type="date" id="end-date" placeholder="Check-out date">
+    <input id="origin" placeholder="Origin" value="London">
+    <input id='destination' placeholder="Destination" value="New York">
+    <input type="date" id="start-date" placeholder="Check-in date" value="2016-09-16">
+    <input type="date" id="end-date" placeholder="Check-out date"  value="2016-09-19">
     <select name="no-rooms" id="no-rooms">
 
 
@@ -25,26 +25,39 @@
     <button type="button" id="button">Submit</button>
 
     <div id='map'></div>
+    <div id="saved"></div>
     <div id='combined-results'>
       <div id='flight-results'>
-        <div id='flight-result1'>
-        <div id='flight-result2'>
-        <div id='flight-result3'>
-        <div id='flight-result4'>
-        <div id='flight-result5'>
+        <div id='flight-result0'></div>
+        <div id='flight-result1'></div>
+        <div id='flight-result2'></div>
+        <div id='flight-result3'></div>
+        <div id='flight-result4'></div>
       </div>
       <div id='hotel-results'>
-        <div id='hotel-result1'>
-        <div id='hotel-result2'>
-        <div id='hotel-result3'>
-        <div id='hotel-result4'>
-        <div id='hotel-result5'>
+        <div id='hotel-result0'></div>
+        <div id='hotel-result1'></div>
+        <div id='hotel-result2'></div>
+        <div id='hotel-result3'></div>
+        <div id='hotel-result4'></div>
+        <div id='hotel-result5'></div>
+        <div id='hotel-result6'></div>
+        <div id='hotel-result7'></div>
+        <div id='hotel-result8'></div>
+        <div id='hotel-result9'></div>
       </div>
     </div>
+    <div id='add-selected-button'>
+    <button type="button" id="package-button">Select these options</button>
+    <div id='user-selected'>
+
   </form>
+<<<<<<< HEAD
   <div id="map"></div>
   </form>
 
 
+=======
+>>>>>>> develop
 </body>
 </html>
