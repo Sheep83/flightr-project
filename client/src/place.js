@@ -9,20 +9,9 @@ this.map = new google.maps.Map(document.getElementById('map'), {
 
 Place.prototype = {
 
-  // hotel: function(hotel){
-  //   infowindow = new google.maps.InfoWindow();
-  //   var bounds = new google.maps.LatLngBounds();
-  //  for(i=0; i<hotel.length;i++){
-  //   var marker = new google.maps.Marker({
-  //     position: new google.maps.LatLng(parseFloat(hotel[i].longitude), parseFloat(hotel[i].latitude)),
-  //     map: this.map
-  //   });
-  //   bounds.extend(marker.position);
-  //   this.map.fitBounds(bounds);
-      
-  //  }
+
    
-  // },
+  
 
 
  //  initMap: function(locations) {
@@ -79,13 +68,13 @@ Place.prototype = {
  // }
 
  initMap: function(locations) {
-    console.log(locations)
-   // Markers={}
-   // var myLatLng = {lat: -25.363, lng: 131.044};
-   // var map = new google.maps.Map(document.getElementById('map'), {
-   //   zoom: 4,
-   //   center: myLatLng
-   // })
+    for (var i = 0;i<locations.length; i++) {
+       if(locations[i][3].type==='trip'){
+       icon = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+        }else if (locations[i][3].type==='hotel') {
+        icon = "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+        }
+   }
    infowindow = new google.maps.InfoWindow();
    var bounds = new google.maps.LatLngBounds();
    for (i = 0; i < locations.length; i++){
@@ -93,14 +82,11 @@ Place.prototype = {
        position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
        map: this.map,
        title: locations[i][0],
+       animation: google.maps.Animation.DROP,
+       icon: new google.maps.MarkerImage(icon)
      });
-     if (locations.length>3){
-      
-     marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
-     }else
-     {
-      marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
-     }
+   
+     // marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
      bounds.extend(marker.position);
      this.map.fitBounds(bounds);
      google.maps.event.addListener(marker, 'click',(function(marker,i){
@@ -132,6 +118,7 @@ populate : function(destination){
       arr.push(info.activities[i].title)
       arr.push(lat)
       arr.push(lang)
+      arr.push({type: 'trip'})
       location.push(arr)
     }     
     this.initMap(location);

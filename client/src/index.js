@@ -42,16 +42,16 @@ window.onload = function(){
         arr.push(state.hotelsSelect[i].name);
         arr.push(parseFloat(state.hotelsSelect[i].latitude));
         arr.push(parseFloat(state.hotelsSelect[i].longitude));
+        arr.push({type: 'hotel'})
         arr.push(state.hotelsSelect[i].shortDescription)
+       
         dest.push(arr)
         arr=[]
      }  
-     console.log(state.hotelsSelect)
      populatehotel(dest)
-    },6000);
+    },8000);
     function populatehotel(arr){
       place.initMap(dest)
-      console.log(dest)
     }
    
 
