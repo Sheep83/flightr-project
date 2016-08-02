@@ -3,6 +3,20 @@
 <head>
   <title>Flightr</title>
   <link rel="stylesheet" href="style.css"/>
+
+  <!--NEW Stuff -->
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+<!--   <script src="./pieChart.js"></script>
+  <script src="../pieChart.js"></script>
+  <script src="./src/pieChart.js"></script>
+  <script src="../src/pieChart.js"></script>
+  <script src="/pieChart.js"></script> -->
+  <script src="pieChart.js"></script>
+<!--   <script src="./client/src/pieChart.js"></script>
+  <script src="../client/src/pieChart.js"></script> -->
+  <script src="lineChart.js"></script>
+  <!--NEW Stuff -->
+
   <script src="https://maps.googleapis.com/maps/api/js"></script>
   <script type="text/javascript" src="bundle.js"></script>
 </head>
@@ -21,6 +35,12 @@
     </select>
     <button type="button" id="button">Submit</button>
     <div id='map'></div>
+
+    <!--NEW Stuff -->
+    <div id="pieChart" width="400" height="400"></div>
+<!--     <div id="lineChart" width="400" height="400"></div> -->
+    <!--NEW Stuff -->
+
     <div id="saved"></div>
     <div id='combined-results'>
       <div id='flight-results'>

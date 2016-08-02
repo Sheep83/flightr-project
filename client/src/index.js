@@ -11,6 +11,7 @@ var state = {
   "selectedHotel": [],
   "savedSearch": [],
   "latLng": [],
+  "resultsArray": []
 }
 
 window.onload = function(){
@@ -20,6 +21,7 @@ window.onload = function(){
   var button = document.getElementById('button');
   var packageButton = document.getElementById('package-button');
   button.onclick = function(){
+    clearPreviousSearch();
     origin = document.getElementById('origin').value;
     destination = document.getElementById('destination').value;
     startDate = document.getElementById('start-date').value;
@@ -38,7 +40,6 @@ window.onload = function(){
     if (state.selectedFlight.length === 0 || state.selectedHotel.length === 0) {
       alert("You haven't selected a valid flight and hotel. Please try again.");
     } else {
-      console.log("Need to display this");
       displaySavedSearch();
       // NEED TO SAVE TO DB
     }
@@ -47,6 +48,36 @@ window.onload = function(){
   // var center = {lat: 55.9533, lng: -3.1883};
   // var map = new Map(center);
 };
+
+var clearPreviousSearch = function() {
+  state.flightsSelect = [];
+  state.selectedFlight = [];
+  state.hotelsSelect = [];
+  state.selectedHotel = [];
+  state.savedSearch = [];
+  state.latLng = [];
+  state.resultsArray = [];
+  clearFlightDivs();
+  clearHotelDivs();
+}
+
+var clearFlightDivs = function() {
+  var numberOfFlights = 5;
+  var localResultsArray = [];
+
+  for (var i = 0; i < numberOfFlights; i++) {
+      localResultsArray[i] = document.getElementById('flight-result' + (i)).innerHTML = "";
+    }
+  }
+
+  var clearHotelDivs = function() {
+    var numberOfHotels = 10;
+    var localResultsArray = [];
+
+    for (var i = 0; i < numberOfHotels; i++) {
+        localResultsArray[i] = document.getElementById('hotel-result' + (i)).innerHTML = "";
+      }
+    }
 
 var sendOriginRequest = function() {
   var url_origin = "http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/GB/GBP/en-GB?query=" + origin + "&apiKey=co666659065635714271429118382522";
@@ -95,6 +126,11 @@ var sendSearchRequests = function() {
   req_exp.send(null);
   req_exp.onload = function(){
     res_exp = JSON.parse(req_exp.responseText);
+
+    // NEW STUFF
+    loadCharts();
+    // NEW STUFF
+    
     console.log(res_exp);
     displayFlightResults();
     displayHotelResults();
@@ -133,22 +169,22 @@ var displayFlightResults = function() {
 
 // gets a handle on the divs used to display the flight and hotel results
 var createDisplayHandles = function(size, type) {
-  var resultsArray = [];
   // these are global so not overwritten on each click
   userSelectedFlights = [];
   userSelectedHotels = [];
 
   for (var i = 0; i < size; i++) {
     if (type === "flight") {
-      resultsArray[i] = document.getElementById('flight-result' + (i));
-      resultsArray[i].onclick=function(e){ selectedItem(e) };
+      state.resultsArray[i] = document.getElementById('flight-result' + (i));
+      state.resultsArray[i].onclick=function(e){ selectedItem(e) };
       // NEED TO STOP THIS REGISTERING CLICK WHEN CHILD ELEMENTS ARE CLICKED
     } else {
-      resultsArray[i] = document.getElementById('hotel-result' + (i));
-      resultsArray[i].onclick=function(e){ selectedItem(e) };
+      state.resultsArray[i] = document.getElementById('hotel-result' + (i));
+      state.resultsArray[i].onclick=function(e){ selectedItem(e) };
     }
   }
-  return resultsArray;
+  console.log("resultsArray:", state.resultsArray);
+  return state.resultsArray;
 }
 
 // returns the airline name, given the airline ID
@@ -204,6 +240,39 @@ var displayHotelResults = function() {
     results[index].innerHTML += "<p>" + "Guest rating: " + hotel.guestRating + "</p>";
     results[index].innerHTML += "<p>" + "Star rating: " + hotel.starRating + "</p>";
   }
+
+// NEW STUFF
+var loadCharts = function() {
+  priceBracketData = [];
+  // priceByProximityData = [];
+  var hotelData = res_exp;
+
+  var hotelPriceOptions = hotelData.priceOptions;
+  hotelPriceOptions.splice(-1,1); // remove last item from array
+
+  // var eachHotel = hotelData.hotelList;
+
+  // for (var i = 0; i < eachHotel.length; i++) {
+  //   var distance = eachHotel[i].proximityDistanceInMiles;
+  //   var count = 0;
+  //   if (distance < 1) {
+  //     count += 1;
+  //   }
+  //   console.log(count);
+  //   var cost = eachHotel[i].lowRateInfo.maxNightlyRate;
+    // var starRating = eachHotel[i].hotelStarRating;
+
+  hotelPriceOptions.forEach(function(priceRange) {
+    priceBracketData.push({
+      name: "£" + priceRange.minPrice + " - £" + priceRange.maxPrice,
+      y: priceRange.count
+    });
+  }); 
+
+  new PieChart("Hotels by Price Range", priceBracketData);
+  // new LineChart("Hotel Price by Proximity", priceByProximityData);
+}
+// NEW STUFF
 
 //constructs and displays saved search object
 var displaySavedSearch = function(event){
@@ -265,14 +334,33 @@ var selectedItem = function(e) {
 
 
 // TO DO LIST:
-// BEFORE ANYTHING ELSE - COMBINE WHAT WE HAVE AND GET IT WORKING/ON GITHUB
-// 1. add a click to buy button, which appears when options are selected. This should link to expedia and skyscanner and ideally populate a search query for the chosen flight/hotel
 // 2. save the users options to db
 // 3. add functionality which enables user to retrieve their previous selections (including the date of the search)
 // 4. maybe add a line chart which shows cost by proximity to city centre, and a pie chart showing the number of hotels
 // 5. add geolocation so that the initial map defaults to the users location
+
+// this.setMapCenter = function(){
+//   navigator.geolocation.getCurrentPosition(function(position) {
+//     var center = {lat: position.coords.latitude, lng: position.coords.longitude};
+//     this.map.map.setCenter(center);
+//   }.bind(this));
+// }
+
 // 6. update the map with points of interest for the chosen destination - display this map as soon as the user enters their chosen options - maybe have POI in blue markers and hotels in red markers
 // 7. style the website - need to add a coloured border around the options that the user selects
 // 8. tidy up some of the code
-// 9. sort the hotel results by value for money (taking into account proximity, star rating and cost)
+// 9. sort the hotel results
+
+// res_exp.hotelList.sort(compare);
+
+// function compare(a, b) {
+//   if (a.lowRateInfo.total < b.lowRateInfo.total) {
+//     return -1;
+//   } else if (a.lowRateInfo.total > b.lowRateInfo.total) {
+//     return 1;
+//   } else {
+//     return 0;
+//   }
+// }
+
 // 10. only display 5 hotel search results at one time
