@@ -56,6 +56,7 @@ table {
 ***********************************/
 body {
 /*  background: linear-gradient(#F0E6DD  0%, #5CADFF  100%) ; */
+  /*text-shadow: 2px 2px 2px #999999;*/
   background: white; 
   background-size: cover;
 }
@@ -130,7 +131,7 @@ button {
  width: 150px;
  text-decoration: none;
  margin-bottom: 10px;
- box-shadow: 3px 3px 1px black;
+ box-shadow: 3px 3px 1px #999999;
  border: 1px;
  border-color: black;
  background: #3a7999 ;
@@ -154,6 +155,14 @@ button:focus {
    text-decoration: none;
 }
 
+#add-selected-button {
+  clear: both;
+}
+
+#package-button{
+  clear: both;
+}
+
 /***********************************
             MAP
 ***********************************/
@@ -163,7 +172,7 @@ button:focus {
   float:left;
   width:50%;
   overflow:hidden;
-/*  border-radius: 15px;*/
+  /*border-radius: 15px;*/
 /*  box-shadow: 5px 5px 5px 2px black;*/
 }
 
@@ -234,3 +243,41 @@ tfoot tr:last-child {
   font-weight: bold;
   font-size: 16px;
 }
+
+/***********************************
+            RESULTS 
+***********************************/
+#flight-results{
+  /*margin-left: 25px;*/
+  width: 50%;
+  float: left;
+}
+
+#hotel-results{
+  /*margin-right: 25px;*/
+  width:50%;
+  float: right;
+  clear: right;
+}
+
+#hotel-results img {
+  border-radius: 100%;
+  height: 150px;
+  width: 150px;
+}
+
+#hotel-results p:first-child {
+  font-weight: bold;
+}
+
+#hotel-results div {
+  margin-bottom: 15px;
+  padding: 5px;
+}
+
+#hotel-results div:hover {
+  border: 2px solid black;
+  cursor: pointer;
+}
+
+

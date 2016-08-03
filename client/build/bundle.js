@@ -101,7 +101,7 @@
 	      arr.push(parseFloat(state.hotelsSelect[i].longitude));
 	      arr.push({type: 'hotel'})
 	      arr.push(state.hotelsSelect[i].shortDescription)
-	      
+	
 	      dest.push(arr)
 	      arr=[]
 	    }  
@@ -448,23 +448,32 @@
 	  // console.log(e);
 	  var childElement = String(e.target.id);
 	  var parentElement = String(e.target.parentNode.id);
+	  var childElementHandle = document.getElementById(childElement);
+	  var parentElementHandle = document.getElementById(parentElement);
 	
 	  if (childElement.substring(0,6) === "flight") {
 	    state.selectedFlight = [];
 	    selectedIndex = childElement.substring(13,14);
 	    // console.log("the slected index:", state.flightsSelect);
 	    state.selectedFlight.push(state.flightsSelect[selectedIndex]);
+	    // console.log("ceh", e.target.id);
+	    childElement.style.borderColor = "red";
 	    // console.log("123", state.flightsSelect[selectedIndex]);
 	  } else if (parentElement.substring(0,6) === "flight") {
 	    state.selectedFlight = [];
 	    selectedIndex = parentElement.substring(13,14);
 	    state.selectedFlight.push(state.flightsSelect[selectedIndex]);
+	    // console.log("peh", e.target.id);
+	    parentElementHandle.style.borderColor = "red";
 	  } else if (childElement.substring(0,5) === "hotel") {
 	    state.selectedHotel = [];
 	    // console.log("should empty hotel here");
 	    // console.log("selected hotel", state.selectedHotel);
 	    selectedIndex = childElement.substring(12,13);
 	    state.selectedHotel.push(state.hotelsSelect[selectedIndex]);
+	    // console.log("ceh", e.target.id);
+	    childElementHandle.style.borderColor = "red";
+	
 	    // console.log("the index is", selectedIndex);
 	    // console.log("child", childElement);
 	    // console.log("parent", parentElement);
@@ -475,28 +484,14 @@
 	    // console.log("selected hotel", state.selectedHotel);
 	    selectedIndex = parentElement.substring(12,13);
 	    state.selectedHotel.push(state.hotelsSelect[selectedIndex]);
+	    // console.log("peh", e.target.id);
+	    parentElementHandle.style.borderColor = "red";
 	    // console.log("the index is", selectedIndex);
 	    // console.log("child", childElement);
 	    // console.log("parent", parentElement);
 	    // console.log("the hotel pushed is", state.hotelsSelect[selectedIndex]);
 	  }
 	}
-	
-	// TO DO LIST:
-	// 2. save the users options to db
-	// 3. add functionality which enables user to retrieve their previous selections (including the date of the search)
-	// 5. add geolocation so that the initial map defaults to the users location
-	
-	// this.setMapCenter = function(){
-	//   navigator.geolocation.getCurrentPosition(function(position) {
-	//     var center = {lat: position.coords.latitude, lng: position.coords.longitude};
-	//     this.map.map.setCenter(center);
-	//   }.bind(this));
-	// }
-	
-	// 6. update the map with points of interest for the chosen destination - display this map as soon as the user enters their chosen options - maybe have POI in blue markers and hotels in red markers
-	// 7. style the website - need to add a coloured border around the options that the user selects
-	// 8. tidy up some of the code
 
 /***/ },
 /* 1 */
