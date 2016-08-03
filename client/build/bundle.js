@@ -86,6 +86,7 @@
 	      savedDiv.appendChild(savedSubDiv);
 	      var viewButton = document.createElement('button');
 	      viewButton.id = index;
+	      viewButton.innerText = "View Quote";
 	      console.log(viewButton.id)
 	      savedSubDiv.appendChild(viewButton);
 	      viewButton.onclick = updateSavedSearch;
@@ -131,18 +132,19 @@
 	    function populatehotel(arr){
 	      place.initMap(dest)
 	    }
+	    var viewCharts = document.getElementById('mapChart').scrollIntoView();
 	  }
 	
 	  packageButton.onclick = function(){
 	    if (state.selectedFlight.length === 0 || state.selectedHotel.length === 0) {
 	      alert("You haven't selected a valid flight and hotel. Please try again.");
 	    } else {
-	      // var getSearchTable = document.getElementById('saved-search-display');
 	      // location.href='#saved-search-display';
-	      // getSearchTable.scrollIntoView();
 	      var displayPreviousSearches = document.getElementById('dbResults').style.display = 'inline-block';
 	      displaySavedSearch();
 	      var displayTable = document.getElementById('saved-search-display').style.display = 'inline-block';
+	      var displayDBButton = document.getElementById('view-db-results-button').style.display = 'block';
+	      var getSearchTable = document.getElementById('view-table').scrollIntoView();
 	    }
 	  }
 	
@@ -540,7 +542,7 @@
 	    state.selectedFlight.push(state.flightsSelect[selectedIndex]);
 	    // console.log("ceh", e.target.id);
 	    clearFlightBorders(flightSize);
-	    childElement.style.border="5px solid red";
+	    childElement.style.border="5px solid #3a7999";
 	    // console.log("123", state.flightsSelect[selectedIndex]);
 	  } else if (parentElement.substring(0,6) === "flight") {
 	    state.selectedFlight = [];
@@ -548,7 +550,7 @@
 	    state.selectedFlight.push(state.flightsSelect[selectedIndex]);
 	    // console.log("peh", e.target.id);
 	    clearFlightBorders(flightSize);
-	    parentElementHandle.style.border="5px solid red";
+	    parentElementHandle.style.border="5px solid #3a7999";
 	  } else if (childElement.substring(0,5) === "hotel") {
 	    state.selectedHotel = [];
 	    // console.log("should empty hotel here");
@@ -557,7 +559,7 @@
 	    state.selectedHotel.push(state.hotelsSelect[selectedIndex]);
 	    // console.log("ceh", e.target.id);
 	    clearHotelBorders(hotelSize);
-	    childElementHandle.style.border="5px solid red";
+	    childElementHandle.style.border="5px solid #3a7999";
 	
 	    // console.log("the index is", selectedIndex);
 	    // console.log("child", childElement);
@@ -571,7 +573,7 @@
 	    state.selectedHotel.push(state.hotelsSelect[selectedIndex]);
 	    // console.log("peh", e.target.id);
 	    clearHotelBorders(hotelSize);
-	    parentElementHandle.style.border="5px solid red";
+	    parentElementHandle.style.border="5px solid #3a7999";
 	    // console.log("the index is", selectedIndex);
 	    // console.log("child", childElement);
 	    // console.log("parent", parentElement);
@@ -592,14 +594,6 @@
 	    hotelArray[i] = document.getElementById('hotel-result' + (i)).style.border="0";
 	  }
 	}
-	
-	
-	
-	
-	
-	
-	
-
 
 /***/ },
 /* 1 */

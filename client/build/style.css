@@ -170,6 +170,12 @@ button:focus {
   margin-bottom: 200px;
 }
 
+#view-db-results-button {
+  text-align: center;
+  margin-bottom: 200px;
+  display: none;
+}
+
 /***********************************
             MAP
 ***********************************/
@@ -209,8 +215,8 @@ table {
   color: #4a4a4d;
   font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
   display: none;
-  padding-top: 200px;
-  padding-bottom: 120px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 th, td {
@@ -297,6 +303,15 @@ tfoot tr:last-child {
   cursor: pointer;
 }
 
+#flight-results p:first-child {
+  font-weight: bold;
+}
+
+#flight-results div {
+  margin-bottom: 15px;
+  padding: 5px;
+}
+
 #flight-results div:hover {
   border: 2px solid black;
   cursor: pointer;
@@ -308,4 +323,16 @@ tfoot tr:last-child {
 
 #dbResults {
   display: none;
+}
+
+#randomDiv {
+  height: 150px;
+}
+
+#randomDiv2 {
+  height: 20px;
+}
+
+#randomDiv3 {
+  height: 20px;
 }
