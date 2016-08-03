@@ -22,12 +22,12 @@ window.onload = function(){
   var request = new XMLHttpRequest();
    request.open("GET", '/savedsearches');
    request.setRequestHeader("Content-Type", "application/json");
-   console.log(request);
+   // console.log(request);
    request.onload = function(){
      if(request.status === 200){
        var searches = JSON.parse(request.responseText)
      }
-     console.log(searches);
+     // console.log(searches);
    }
    request.send(null);
 
@@ -71,9 +71,9 @@ window.onload = function(){
     if (state.selectedFlight.length === 0 || state.selectedHotel.length === 0) {
       alert("You haven't selected a valid flight and hotel. Please try again.");
     } else {
-      console.log("going to save to saved search");
-      console.log(state.selectedFlight[0]);
-      console.log(state.selectedHotel[0]);
+      // console.log("going to save to saved search");
+      // console.log(state.selectedFlight[0]);
+      // console.log(state.selectedHotel[0]);
       displaySavedSearch();
 
       // NEED TO SAVE TO DB
@@ -279,8 +279,8 @@ var displayHotelResults = function() {
           var hotelResultDetails = {"name": res_exp.hotelList[i].name, "description": res_exp.hotelList[i].shortDescription, "image": hotelImage, "guestRating": res_exp.hotelList[i].hotelGuestRating, "starRating": res_exp.hotelList[i].hotelStarRating, "lat": res_exp.hotelList[i].latitude, "long": res_exp.hotelList[i].longitude, "price": res_exp.hotelList[i].lowRateInfo.total}
           state.hotelsSelect.push(hotel);
           // console.log(state.hotelsSelect);
-          console.log(state.hotelsSelect);
-          console.log("BUDGET", typeof budget);
+          // console.log(state.hotelsSelect);
+          // console.log("BUDGET", typeof budget);
           addHotelResultToPage(hotelResultDetails, displayHotelsArray, i);
         }
       }
@@ -415,7 +415,7 @@ var displaySavedSearch = function(event){
 };
 
 var selectedItem = function(e) {
-  console.log(e);
+  // console.log(e);
   var childElement = String(e.target.id);
   var parentElement = String(e.target.parentNode.id);
 
@@ -431,24 +431,24 @@ var selectedItem = function(e) {
     state.selectedFlight.push(state.flightsSelect[selectedIndex]);
   } else if (childElement.substring(0,5) === "hotel") {
     state.selectedHotel = [];
-    console.log("should empty hotel here");
-    console.log("selected hotel", state.selectedHotel);
+    // console.log("should empty hotel here");
+    // console.log("selected hotel", state.selectedHotel);
     selectedIndex = childElement.substring(12,13);
     state.selectedHotel.push(state.hotelsSelect[selectedIndex]);
-    console.log("the index is", selectedIndex);
-    console.log("child", childElement);
-    console.log("parent", parentElement);
-    console.log("the hotel pushed is", state.hotelsSelect[selectedIndex]);
+    // console.log("the index is", selectedIndex);
+    // console.log("child", childElement);
+    // console.log("parent", parentElement);
+    // console.log("the hotel pushed is", state.hotelsSelect[selectedIndex]);
   } else if (parentElement.substring(0,5) === "hotel") {
     state.selectedHotel = [];
-    console.log("should empty hotel here");
-    console.log("selected hotel", state.selectedHotel);
+    // console.log("should empty hotel here");
+    // console.log("selected hotel", state.selectedHotel);
     selectedIndex = parentElement.substring(12,13);
     state.selectedHotel.push(state.hotelsSelect[selectedIndex]);
-    console.log("the index is", selectedIndex);
-    console.log("child", childElement);
-    console.log("parent", parentElement);
-    console.log("the hotel pushed is", state.hotelsSelect[selectedIndex]);
+    // console.log("the index is", selectedIndex);
+    // console.log("child", childElement);
+    // console.log("parent", parentElement);
+    // console.log("the hotel pushed is", state.hotelsSelect[selectedIndex]);
   }
 }
 
