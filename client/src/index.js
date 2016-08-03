@@ -1,4 +1,3 @@
-
 var Place = require('./place');
 
 var SavedSearch = require('./saved_search/saved_search');
@@ -14,26 +13,58 @@ var state = {
   "selectedHotel": [],
   "savedSearch": [],
   "latLng": [],
-  "resultsArray": []
+  "resultsArray": [],
+  "origin": [],
+  "destination": []
 }
 
-
 window.onload = function(){
-  var place = new Place();
+  var request = new XMLHttpRequest();
+   request.open("GET", '/savedsearches');
+   request.setRequestHeader("Content-Type", "application/json");
+   console.log(request);
+   request.onload = function(){
+     if(request.status === 200){
+       var searches = JSON.parse(request.responseText)
+     }
+     console.log(searches);
+   }
+   request.send(null);
 
   var button = document.getElementById('button');
   var packageButton = document.getElementById('package-button');
   button.onclick = function(){
     clearPreviousSearch();
     origin = document.getElementById('origin').value;
+    state.origin.push(origin);
     destination = document.getElementById('destination').value;
+    state.destination.push(destination);
     startDate = document.getElementById('start-date').value;
     endDate = document.getElementById('end-date').value;
     noRooms = document.getElementById('no-rooms');
     budget = document.getElementById('range').innerHTML;
     noRoomsValue = noRooms.options[noRooms.selectedIndex].text;
     sendOriginRequest();
+    var place = new Place();
     place.populate(destination);
+    dest=[]
+    arr=[]
+    setTimeout(function(){
+     for(i=0; i<state.hotelsSelect.length;i++){
+        arr.push(state.hotelsSelect[i].name);
+        arr.push(parseFloat(state.hotelsSelect[i].latitude));
+        arr.push(parseFloat(state.hotelsSelect[i].longitude));
+        arr.push({type: 'hotel'})
+        arr.push(state.hotelsSelect[i].shortDescription)
+       
+        dest.push(arr)
+        arr=[]
+     }  
+     populatehotel(dest)
+    },10000);
+    function populatehotel(arr){
+      place.initMap(dest)
+    }
   }
 
   packageButton.onclick = function(){
@@ -63,6 +94,8 @@ window.onload = function(){
   // }
 
 };
+
+
 
 var clearPreviousSearch = function() {
   state.flightsSelect = [];
@@ -155,21 +188,21 @@ var sendSearchRequests = function() {
     // }
 
    //  console.log("hotelListArray", hotelListArray);
-    var sorted_hotels = hotelListArray.sort(function(a, b){
-        return a.lowRateInfo.total - b.lowRateInfo.total;     
-   })
+   var sorted_hotels = hotelListArray.sort(function(a, b){
+    return a.lowRateInfo.total - b.lowRateInfo.total;     
+  })
 
-    loadCharts();
-    displayFlightResults();
-    displayHotelResults();
-  }
+   loadCharts();
+   displayFlightResults();
+   displayHotelResults();
+ }
 }
 
-  var displayFlightResults = function() {
-    var displayFlightsArray = createDisplayHandles(5, "flight");
-    var index = 0;
+var displayFlightResults = function() {
+  var displayFlightsArray = createDisplayHandles(5, "flight");
+  var index = 0;
 
-    for (var i = 0; i < displayFlightsArray.length; i++) {
+  for (var i = 0; i < displayFlightsArray.length; i++) {
     if (res_ss.Quotes[i]) { // if there is a valid quote then print it
       // but only if the trip has an inbound and outbound journey
       if (res_ss.Quotes[i].InboundLeg && res_ss.Quotes[i].OutboundLeg) {
@@ -256,7 +289,7 @@ var displayHotelResults = function() {
 
   var addHotelResultToPage = function(hotel, results, index) {
     results[index].innerHTML += "<p><b>" + hotel.name + "</b></p>";
-    results[index].innerHTML += "<p>" + "Total Cost: £" + hotel.price + "</p>";
+    results[index].innerHTML += "<p>" + "Cost Per Room (Based on 2 people sharing): £" + hotel.price + "</p>";
     results[index].innerHTML += "<img src=" + hotel.image + ">";
     results[index].innerHTML += "<p>" + hotel.description + "</p>";
     results[index].innerHTML += "<p>" + "Guest rating: " + hotel.guestRating + "</p>";
@@ -298,24 +331,28 @@ var loadCharts = function() {
 
 //constructs and displays saved search object
 var displaySavedSearch = function(event){
+  var saved = new SavedSearch(state.selectedFlight[0], state.selectedHotel[0], state.origin[0], state.destination[0], noRoomsValue);
+  saved.saveToDb();
   // console.log("SAVED", saved);
-
-  var saved = new SavedSearch(state.selectedFlight[0], state.selectedHotel[0], noRoomsValue);
-  console.log("SAVED", saved);
-  var savedResult = document.getElementById('saved')
+  var savedResult = document.getElementById('saved');
   savedResult.innerHTML = "";
-  var carrier = document.createElement('p');
-  var flightPrice = document.createElement('p');
-  var hotelName = document.createElement('p');
-  var hotelPrice = document.createElement('p');
-  var totalPrice = document.createElement('p');
-  var starRating = document.createElement('p');
-  var numberPeople = document.createElement('p');
-
-  carrier.innerText = "Airline : " + saved.flightCarrier;
-  hotelName.innerText = "Hotel : " + saved.hotelName;
-  numberPeople.innerText = "Number of People : " + saved.numPeople;
-  flightPrice.innerText = "Flight Cost Per Person : £" + Math.floor(saved.flightPrice);
+  
+  // new stuff
+  // need to clear this on next submit
+  var from = document.getElementById('from');
+  var to = document.getElementById('to');
+  var departureDate = document.getElementById('departure-date');
+  var arrivalDate = document.getElementById('arrival-date');
+  var numPeople = document.getElementById('num-people');
+  var airline = document.getElementById('airline');
+  var flightCost = document.getElementById('flight-cost');
+  var hotelName = document.getElementById('hotel');
+  var starRating = document.getElementById('star-rating');
+  var numRooms = document.getElementById('num-rooms');
+  var costPerRoom = document.getElementById('cost-per-room');
+  var flightSubtotal = document.getElementById('flight-subtotal');
+  var hotelSubtotal = document.getElementById('hotel-subtotal');
+  var totalCost = document.getElementById('total-cost');
 
   var numberRooms = 0;
   if (saved.numPeople == 1 || saved.numPeople == 2) {
@@ -325,19 +362,52 @@ var displaySavedSearch = function(event){
   } else {
     numberRooms = 3;
   }
-  console.log("numPeople", saved.numPeople);
-  hotelPrice.innerText = "Accomodation Cost Per Room (2 people) : £" + Math.floor(saved.hotelPrice);
-  starRating.innerHTML = "Hotel Star Rating : " + saved.starRating;
-  var totalCost = Math.floor(saved.flightPrice * saved.numPeople) + Math.floor(saved.hotelPrice * numberRooms);
-  totalPrice.innerHTML = "Total Package Cost : £" + Math.floor(totalCost);
 
-  savedResult.appendChild(carrier);
-  savedResult.appendChild(hotelName);
-  savedResult.appendChild(starRating);
-  savedResult.appendChild(numberPeople);
-  savedResult.appendChild(flightPrice);
-  savedResult.appendChild(hotelPrice);
-  savedResult.appendChild(totalPrice);
+  from.innerHTML = saved.origin;
+  to.innerHTML = saved.destination;
+  departureDate.innerHTML = saved.flightDepDate;
+  arrivalDate.innerHTML = saved.flightRetDate;
+  numPeople.innerHTML = saved.numPeople;
+  airline.innerHTML = saved.flightCarrier;
+  flightCost.innerHTML = "£" + saved.flightPrice.toFixed(2);
+  hotelName.innerHTML = saved.hotelName;
+  starRating.innerHTML = saved.starRating;
+  numRooms.innerHTML = numberRooms;
+  costPerRoom.innerHTML = "£" + saved.hotelPrice;
+  flightSubtotal.innerHTML = "£" + (saved.flightPrice * saved.numPeople).toFixed(2);
+  hotelSubtotal.innerHTML = "£" + (saved.hotelPrice * numberRooms).toFixed(2);
+  totalCost.innerHTML = "£" + ((saved.flightPrice * saved.numPeople) + (saved.hotelPrice * numberRooms)).toFixed(2);
+
+  // new stuff
+
+  // var carrier = document.createElement('p');
+  // var flightPrice = document.createElement('p');
+  // var hotelName = document.createElement('p');
+  // var hotelPrice = document.createElement('p');
+  // var totalPrice = document.createElement('p');
+  // var starRating = document.createElement('p');
+  // var numberPeople = document.createElement('p');
+
+  // carrier.innerText = "Airline : " + saved.flightCarrier;
+  // hotelName.innerText = "Hotel : " + saved.hotelName;
+  // numberPeople.innerText = "Number of People : " + saved.numPeople;
+  // flightPrice.innerText = "Flight Cost Per Person : £" + Math.floor(saved.flightPrice);
+
+
+
+  // console.log("numPeople", saved.numPeople);
+  // hotelPrice.innerText = "Accomodation Cost Per Room (2 people) : £" + Math.floor(saved.hotelPrice);
+  // starRating.innerHTML = "Hotel Star Rating : " + saved.starRating;
+  // var totalCost = Math.floor(saved.flightPrice * saved.numPeople) + Math.floor(saved.hotelPrice * numberRooms);
+  // totalPrice.innerHTML = "Total Package Cost : £" + Math.floor(totalCost);
+
+  // savedResult.appendChild(carrier);
+  // savedResult.appendChild(hotelName);
+  // savedResult.appendChild(starRating);
+  // savedResult.appendChild(numberPeople);
+  // savedResult.appendChild(flightPrice);
+  // savedResult.appendChild(hotelPrice);
+  // savedResult.appendChild(totalPrice);
 };
 
 var selectedItem = function(e) {
