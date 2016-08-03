@@ -261,11 +261,15 @@
 	  for (var i = 0; i < size; i++) {
 	    if (type === "flight") {
 	      state.resultsArray[i] = document.getElementById('flight-result' + (i));
-	      state.resultsArray[i].onclick=function(e){ selectedItem(e) };
+	      state.resultsArray[i].onclick=function(e){ 
+	        selectedItem(e);
+	      };
 	      // NEED TO STOP THIS REGISTERING CLICK WHEN CHILD ELEMENTS ARE CLICKED
 	    } else {
 	      state.resultsArray[i] = document.getElementById('hotel-result' + (i));
-	      state.resultsArray[i].onclick=function(e){ selectedItem(e) };
+	      state.resultsArray[i].onclick=function(e){ 
+	        selectedItem(e);
+	      };
 	    }
 	  }
 	  // console.log("resultsArray:", state.resultsArray);
@@ -452,6 +456,8 @@
 	  var parentElement = String(e.target.parentNode.id);
 	  var childElementHandle = document.getElementById(childElement);
 	  var parentElementHandle = document.getElementById(parentElement);
+	  var flightSize = 5;
+	  var hotelSize = 10;
 	
 	  if (childElement.substring(0,6) === "flight") {
 	    state.selectedFlight = [];
@@ -459,6 +465,7 @@
 	    // console.log("the slected index:", state.flightsSelect);
 	    state.selectedFlight.push(state.flightsSelect[selectedIndex]);
 	    // console.log("ceh", e.target.id);
+	    clearFlightBorders(flightSize);
 	    childElement.style.border="5px solid red";
 	    // console.log("123", state.flightsSelect[selectedIndex]);
 	  } else if (parentElement.substring(0,6) === "flight") {
@@ -466,6 +473,7 @@
 	    selectedIndex = parentElement.substring(13,14);
 	    state.selectedFlight.push(state.flightsSelect[selectedIndex]);
 	    // console.log("peh", e.target.id);
+	    clearFlightBorders(flightSize);
 	    parentElementHandle.style.border="5px solid red";
 	  } else if (childElement.substring(0,5) === "hotel") {
 	    state.selectedHotel = [];
@@ -474,6 +482,7 @@
 	    selectedIndex = childElement.substring(12,13);
 	    state.selectedHotel.push(state.hotelsSelect[selectedIndex]);
 	    // console.log("ceh", e.target.id);
+	    clearHotelBorders(hotelSize);
 	    childElementHandle.style.border="5px solid red";
 	
 	    // console.log("the index is", selectedIndex);
@@ -487,6 +496,7 @@
 	    selectedIndex = parentElement.substring(12,13);
 	    state.selectedHotel.push(state.hotelsSelect[selectedIndex]);
 	    // console.log("peh", e.target.id);
+	    clearHotelBorders(hotelSize);
 	    parentElementHandle.style.border="5px solid red";
 	    // console.log("the index is", selectedIndex);
 	    // console.log("child", childElement);
@@ -494,6 +504,26 @@
 	    // console.log("the hotel pushed is", state.hotelsSelect[selectedIndex]);
 	  }
 	}
+	
+	var clearFlightBorders = function(size) {
+	 
+	 var flightResult0 = document.getElementById('flight-result0').style.border="0";
+	
+	}
+	
+	var clearHotelBorders = function(size) {
+	  var hotelArray = [];
+	  for (var i = 0; i < size; i++) {
+	    hotelArray[i] = document.getElementById('hotel-result' + (i)).style.border="0";
+	  }
+	 var hotelResult0 = document.getElementById('hotel-result0').style.border="0";
+	 var hotelResult1 = document.getElementById('hotel-result1').style.border="0";
+	}
+	
+	state.resultsArray[i] = document.getElementById('flight-result' + (i));
+	
+	
+
 
 /***/ },
 /* 1 */
