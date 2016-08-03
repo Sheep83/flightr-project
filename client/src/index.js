@@ -1,5 +1,4 @@
 var Place = require('./place');
-
 var SavedSearch = require('./saved_search/saved_search');
 var Map = require('./map');
 var Place = require('./place');
@@ -20,8 +19,8 @@ var state = {
 
 window.onload = function(){
   var request = new XMLHttpRequest();
-   request.open("GET", '/savedsearches');
-   request.setRequestHeader("Content-Type", "application/json");
+  request.open("GET", '/savedsearches');
+  request.setRequestHeader("Content-Type", "application/json");
    // console.log(request);
    request.onload = function(){
      if(request.status === 200){
@@ -31,9 +30,9 @@ window.onload = function(){
    }
    request.send(null);
 
-  var button = document.getElementById('button');
-  var packageButton = document.getElementById('package-button');
-  button.onclick = function(){
+   var button = document.getElementById('button');
+   var packageButton = document.getElementById('package-button');
+   button.onclick = function(){
     clearPreviousSearch();
     origin = document.getElementById('origin').value;
     state.origin.push(origin);
@@ -51,17 +50,17 @@ window.onload = function(){
     arr=[]
     setTimeout(function(){
      for(i=0; i<state.hotelsSelect.length;i++){
-        arr.push(state.hotelsSelect[i].name);
-        arr.push(parseFloat(state.hotelsSelect[i].latitude));
-        arr.push(parseFloat(state.hotelsSelect[i].longitude));
-        arr.push({type: 'hotel'})
-        arr.push(state.hotelsSelect[i].shortDescription)
-       
-        dest.push(arr)
-        arr=[]
-     }  
-     populatehotel(dest)
-    },10000);
+      arr.push(state.hotelsSelect[i].name);
+      arr.push(parseFloat(state.hotelsSelect[i].latitude));
+      arr.push(parseFloat(state.hotelsSelect[i].longitude));
+      arr.push({type: 'hotel'})
+      arr.push(state.hotelsSelect[i].shortDescription)
+      
+      dest.push(arr)
+      arr=[]
+    }  
+    populatehotel(dest)
+  },10000);
     function populatehotel(arr){
       place.initMap(dest)
     }
@@ -71,28 +70,13 @@ window.onload = function(){
     if (state.selectedFlight.length === 0 || state.selectedHotel.length === 0) {
       alert("You haven't selected a valid flight and hotel. Please try again.");
     } else {
-      // console.log("going to save to saved search");
-      // console.log(state.selectedFlight[0]);
-      // console.log(state.selectedHotel[0]);
       displaySavedSearch();
-
-      // NEED TO SAVE TO DB
     }
   }
 
 
   var center = {lat: 55.9533, lng: -3.1883};
   var map = new Map(center);
-
-  // this.setMapCenter = function(){
-  //   this.setInfoDisplay("block");
-  //   navigator.geolocation.getCurrentPosition(function(position) {
-  //     var center = {lat: position.coords.latitude, lng: position.coords.longitude};
-  //     this.map.map.setCenter(center);
-  //     this.setInfoDisplay("none");
-  //   }.bind(this));
-  // }
-
 };
 
 
