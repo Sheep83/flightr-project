@@ -14,7 +14,8 @@ var state = {
   "latLng": [],
   "resultsArray": [],
   "origin": [],
-  "destination": []
+  "destination": [],
+  "dbSearches": []
 }
 
 window.onload = function(){
@@ -27,6 +28,23 @@ window.onload = function(){
        var searches = JSON.parse(request.responseText)
      }
      // console.log(searches);
+     searches.forEach(function(item, index){
+      state.dbSearches.push(item);
+    })
+     savedDiv = document.getElementById('dbResults');
+     searches.forEach(function(item, index){
+      savedSubDiv = document.createElement('p');
+      savedSubDiv.id = index;
+      savedSubDiv.class = 'savedSubDiv';
+      savedSubDiv.innerHTML = "Airline: " + item.flightCarrier + "<br>Hotel: " + item.hotelName + "<br>Origin: " + item.origin + "<br>Destination: " + item.destination;
+      savedDiv.appendChild(savedSubDiv);
+      var viewButton = document.createElement('button');
+      viewButton.id = index;
+      console.log(viewButton.id)
+      savedSubDiv.appendChild(viewButton);
+      viewButton.onclick = updateSavedSearch;
+
+    })
    }
    request.send(null);
 
@@ -76,6 +94,7 @@ window.onload = function(){
       // var getSearchTable = document.getElementById('saved-search-display');
       // location.href='#saved-search-display';
       // getSearchTable.scrollIntoView();
+      var displayPreviousSearches = document.getElementById('dbResults').style.display = 'inline-block';
       displaySavedSearch();
       var displayTable = document.getElementById('saved-search-display').style.display = 'inline-block';
     }
@@ -407,6 +426,56 @@ var displaySavedSearch = function(event){
   // savedResult.appendChild(flightPrice);
   // savedResult.appendChild(hotelPrice);
   // savedResult.appendChild(totalPrice);
+};
+
+var updateSavedSearch = function(event){
+ console.log(event);
+ console.log('clicked');
+ search = state.dbSearches[event.target.id];
+ var savedResult = document.getElementById('saved');
+ savedResult.innerHTML = "";
+ var from = document.getElementById('from');
+ var to = document.getElementById('to');
+ var departureDate = document.getElementById('departure-date');
+ var arrivalDate = document.getElementById('arrival-date');
+ var numPeople = document.getElementById('num-people');
+ var airline = document.getElementById('airline');
+ var flightCost = document.getElementById('flight-cost');
+ var hotelName = document.getElementById('hotel');
+ var starRating = document.getElementById('star-rating');
+ var numRooms = document.getElementById('num-rooms');
+ var costPerRoom = document.getElementById('cost-per-room');
+ var flightSubtotal = document.getElementById('flight-subtotal');
+ var hotelSubtotal = document.getElementById('hotel-subtotal');
+ var totalCost = document.getElementById('total-cost');
+ var flightSubtotalFull = document.getElementById('flight-subtotal-full');
+ var hotelSubtotalFull = document.getElementById('hotel-subtotal-full');
+
+ var numberRooms = 0;
+ if (search.numPeople == 1 || search.numPeople == 2) {
+   numberRooms = 1;
+ } else if (search.numPeople == 3 || search.numPeople == 4) {
+   numberRooms = 2;
+ } else {
+   numberRooms = 3;
+ }
+
+ from.innerHTML = search.origin;
+ to.innerHTML = search.destination;
+ departureDate.innerHTML = search.flightDepDate;
+ arrivalDate.innerHTML = search.flightRetDate;
+ numPeople.innerHTML = search.numPeople;
+ airline.innerHTML = search.flightCarrier;
+ flightCost.innerHTML = "£" + search.flightPrice.toFixed(2);
+ hotelName.innerHTML = search.hotelName;
+ starRating.innerHTML = search.starRating;
+ numRooms.innerHTML = numberRooms;
+ costPerRoom.innerHTML = "£" + search.hotelPrice;
+ flightSubtotalFull.innerHTML = search.numPeople + " x " + search.flightPrice.toFixed(2);
+ flightSubtotal.innerHTML = "£" + (search.flightPrice * search.numPeople).toFixed(2);
+ hotelSubtotal.innerHTML = "£" + (search.hotelPrice * numberRooms).toFixed(2);
+ hotelSubtotalFull.innerHTML = numberRooms + " x " + search.hotelPrice;
+ totalCost.innerHTML = "£" + ((search.flightPrice * search.numPeople) + (search.hotelPrice * numberRooms)).toFixed(2);
 };
 
 var selectedItem = function(e) {

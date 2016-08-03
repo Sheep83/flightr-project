@@ -305,3 +305,7 @@ tfoot tr:last-child {
 #combined-results {
   display: none;
 }
+
+#dbResults {
+  display: none;
+}
