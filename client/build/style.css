@@ -1,9 +1,183 @@
 /***********************************
+            CSS RESET
+***********************************/
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/***********************************
+            BODY
+***********************************/
+body {
+/*  background: linear-gradient(#F0E6DD  0%, #5CADFF  100%) ; */
+  background: white; 
+  background-size: cover;
+}
+
+/***********************************
+            LOGO
+***********************************/
+#logo {
+  height: 120px;
+  width: 180px;
+  position: absolute;
+  z-index: 2;
+}
+
+#beach {
+  height: 525px;
+  width: 100%;
+  position: relative;
+  display: inline;
+  z-index: 1;
+  margin-bottom: 10px;
+}
+
+/***********************************
+            FORM
+***********************************/
+#form {
+  height: 425px;
+  width: 90%;
+}
+
+#user-form {
+  font-size: 30px;
+  font-family: 'Raleway', helvetica, sans-serif;
+}
+
+.left-user-input {
+  float: left;
+  width:50%;
+  overflow:hidden;
+  text-align: right;
+  margin-right: 100px;
+}
+
+.right-user-input {
+  float: right;
+  width: 30%;
+  overflow: hidden;
+  text-align: right;
+  margin-right: 130px;
+}
+
+#search-button {
+  text-align: center;
+  clear: both;
+}
+
+input {
+  height: 30px;
+  width: 120px;
+}
+
+#no-rooms {
+  margin-right: 7px;
+}
+
+/***********************************
+            BUTTON
+***********************************/
+button {
+ padding: 8px;
+ width: 150px;
+ text-decoration: none;
+ margin-bottom: 10px;
+ box-shadow: 3px 3px 1px black;
+ border: 1px;
+ border-color: black;
+ background: #3a7999 ;
+ color: #f2f2f2 ;
+ font-size: 20px;
+ border-radius: 5px;
+ position: relative;
+ box-sizing: border-box;
+ transition: all 500ms ease; 
+font-family: 'Raleway', helvetica, sans-serif;
+
+}
+
+button:hover {
+ transform: scale(1.15);
+ cursor: pointer;
+}
+
+button:focus {
+   outline:none;
+   text-decoration: none;
+}
+
+/***********************************
             MAP
 ***********************************/
 #map {
-  height:500px;
-  width:500px;
+  height: 400px;
+  width: 400px;
+  float:left;
+  width:50%;
+  overflow:hidden;
+/*  border-radius: 15px;*/
+/*  box-shadow: 5px 5px 5px 2px black;*/
+}
+
+/***********************************
+            PIE CHART
+***********************************/
+#pieChart {
+  height: 400px;
+  width: 400px;
+  float: right;
+  width:50%;
+  overflow:hidden;
+/*  border-radius: 15px;*/
+/*  box-shadow: 5px 5px 5px 2px black;*/
 }
 
 /***********************************

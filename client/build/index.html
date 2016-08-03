@@ -6,152 +6,180 @@
   <script src="http://code.highcharts.com/highcharts.js"></script>
   <script src="pieChart.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Raleway:600,400' rel='stylesheet' type='text/css'>
   <script type="text/javascript" src="bundle.js"></script>
 </head>
 <body>
+  <div class="header">
 
-  <form id="user-form">
-    <label for="origin">Leaving:</label>
-    <input id="origin" placeholder="Origin" value="London">
-    <label for="destination">Destination:</label>
-    <input id='destination' placeholder="Destination" value="New York">
-    <label for="start-date">Start Date:</label>
-    <input type="date" id="start-date" placeholder="Check-in date" value="2016-09-16">
-    <label for="end-date">End Date:</label>
-    <input type="date" id="end-date" placeholder="Check-out date"  value="2016-09-19">
-    <label for="budget">Max Rate Per Night:</label>
-    <input type="range" id="budget" min="0" max="500" value="250" step="10" oninput="showValue(this.value)" />
-    <span id="range">250</span>
-    <script type="text/javascript">
-      function showValue(newValue)
-      {
-       document.getElementById("range").innerHTML=newValue;
-     }
-   </script>
-   <label for="No-rooms">No. People:</label>
-   <select name="no-rooms" id="no-rooms">
-
-    <option value="1" selected="selected">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-  </select>
-  <button type="button" id="button">Search</button>
-
-  <div id='map'></div>
-
-  <div id="pieChart" width="400" height="400"></div>
-
-  <div id="saved"></div>
-  <div id='combined-results'>
-    <div id='flight-results'>
-      <div id='flight-result0'></div>
-      <div id='flight-result1'></div>
-      <div id='flight-result2'></div>
-      <div id='flight-result3'></div>
-      <div id='flight-result4'></div>
-    </div>
-    <div id='hotel-results'>
-      <div id='hotel-result0'></div>
-      <div id='hotel-result1'></div>
-      <div id='hotel-result2'></div>
-      <div id='hotel-result3'></div>
-      <div id='hotel-result4'></div>
-      <div id='hotel-result5'></div>
-      <div id='hotel-result6'></div>
-      <div id='hotel-result7'></div>
-      <div id='hotel-result8'></div>
-      <div id='hotel-result9'></div>
-    </div>
+    <header>
+      <img id="logo" src="public/wat.png">
+      <img id="beach" src="public/new_beach.jpg">
+    </header>
   </div>
-  <div id='add-selected-button'>
-    <button type="button" id="package-button">Select these options</button>
-    <div id='user-selected'>
-    </form>
+  <div id="form">
+    <form id="user-form">
+
+      <div class="left-user-input">
+        <label for="origin">Leaving:</label>
+        <input id="origin" placeholder="Origin" value="London">
+        <br>
+        <br>
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date" placeholder="Check-in date" value="2016-09-16">
+        <br>
+        <br>
+        <label for="budget">Max Rate Per Night:</label>
+        <input type="range" id="budget" min="0" max="500" value="250" step="10" oninput="showValue(this.value)" />
+        <span id="range">250</span>
+        <script type="text/javascript">
+         function showValue(newValue)
+         {
+          document.getElementById("range").innerHTML=newValue;
+        }
+      </script>
+      <br>
+      <br>
+    </div>
+
+    <div class="right-user-input">
+      <label for="destination">Destination:</label>
+      <input id='destination' placeholder="Destination" value="New York">
+      <br>
+      <br>
+      <label for="end-date">End Date:</label>
+      <input type="date" id="end-date" placeholder="Check-out date"  value="2016-09-19">
+      <br>
+      <br>
+      <label for="No-rooms">No. People:</label>
+      <select name="no-rooms" id="no-rooms">
+        <option value="1" selected="selected">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+      </select>
+    </div>
+
+    <div id="search-button">
+      <button type="button" id="button">Search</button>
+    </div>
+  </form>
+</div>
+
+<div id='map'></div>
+
+<div id="pieChart" width="400" height="400"></div>
+
+<div id="saved"></div>
+<div id='combined-results'>
+  <div id='flight-results'>
+    <div id='flight-result0'></div>
+    <div id='flight-result1'></div>
+    <div id='flight-result2'></div>
+    <div id='flight-result3'></div>
+    <div id='flight-result4'></div>
+  </div>
+  <div id='hotel-results'>
+    <div id='hotel-result0'></div>
+    <div id='hotel-result1'></div>
+    <div id='hotel-result2'></div>
+    <div id='hotel-result3'></div>
+    <div id='hotel-result4'></div>
+    <div id='hotel-result5'></div>
+    <div id='hotel-result6'></div>
+    <div id='hotel-result7'></div>
+    <div id='hotel-result8'></div>
+    <div id='hotel-result9'></div>
+  </div>
+</div>
+<div id='add-selected-button'>
+  <button type="button" id="package-button">Select these options</button>
+  <div id='user-selected'>
+
 
     <!-- New stuff-->
 
     <table class="table-centre" id="saved-search-display">
-        <thead>
-          <tr>
-            <th colspan="3">Saved Results</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>From: </td>
-            <td id="from"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>To: </td>
-            <td id="to"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Departure Date: </td>
-            <td id="departure-date"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Arrival Date: </td>
-            <td id="arrival-date"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Number of People: </td>
-            <td id="num-people"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Airline: </td>
-            <td id="airline"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Flight Cost Per Person: </td>
-            <td id="flight-cost"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Flight Sub-total: </td>
-            <td id="flight-subtotal-full"></td>
-            <td id="flight-subtotal"></td>
-          </tr>
-          <tr>
-            <td>Hotel: </td>
-            <td id="hotel"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Hotel Star Rating: </td>
-            <td id="star-rating"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Number of Rooms: </td>
-            <td id="num-rooms"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Cost per Room: </td>
-            <td id="cost-per-room"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Hotel Sub-total: </td>
-            <td id="hotel-subtotal-full"></td>
-            <td id="hotel-subtotal"></td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="2">Total Cost: </td>
-            <td id="total-cost"></td>
-          </tr>
-        </tfoot>
-      </table>
+      <thead>
+        <tr>
+          <th colspan="3">Saved Results</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>From: </td>
+          <td id="from"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>To: </td>
+          <td id="to"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Departure Date: </td>
+          <td id="departure-date"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Arrival Date: </td>
+          <td id="arrival-date"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Number of People: </td>
+          <td id="num-people"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Airline: </td>
+          <td id="airline"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Flight Cost Per Person: </td>
+          <td id="flight-cost"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Flight Sub-total: </td>
+          <td id="flight-subtotal-full"></td>
+          <td id="flight-subtotal"></td>
+        </tr>
+        <tr>
+          <td>Hotel: </td>
+          <td id="hotel"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Hotel Star Rating: </td>
+          <td id="star-rating"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Number of Rooms: </td>
+          <td id="num-rooms"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Cost per Room: </td>
+          <td id="cost-per-room"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Hotel Sub-total: </td>
+          <td id="hotel-subtotal-full"></td>
+          <td id="hotel-subtotal"></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2">Total Cost: </td>
+          <td id="total-cost"></td>
+        </tr>
+      </tfoot>
+    </table>
   </body>
   </html>

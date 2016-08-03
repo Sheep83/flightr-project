@@ -19,6 +19,7 @@
     "mocha": "^2.5.3",
     "mongodb": "^2.2.5",
     "nodemon": "^1.10.0",
+    "normalize.css": "^4.2.0",
     "webpack": "^1.13.1"
   }
 }
