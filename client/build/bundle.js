@@ -543,13 +543,6 @@
 	     this.map.fitBounds(bounds);
 	     google.maps.event.addListener(marker, 'click',(function(marker,i){
 	      return function(){ 
-	        // if(locations[i][5]=== undefined || locations[i][5]===null){
-	        //   console.log(locations[i][5])
-	        //   infowindow.setContent(this.locations[i][0])
-	        //   infowindow.open(map, marker)
-	        // }
-	        // else
-	        // {
 	       infowindow.setContent('<IMG BORDER="0" ALIGN="Left" SRC="http://images.travelnow.com'+locations[i][5]+'">' + " " +"<b>"+locations[i][0] + "</b>" +  "<p>" +locations[i][4]);
 	       infowindow.setOptions({maxWidth: 200});
 	       infowindow.open(map, marker)
