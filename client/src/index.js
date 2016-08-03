@@ -18,15 +18,6 @@ var state = {
   "dbSearches": []
 }
 
-<<<<<<< HEAD
-
-
-
-window.onload = function(){
-  var button = document.getElementById('button');
-  var packageButton = document.getElementById('package-button');
-  button.onclick = function(){
-=======
 window.onload = function(){
   var request = new XMLHttpRequest();
   request.open("GET", '/savedsearches');
@@ -61,7 +52,6 @@ window.onload = function(){
    var button = document.getElementById('button');
    var packageButton = document.getElementById('package-button');
    button.onclick = function(){
->>>>>>> develop
     clearPreviousSearch();
     var displaySearchResults = document.getElementById('combined-results').style.display = 'inline-block';
     origin = document.getElementById('origin').value;
@@ -81,33 +71,6 @@ window.onload = function(){
 
     setTimeout(function(){
      for(i=0; i<state.hotelsSelect.length;i++){
-<<<<<<< HEAD
-        arr.push(state.hotelsSelect[i].name);
-        arr.push(parseFloat(state.hotelsSelect[i].latitude));
-        arr.push(parseFloat(state.hotelsSelect[i].longitude));
-        arr.push({type: 'hotel'})
-        arr.push(state.hotelsSelect[i].shortDescription)
-        arr.push(state.hotelsSelect[i].thumbnailUrl)  
-        dest.push(arr)
-        arr=[]
-     }  
-     console.log(dest)
-     populatehotel(dest)
-    },10000);
-    function populatehotel(arr){
-      place.initMap(dest)
-    }
-   
-    var legend = document.createElement('legend')
-
-
-
-
-
-  //   // var center = {lat: 55.9533, lng: -3.1883};
-  //   // var map = new Map(center);
-  
-=======
       arr.push(state.hotelsSelect[i].name);
       arr.push(parseFloat(state.hotelsSelect[i].latitude));
       arr.push(parseFloat(state.hotelsSelect[i].longitude));
@@ -124,7 +87,6 @@ window.onload = function(){
       place.initMap(dest)
     }
     var viewCharts = document.getElementById('mapChart').scrollIntoView();
->>>>>>> develop
   }
 
   packageButton.onclick = function(){
@@ -228,19 +190,6 @@ var sendSearchRequests = function() {
   req_exp.onload = function(){
 
     res_exp = JSON.parse(req_exp.responseText);
-<<<<<<< HEAD
-
-
-    // NEW STUFF
-    loadCharts();
-    // NEW STUFF
-    
-    // console.log(res_exp);
-
-    displayFlightResults();
-    displayHotelResults();
-  }
-=======
     var hotelListArray = res_exp.hotelList;
 
     // console.log(hotelListArray);
@@ -259,7 +208,6 @@ var sendSearchRequests = function() {
    displayFlightResults();
    displayHotelResults();
  }
->>>>>>> develop
 }
 
 var displayFlightResults = function() {
@@ -347,12 +295,8 @@ var displayHotelResults = function() {
           var hotelResultDetails = {"name": res_exp.hotelList[i].name, "description": res_exp.hotelList[i].shortDescription, "image": hotelImage, "guestRating": res_exp.hotelList[i].hotelGuestRating, "starRating": res_exp.hotelList[i].hotelStarRating, "lat": res_exp.hotelList[i].latitude, "long": res_exp.hotelList[i].longitude, "price": res_exp.hotelList[i].lowRateInfo.total}
           state.hotelsSelect.push(hotel);
           // console.log(state.hotelsSelect);
-<<<<<<< HEAD
-          // place.hotel(state.hotelsSelect)
-=======
           // console.log(state.hotelsSelect);
           // console.log("BUDGET", typeof budget);
->>>>>>> develop
           addHotelResultToPage(hotelResultDetails, displayHotelsArray, i);
         }
       }
@@ -605,3 +549,4 @@ var clearHotelBorders = function(size) {
     hotelArray[i] = document.getElementById('hotel-result' + (i)).style.border="0";
   }
 }
+
