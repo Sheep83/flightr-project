@@ -13,7 +13,9 @@ var state = {
   "selectedHotel": [],
   "savedSearch": [],
   "latLng": [],
-  "resultsArray": []
+  "resultsArray": [],
+  "origin": [],
+  "destination": []
 }
 
 
@@ -39,8 +41,13 @@ window.onload = function(){
   var packageButton = document.getElementById('package-button');
   button.onclick = function(){
     clearPreviousSearch();
+
     origin = document.getElementById('origin').value;
+    state.origin.push(origin);
     destination = document.getElementById('destination').value;
+    state.destination.push(destination);
+    console.log(state.destination);
+    console.log(state.origin);
     startDate = document.getElementById('start-date').value;
     endDate = document.getElementById('end-date').value;
     noRooms = document.getElementById('no-rooms');
@@ -78,6 +85,8 @@ var clearPreviousSearch = function() {
   state.savedSearch = [];
   state.latLng = [];
   state.resultsArray = [];
+  state.origin = [];
+  state.destination = [];
   clearFlightDivs();
   clearHotelDivs();
 }
@@ -328,8 +337,8 @@ var loadCharts = function() {
 //constructs and displays saved search object
 var displaySavedSearch = function(event){
 
-  var saved = new SavedSearch(state.selectedFlight[0], state.selectedHotel[0]);
-  console.log(saved);
+  var saved = new SavedSearch(state.selectedFlight[0], state.selectedHotel[0], state.origin[0], state.destination[0]);
+  console.log(state.selectedFlight[0]);
   saved.saveToDb();
   var savedResult = document.getElementById('saved')
   savedResult.innerHTML = "";

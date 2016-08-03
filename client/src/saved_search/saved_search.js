@@ -1,4 +1,4 @@
-var SavedSearch = function(ssObj, expObj){
+var SavedSearch = function(ssObj, expObj, origin, dest){
    console.log(expObj, "HEREEEE");
    this.flightDepDate = ssObj.outboundDate,
    this.flightRetDate = ssObj.inboundDate,
@@ -6,7 +6,9 @@ var SavedSearch = function(ssObj, expObj){
    this.flightPrice = ssObj.price,
    this.hotelName =  expObj.localizedName,
    this.starRating = expObj.hotelStarRating,
-   this.hotelPrice = expObj.lowRateInfo.total
+   this.hotelPrice = expObj.lowRateInfo.total,
+   this.origin = origin,
+   this.destination = destination
 };
 
 SavedSearch.prototype = {
