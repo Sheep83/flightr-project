@@ -524,6 +524,7 @@
 	 hotelSubtotal.innerHTML = "£" + (search.hotelPrice * numberRooms).toFixed(2);
 	 hotelSubtotalFull.innerHTML = numberRooms + " x " + search.hotelPrice;
 	 totalCost.innerHTML = "£" + ((search.flightPrice * search.numPeople) + (search.hotelPrice * numberRooms)).toFixed(2);
+	 var scrollToTable = document.getElementById('view-table').scrollIntoView();
 	};
 	
 	var selectedItem = function(e) {
