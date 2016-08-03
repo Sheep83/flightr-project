@@ -3,6 +3,7 @@ var PieChart = function(title, data){
 
   var chart = new Highcharts.Chart({
     chart: {
+      backgroundColor: null,
       type: 'pie',
       renderTo: container
     },

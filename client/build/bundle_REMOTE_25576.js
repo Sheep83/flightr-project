@@ -64,15 +64,6 @@
 	  "dbSearches": []
 	}
 	
-<<<<<<< HEAD
-	
-	
-	
-	window.onload = function(){
-	  var button = document.getElementById('button');
-	  var packageButton = document.getElementById('package-button');
-	  button.onclick = function(){
-=======
 	window.onload = function(){
 	  var request = new XMLHttpRequest();
 	  request.open("GET", '/savedsearches');
@@ -107,7 +98,6 @@
 	   var button = document.getElementById('button');
 	   var packageButton = document.getElementById('package-button');
 	   button.onclick = function(){
->>>>>>> develop
 	    clearPreviousSearch();
 	    var displaySearchResults = document.getElementById('combined-results').style.display = 'inline-block';
 	    origin = document.getElementById('origin').value;
@@ -127,33 +117,6 @@
 	
 	    setTimeout(function(){
 	     for(i=0; i<state.hotelsSelect.length;i++){
-<<<<<<< HEAD
-	        arr.push(state.hotelsSelect[i].name);
-	        arr.push(parseFloat(state.hotelsSelect[i].latitude));
-	        arr.push(parseFloat(state.hotelsSelect[i].longitude));
-	        arr.push({type: 'hotel'})
-	        arr.push(state.hotelsSelect[i].shortDescription)
-	        arr.push(state.hotelsSelect[i].thumbnailUrl)  
-	        dest.push(arr)
-	        arr=[]
-	     }  
-	     console.log(dest)
-	     populatehotel(dest)
-	    },10000);
-	    function populatehotel(arr){
-	      place.initMap(dest)
-	    }
-	   
-	    var legend = document.createElement('legend')
-	
-	
-	
-	
-	
-	  //   // var center = {lat: 55.9533, lng: -3.1883};
-	  //   // var map = new Map(center);
-	  
-=======
 	      arr.push(state.hotelsSelect[i].name);
 	      arr.push(parseFloat(state.hotelsSelect[i].latitude));
 	      arr.push(parseFloat(state.hotelsSelect[i].longitude));
@@ -170,7 +133,6 @@
 	      place.initMap(dest)
 	    }
 	    var viewCharts = document.getElementById('mapChart').scrollIntoView();
->>>>>>> develop
 	  }
 	
 	  packageButton.onclick = function(){
@@ -288,23 +250,10 @@
 	    return a.lowRateInfo.total - b.lowRateInfo.total;     
 	  })
 	
-<<<<<<< HEAD
-	
-	    // NEW STUFF
-	    loadCharts();
-	    // NEW STUFF
-	    
-	    // console.log(res_exp);
-	
-	    displayFlightResults();
-	    displayHotelResults();
-	  }
-=======
 	   loadCharts();
 	   displayFlightResults();
 	   displayHotelResults();
 	 }
->>>>>>> develop
 	}
 	
 	var displayFlightResults = function() {
@@ -392,12 +341,8 @@
 	          var hotelResultDetails = {"name": res_exp.hotelList[i].name, "description": res_exp.hotelList[i].shortDescription, "image": hotelImage, "guestRating": res_exp.hotelList[i].hotelGuestRating, "starRating": res_exp.hotelList[i].hotelStarRating, "lat": res_exp.hotelList[i].latitude, "long": res_exp.hotelList[i].longitude, "price": res_exp.hotelList[i].lowRateInfo.total}
 	          state.hotelsSelect.push(hotel);
 	          // console.log(state.hotelsSelect);
-<<<<<<< HEAD
-	          // place.hotel(state.hotelsSelect)
-=======
 	          // console.log(state.hotelsSelect);
 	          // console.log("BUDGET", typeof budget);
->>>>>>> develop
 	          addHotelResultToPage(hotelResultDetails, displayHotelsArray, i);
 	        }
 	      }
@@ -662,36 +607,6 @@
 	    center: myLatLng
 	  });
 	
-<<<<<<< HEAD
-	var leg = document.createElement("div");
-	leg.setAttribute("id","legend");
-	
-	var iconBase = 'http://maps.google.com/mapfiles/kml/pal2/';
-	        
-	var icons = {
-	  hotel: {
-	    name: 'Hotel',
-	    icon: iconBase + 'icon20.png'
-	  },
-	  Event: {
-	    name: 'Event',
-	    icon: iconBase + 'icon57.png'
-	  }
-	};
-	    
-	var legend = document.getElementById('legend');
-	
-	
-	for (var key in icons) {
-	  var type = icons[key];
-	  var name = type.name;
-	  var icon = type.icon;
-	
-	  var div = document.createElement('div');
-	  div.innerHTML = '<img src="' + icon + '"> ' + name;
-	  
-	  legend.appendChild(div);
-=======
 	  var leg = document.createElement("div");
 	  leg.setAttribute("id","legend");
 	
@@ -707,37 +622,10 @@
 	      icon: iconBase + 'icon57.png'
 	    }
 	  };
->>>>>>> develop
 	}
-	  this.map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);   
-	  legend.removeAttribute('hidden'); 
 	
 	  Place.prototype = {
 	
-<<<<<<< HEAD
-	}
-	
-	
-	
-	Place.prototype = {
-	
-	 initMap: function(locations) {
-	  for (var i = 0;i<locations.length; i++) {
-	   if(locations[i][3].type==='trip'){
-	     icon = "http://maps.google.com/mapfiles/kml/pal2/icon57.png"
-	   }else if (locations[i][3].type==='hotel') {
-	 
-	    icon = "http://maps.google.com/mapfiles/kml/pal2/icon20.png"
-	  }
-	}
-	
-	   infowindow = new google.maps.InfoWindow();
-	   var bounds = new google.maps.LatLngBounds();
-	   for (i = 0; i < locations.length; i++){
-	     var marker = new google.maps.Marker({
-	       position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
-	       map: this.map,
-=======
 	   initMap: function(locations) {
 	    for (var i = 0;i<locations.length; i++) {
 	     if(locations[i][3].type==='trip'){
@@ -754,23 +642,10 @@
 	   var marker = new google.maps.Marker({
 	     position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
 	     map: this.map,
->>>>>>> develop
 	       // title: locations[i][0],
 	       animation: google.maps.Animation.DROP,
 	       icon: new google.maps.MarkerImage(icon)
 	     });
-<<<<<<< HEAD
-	     bounds.extend(marker.position);
-	     this.map.fitBounds(bounds);
-	     google.maps.event.addListener(marker, 'click',(function(marker,i){
-	      return function(){ 
-	       infowindow.setContent('<IMG BORDER="0" ALIGN="Left" SRC="http://images.travelnow.com'+locations[i][5]+'">' + " " +"<b>"+locations[i][0] + "</b>" +  "<p>" +locations[i][4]);
-	       infowindow.setOptions({maxWidth: 200});
-	       infowindow.open(map, marker)
-	     
-	     }
-	   })(marker,i));
-=======
 	   bounds.extend(marker.position);
 	   this.map.fitBounds(bounds);
 	   google.maps.event.addListener(marker, 'click',(function(marker,i){
@@ -778,7 +653,6 @@
 	     infowindow.setContent('<IMG BORDER="0" ALIGN="Left" SRC="http://images.travelnow.com'+locations[i][5]+'">' + " " +"<b>"+locations[i][0] + "</b>" +  "<p>" +locations[i][4]);
 	     infowindow.setOptions({maxWidth: 200});
 	     infowindow.open(map, marker)
->>>>>>> develop
 	
 	   }
 	 })(marker,i));
@@ -814,17 +688,7 @@
 	
 	  request.send(null);
 	}
-<<<<<<< HEAD
-	
-	
-	
 	}
-	
-	
-	
-=======
-	}
->>>>>>> develop
 	module.exports = Place;
 
 /***/ },

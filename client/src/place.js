@@ -5,6 +5,7 @@ var Place = function(){
     center: myLatLng
   });
 
+<<<<<<< HEAD
 var leg = document.createElement("div");
 leg.setAttribute("id","legend");
 
@@ -39,8 +40,14 @@ for (var key in icons) {
 
 
 }
+=======
+  var leg = document.createElement("div");
+  leg.setAttribute("id","legend");
+>>>>>>> develop
 
+  var iconBase = 'http://maps.google.com/mapfiles/kml/pal2/';
 
+<<<<<<< HEAD
 
 Place.prototype = {
 
@@ -60,10 +67,43 @@ Place.prototype = {
      var marker = new google.maps.Marker({
        position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
        map: this.map,
+=======
+  var icons = {
+    hotel: {
+      name: 'Hotel',
+      icon: iconBase + 'icon20.png'
+    },
+    Event: {
+      name: 'Event',
+      icon: iconBase + 'icon57.png'
+    }
+  };
+}
+
+  Place.prototype = {
+
+   initMap: function(locations) {
+    for (var i = 0;i<locations.length; i++) {
+     if(locations[i][3].type==='trip'){
+       icon = "http://maps.google.com/mapfiles/kml/pal2/icon57.png"
+     }else if (locations[i][3].type==='hotel') {
+
+      icon = "http://maps.google.com/mapfiles/kml/pal2/icon20.png"
+    }
+  }
+
+  infowindow = new google.maps.InfoWindow();
+  var bounds = new google.maps.LatLngBounds();
+  for (i = 0; i < locations.length; i++){
+   var marker = new google.maps.Marker({
+     position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
+     map: this.map,
+>>>>>>> develop
        // title: locations[i][0],
        animation: google.maps.Animation.DROP,
        icon: new google.maps.MarkerImage(icon)
      });
+<<<<<<< HEAD
      bounds.extend(marker.position);
      this.map.fitBounds(bounds);
      google.maps.event.addListener(marker, 'click',(function(marker,i){
@@ -74,9 +114,21 @@ Place.prototype = {
      
      }
    })(marker,i));
+=======
+   bounds.extend(marker.position);
+   this.map.fitBounds(bounds);
+   google.maps.event.addListener(marker, 'click',(function(marker,i){
+    return function(){ 
+     infowindow.setContent('<IMG BORDER="0" ALIGN="Left" SRC="http://images.travelnow.com'+locations[i][5]+'">' + " " +"<b>"+locations[i][0] + "</b>" +  "<p>" +locations[i][4]);
+     infowindow.setOptions({maxWidth: 200});
+     infowindow.open(map, marker)
+>>>>>>> develop
 
    }
- },
+ })(marker,i));
+
+ }
+},
 
 populate : function(destination){
   var url = "http://terminal2.expedia.com/x/activities/search?location=" + destination + "&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos";
@@ -104,13 +156,17 @@ populate : function(destination){
     this.initMap(location);
   }.bind(this);
 
- request.send(null);
+  request.send(null);
+}
+<<<<<<< HEAD
+
+
+
 }
 
 
 
+=======
 }
-
-
-
+>>>>>>> develop
 module.exports = Place;

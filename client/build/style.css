@@ -1,4 +1,186 @@
+/***********************************
+            CSS RESET
+***********************************/
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/***********************************
+            BODY
+***********************************/
+body {
+/*  background: linear-gradient(#F0E6DD  0%, #5CADFF  100%) ; */
+  /*text-shadow: 2px 2px 2px #999999;*/
+  background: white; 
+  background-size: cover;
+}
+
+/***********************************
+            LOGO
+***********************************/
+#logo {
+  height: 120px;
+  width: 180px;
+  position: absolute;
+  z-index: 2;
+}
+
+#beach {
+  height: 525px;
+  width: 100%;
+  position: relative;
+  display: inline;
+  z-index: 1;
+  margin-bottom: 10px;
+}
+
+/***********************************
+            FORM
+***********************************/
+#form {
+  height: 425px;
+  width: 90%;
+}
+
+#user-form {
+  font-size: 30px;
+  font-family: 'Raleway', helvetica, sans-serif;
+  margin-bottom: 500px;
+}
+
+.left-user-input {
+  float: left;
+  width:50%;
+  overflow:hidden;
+  text-align: right;
+  margin-right: 100px;
+}
+
+.right-user-input {
+  float: right;
+  width: 30%;
+  overflow: hidden;
+  text-align: right;
+  margin-right: 130px;
+}
+
+#search-button {
+  text-align: center;
+  clear: both;
+}
+
+input {
+  height: 30px;
+  width: 120px;
+}
+
+#no-rooms {
+  margin-right: 7px;
+}
+
+/***********************************
+            BUTTON
+***********************************/
+button {
+ padding: 8px;
+ width: 150px;
+ text-decoration: none;
+ margin-bottom: 10px;
+ box-shadow: 3px 3px 1px #999999;
+ border: 1px;
+ border-color: black;
+ background: #3a7999 ;
+ color: #f2f2f2 ;
+ font-size: 20px;
+ border-radius: 5px;
+ position: relative;
+ box-sizing: border-box;
+ transition: all 500ms ease; 
+font-family: 'Raleway', helvetica, sans-serif;
+
+}
+
+button:hover {
+ transform: scale(1.15);
+ cursor: pointer;
+}
+
+button:focus {
+   outline:none;
+   text-decoration: none;
+}
+
+#add-selected-button {
+  clear: both;
+  text-align: center;
+}
+
+#package-button{
+  clear: both;
+}
+
+#view-results-button {
+  text-align: center;
+  margin-bottom: 200px;
+}
+
+#view-db-results-button {
+  text-align: center;
+  margin-bottom: 200px;
+  display: none;
+}
+
+/***********************************
+            MAP
+***********************************/
 #map {
+<<<<<<< HEAD
   height:500px;
   width:500px;
 }
@@ -16,3 +198,161 @@
       #legend img {
         vertical-align: middle;
       }
+=======
+  height: 400px;
+  width: 400px;
+  float:left;
+  width:50%;
+  overflow:hidden;
+  margin-bottom: 90px;
+  /*border-radius: 15px;*/
+/*  box-shadow: 5px 5px 5px 2px black;*/
+}
+
+
+/***********************************
+            PIE CHART
+***********************************/
+#pieChart {
+  height: 400px;
+  width: 400px;
+  float: right;
+  width:50%;
+  overflow:hidden;
+  margin-bottom: 90px;
+/*  border-radius: 15px;*/
+/*  box-shadow: 5px 5px 5px 2px black;*/
+}
+
+/***********************************
+            TABLE 
+(styling taken from http://learn.shayhowe.com/html-css)
+***********************************/
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  color: #4a4a4d;
+  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  display: none;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+th, td {
+  padding: 10px 15px;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+thead {
+  background: #395870;
+  background: linear-gradient(#49708f, #293f50);
+  color: #fff;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+th:first-child {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  text-align: center;
+}
+
+tbody tr:nth-child(even) {
+  background: #f0f0f2;
+}
+
+td {
+  border-bottom: 1px solid #cecfd5;
+  border-right: 1px solid #cecfd5;
+}
+
+td:first-child {
+  border-left: 1px solid #cecfd5;
+}
+
+tfoot {
+  text-align: right;
+}
+
+tfoot tr:last-child {
+  background: #f0f0f2;
+  color: #395870;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.table-centre {
+  text-align: center;
+}
+
+/***********************************
+            RESULTS 
+***********************************/
+#flight-results{
+  /*margin-left: 25px;*/
+  width: 50%;
+  float: left;
+}
+
+#hotel-results{
+  /*margin-right: 25px;*/
+  width: 50%;
+  float: right;
+  clear: right;
+}
+
+#hotel-results img {
+  border-radius: 100%;
+  height: 150px;
+  width: 150px;
+}
+
+#hotel-results p:first-child {
+  font-weight: bold;
+}
+
+#hotel-results div {
+  margin-bottom: 15px;
+  padding: 5px;
+}
+
+#hotel-results div:hover {
+  border: 2px solid black;
+  cursor: pointer;
+}
+
+#flight-results p:first-child {
+  font-weight: bold;
+}
+
+#flight-results div {
+  margin-bottom: 15px;
+  padding: 5px;
+}
+
+#flight-results div:hover {
+  border: 2px solid black;
+  cursor: pointer;
+}
+
+#combined-results {
+  display: none;
+}
+
+#dbResults {
+  display: none;
+}
+
+#randomDiv {
+  height: 150px;
+}
+
+#randomDiv2 {
+  height: 20px;
+}
+
+#randomDiv3 {
+  height: 20px;
+}
+>>>>>>> develop
