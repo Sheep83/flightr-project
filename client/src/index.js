@@ -49,15 +49,13 @@ window.onload = function(){
         dest.push(arr)
         arr=[]
      }  
-     console.log(state.hotelsSelect)
-     console.log(dest)
      populatehotel(dest)
     },10000);
     function populatehotel(arr){
       place.initMap(dest)
     }
    
-
+    var legend = document.createElement('legend')
 
 
 

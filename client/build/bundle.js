@@ -95,15 +95,13 @@
 	        dest.push(arr)
 	        arr=[]
 	     }  
-	     console.log(state.hotelsSelect)
-	     console.log(dest)
 	     populatehotel(dest)
 	    },10000);
 	    function populatehotel(arr){
 	      place.initMap(dest)
 	    }
 	   
-	
+	    var legend = document.createElement('legend')
 	
 	
 	
@@ -475,20 +473,44 @@
 /***/ function(module, exports) {
 
 	var Place = function(){
-	var myLatLng = {lat: -25.363, lng: 131.044};
-	this.map = new google.maps.Map(document.getElementById('map'), {
+	  var myLatLng = {lat: -25.363, lng: 131.044};
+	  this.map = new google.maps.Map(document.getElementById('map'), {
 	    zoom: 30,
 	    center: myLatLng
-	  })
+	  });
+	
+	var leg = document.createElement("div");
+	leg.setAttribute("id","legend");
+	
+	var iconBase = 'http://maps.google.com/mapfiles/kml/pal2/';
+	        
+	var icons = {
+	  hotel: {
+	    name: 'Hotel',
+	    icon: iconBase + 'icon20.png'
+	  },
+	  Event: {
+	    name: 'Event',
+	    icon: iconBase + 'icon57.png'
+	  }
+	};
+	    
+	var legend = document.getElementById('legend');
+	
+	
+	for (var key in icons) {
+	  var type = icons[key];
+	  var name = type.name;
+	  var icon = type.icon;
+	
+	  var div = document.createElement('div');
+	  div.innerHTML = '<img src="' + icon + '"> ' + name;
+	  
+	  legend.appendChild(div);
 	}
+	  this.map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);   
 	
-	// this.map.addControl(new LegendControl({
-	//     mgr          : mgr,
-	//     markerGroups : markerGroups,
-	//     legendValues : legendValues
-	//   }));
-	
-	
+	}
 	
 	
 	Place.prototype = {
@@ -496,15 +518,15 @@
 	 initMap: function(locations) {
 	  for (var i = 0;i<locations.length; i++) {
 	   if(locations[i][3].type==='trip'){
-	     icon = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+	     icon = "http://maps.google.com/mapfiles/kml/pal2/icon57.png"
 	   }else if (locations[i][3].type==='hotel') {
-	    icon = "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+	 
+	    icon = "http://maps.google.com/mapfiles/kml/pal2/icon20.png"
 	  }
 	}
 	
 	   infowindow = new google.maps.InfoWindow();
 	   var bounds = new google.maps.LatLngBounds();
-	   console.log(locations[0][5])
 	   for (i = 0; i < locations.length; i++){
 	     var marker = new google.maps.Marker({
 	       position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
@@ -512,17 +534,18 @@
 	       // title: ('<IMG BORDER="0" ALIGN="Left" SRC="http://images.travelnow.com'+locations[0][5]+'">' + " " +locations[i][0] + " "+ "<p>" +locations[i][4]),
 	       animation: google.maps.Animation.DROP,
 	       icon: new google.maps.MarkerImage(icon)
-	       // infoWindow:{ content: "<b>Loop, Inc.</b>"}
 	     });
 	     bounds.extend(marker.position);
 	     this.map.fitBounds(bounds);
 	     google.maps.event.addListener(marker, 'click',(function(marker,i){
 	      return function(){ 
-	       infowindow.setContent('<IMG BORDER="0" ALIGN="Left" SRC="http://images.travelnow.com'+locations[i][5]+'">' + " " +locations[i][0] + " "+ "<p>" +locations[i][4]);
+	       infowindow.setContent('<IMG BORDER="0" ALIGN="Left" SRC="http://images.travelnow.com'+locations[i][5]+'">' + " " +"<b>"+locations[i][0] + "</b>" +  "<p>" +locations[i][4]);
+	
 	       infowindow.setOptions({maxWidth: 200});
 	       infowindow.open(map, marker)
 	     }
 	   })(marker,i));
+	   // legend.removeAttribute('hidden'); 
 	   }
 	 },
 	
@@ -552,6 +575,8 @@
 	
 	 request.send(null);
 	}
+	
+	
 	
 	}
 	
