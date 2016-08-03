@@ -71,6 +71,7 @@ window.onload = function(){
       alert("You haven't selected a valid flight and hotel. Please try again.");
     } else {
       displaySavedSearch();
+      var displayTable = document.getElementById('saved-search-display').style.display = 'block';
     }
   }
 
@@ -411,14 +412,14 @@ var selectedItem = function(e) {
     // console.log("the slected index:", state.flightsSelect);
     state.selectedFlight.push(state.flightsSelect[selectedIndex]);
     // console.log("ceh", e.target.id);
-    childElement.style.borderColor = "red";
+    childElement.style.border="5px solid red";
     // console.log("123", state.flightsSelect[selectedIndex]);
   } else if (parentElement.substring(0,6) === "flight") {
     state.selectedFlight = [];
     selectedIndex = parentElement.substring(13,14);
     state.selectedFlight.push(state.flightsSelect[selectedIndex]);
     // console.log("peh", e.target.id);
-    parentElementHandle.style.borderColor = "red";
+    parentElementHandle.style.border="5px solid red";
   } else if (childElement.substring(0,5) === "hotel") {
     state.selectedHotel = [];
     // console.log("should empty hotel here");
@@ -426,7 +427,7 @@ var selectedItem = function(e) {
     selectedIndex = childElement.substring(12,13);
     state.selectedHotel.push(state.hotelsSelect[selectedIndex]);
     // console.log("ceh", e.target.id);
-    childElementHandle.style.borderColor = "red";
+    childElementHandle.style.border="5px solid red";
 
     // console.log("the index is", selectedIndex);
     // console.log("child", childElement);
@@ -439,7 +440,7 @@ var selectedItem = function(e) {
     selectedIndex = parentElement.substring(12,13);
     state.selectedHotel.push(state.hotelsSelect[selectedIndex]);
     // console.log("peh", e.target.id);
-    parentElementHandle.style.borderColor = "red";
+    parentElementHandle.style.border="5px solid red";
     // console.log("the index is", selectedIndex);
     // console.log("child", childElement);
     // console.log("parent", parentElement);
