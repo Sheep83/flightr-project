@@ -353,6 +353,8 @@ var displaySavedSearch = function(event){
   var flightSubtotal = document.getElementById('flight-subtotal');
   var hotelSubtotal = document.getElementById('hotel-subtotal');
   var totalCost = document.getElementById('total-cost');
+  var flightSubtotalFull = document.getElementById('flight-subtotal-full');
+  var hotelSubtotalFull = document.getElementById('hotel-subtotal-full');
 
   var numberRooms = 0;
   if (saved.numPeople == 1 || saved.numPeople == 2) {
@@ -374,8 +376,10 @@ var displaySavedSearch = function(event){
   starRating.innerHTML = saved.starRating;
   numRooms.innerHTML = numberRooms;
   costPerRoom.innerHTML = "£" + saved.hotelPrice;
+  flightSubtotalFull.innerHTML = saved.numPeople + " x " + saved.flightPrice.toFixed(2);
   flightSubtotal.innerHTML = "£" + (saved.flightPrice * saved.numPeople).toFixed(2);
   hotelSubtotal.innerHTML = "£" + (saved.hotelPrice * numberRooms).toFixed(2);
+  hotelSubtotalFull.innerHTML = numberRooms + " x " + saved.hotelPrice;
   totalCost.innerHTML = "£" + ((saved.flightPrice * saved.numPeople) + (saved.hotelPrice * numberRooms)).toFixed(2);
 
   // new stuff
