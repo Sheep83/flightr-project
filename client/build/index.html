@@ -68,9 +68,14 @@
   </form>
 </div>
 
-<div id='map'></div>
+<div id="mapChart">
+  <div id='map'></div>
+  <div id="pieChart" width="400" height="400"></div>
+</div>
 
-<div id="pieChart" width="400" height="400"></div>
+<div id="view-results-button">
+  <button type="button" id="button">View Results</button>
+</div>
 
 <div id="saved"></div>
 <div id='combined-results'>
@@ -96,90 +101,91 @@
 </div>
 <div id='add-selected-button'>
   <button type="button" id="package-button">Select these options</button>
-  </div>
+</div>
 
 
-    <!-- New stuff-->
-
-    <table class="table-centre" id="saved-search-display">
-      <thead>
-        <tr>
-          <th colspan="3">Saved Results</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>From: </td>
-          <td id="from"></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>To: </td>
-          <td id="to"></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Departure Date: </td>
-          <td id="departure-date"></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Arrival Date: </td>
-          <td id="arrival-date"></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Number of People: </td>
-          <td id="num-people"></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Airline: </td>
-          <td id="airline"></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Flight Cost Per Person: </td>
-          <td id="flight-cost"></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Flight Sub-total: </td>
-          <td id="flight-subtotal-full"></td>
-          <td id="flight-subtotal"></td>
-        </tr>
-        <tr>
-          <td>Hotel: </td>
-          <td id="hotel"></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Hotel Star Rating: </td>
-          <td id="star-rating"></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Number of Rooms: </td>
-          <td id="num-rooms"></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Cost per Room: </td>
-          <td id="cost-per-room"></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Hotel Sub-total: </td>
-          <td id="hotel-subtotal-full"></td>
-          <td id="hotel-subtotal"></td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="2">Total Cost: </td>
-          <td id="total-cost"></td>
-        </tr>
-      </tfoot>
-    </table>
-  </body>
-  </html>
+<!-- New stuff-->
+<div class="table-centre">
+  <table id="saved-search-display">
+    <thead>
+      <tr>
+        <th colspan="3">Saved Results</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>From: </td>
+        <td id="from"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>To: </td>
+        <td id="to"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Departure Date: </td>
+        <td id="departure-date"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Arrival Date: </td>
+        <td id="arrival-date"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Number of People: </td>
+        <td id="num-people"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Airline: </td>
+        <td id="airline"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Flight Cost Per Person: </td>
+        <td id="flight-cost"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Flight Sub-total: </td>
+        <td id="flight-subtotal-full"></td>
+        <td id="flight-subtotal"></td>
+      </tr>
+      <tr>
+        <td>Hotel: </td>
+        <td id="hotel"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Hotel Star Rating: </td>
+        <td id="star-rating"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Number of Rooms: </td>
+        <td id="num-rooms"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Cost per Room: </td>
+        <td id="cost-per-room"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Hotel Sub-total: </td>
+        <td id="hotel-subtotal-full"></td>
+        <td id="hotel-subtotal"></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">Total Cost: </td>
+        <td id="total-cost"></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+</body>
+</html>

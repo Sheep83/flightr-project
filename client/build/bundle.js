@@ -80,6 +80,7 @@
 	   var packageButton = document.getElementById('package-button');
 	   button.onclick = function(){
 	    clearPreviousSearch();
+	    var displaySearchResults = document.getElementById('combined-results').style.display = 'inline-block';
 	    origin = document.getElementById('origin').value;
 	    state.origin.push(origin);
 	    destination = document.getElementById('destination').value;
@@ -117,7 +118,7 @@
 	      alert("You haven't selected a valid flight and hotel. Please try again.");
 	    } else {
 	      displaySavedSearch();
-	      var displayTable = document.getElementById('saved-search-display').style.display = 'block';
+	      var displayTable = document.getElementById('saved-search-display').style.display = 'inline-block';
 	    }
 	  }
 	

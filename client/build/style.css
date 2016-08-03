@@ -91,6 +91,7 @@ body {
 #user-form {
   font-size: 30px;
   font-family: 'Raleway', helvetica, sans-serif;
+  margin-bottom: 500px;
 }
 
 .left-user-input {
@@ -157,10 +158,16 @@ button:focus {
 
 #add-selected-button {
   clear: both;
+  text-align: center;
 }
 
 #package-button{
   clear: both;
+}
+
+#view-results-button {
+  text-align: center;
+  margin-bottom: 200px;
 }
 
 /***********************************
@@ -172,9 +179,11 @@ button:focus {
   float:left;
   width:50%;
   overflow:hidden;
+  margin-bottom: 90px;
   /*border-radius: 15px;*/
 /*  box-shadow: 5px 5px 5px 2px black;*/
 }
+
 
 /***********************************
             PIE CHART
@@ -185,6 +194,7 @@ button:focus {
   float: right;
   width:50%;
   overflow:hidden;
+  margin-bottom: 90px;
 /*  border-radius: 15px;*/
 /*  box-shadow: 5px 5px 5px 2px black;*/
 }
@@ -199,6 +209,8 @@ table {
   color: #4a4a4d;
   font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
   display: none;
+  padding-top: 200px;
+  padding-bottom: 120px;
 }
 
 th, td {
@@ -245,6 +257,10 @@ tfoot tr:last-child {
   font-size: 16px;
 }
 
+.table-centre {
+  text-align: center;
+}
+
 /***********************************
             RESULTS 
 ***********************************/
@@ -256,7 +272,7 @@ tfoot tr:last-child {
 
 #hotel-results{
   /*margin-right: 25px;*/
-  width:50%;
+  width: 50%;
   float: right;
   clear: right;
 }
@@ -279,6 +295,15 @@ tfoot tr:last-child {
 #hotel-results div:hover {
   border: 2px solid black;
   cursor: pointer;
+}
+
+#flight-results div:hover {
+  border: 2px solid black;
+  cursor: pointer;
+}
+
+#combined-results {
+  display: none;
 }
 
 
