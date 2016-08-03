@@ -49,6 +49,7 @@ window.onload = function(){
         dest.push(arr)
         arr=[]
      }  
+     console.log(dest)
      populatehotel(dest)
     },10000);
     function populatehotel(arr){

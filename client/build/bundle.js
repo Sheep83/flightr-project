@@ -95,6 +95,7 @@
 	        dest.push(arr)
 	        arr=[]
 	     }  
+	     console.log(dest)
 	     populatehotel(dest)
 	    },10000);
 	    function populatehotel(arr){
@@ -475,7 +476,7 @@
 	var Place = function(){
 	  var myLatLng = {lat: -25.363, lng: 131.044};
 	  this.map = new google.maps.Map(document.getElementById('map'), {
-	    zoom: 30,
+	    zoom: 4,
 	    center: myLatLng
 	  });
 	
@@ -509,8 +510,11 @@
 	  legend.appendChild(div);
 	}
 	  this.map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);   
+	  legend.removeAttribute('hidden'); 
+	
 	
 	}
+	
 	
 	
 	Place.prototype = {
@@ -531,7 +535,7 @@
 	     var marker = new google.maps.Marker({
 	       position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
 	       map: this.map,
-	       // title: ('<IMG BORDER="0" ALIGN="Left" SRC="http://images.travelnow.com'+locations[0][5]+'">' + " " +locations[i][0] + " "+ "<p>" +locations[i][4]),
+	       // title: locations[i][0],
 	       animation: google.maps.Animation.DROP,
 	       icon: new google.maps.MarkerImage(icon)
 	     });
@@ -539,13 +543,20 @@
 	     this.map.fitBounds(bounds);
 	     google.maps.event.addListener(marker, 'click',(function(marker,i){
 	      return function(){ 
+	        // if(locations[i][5]=== undefined || locations[i][5]===null){
+	        //   console.log(locations[i][5])
+	        //   infowindow.setContent(this.locations[i][0])
+	        //   infowindow.open(map, marker)
+	        // }
+	        // else
+	        // {
 	       infowindow.setContent('<IMG BORDER="0" ALIGN="Left" SRC="http://images.travelnow.com'+locations[i][5]+'">' + " " +"<b>"+locations[i][0] + "</b>" +  "<p>" +locations[i][4]);
-	
 	       infowindow.setOptions({maxWidth: 200});
 	       infowindow.open(map, marker)
+	     
 	     }
 	   })(marker,i));
-	   // legend.removeAttribute('hidden'); 
+	
 	   }
 	 },
 	
@@ -568,6 +579,8 @@
 	      arr.push(lat)
 	      arr.push(lang)
 	      arr.push({type: 'trip'})
+	      arr.push("Event in town")
+	      arr.push("/hotels/11000000/10510000/10504400/10504306/10504306_46_n.jpg")
 	      location.push(arr)
 	    }     
 	    this.initMap(location);
