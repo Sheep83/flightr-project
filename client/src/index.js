@@ -49,6 +49,7 @@ window.onload = function(){
     place.populate(destination);
     dest=[]
     arr=[]
+
     setTimeout(function(){
      for(i=0; i<state.hotelsSelect.length;i++){
       arr.push(state.hotelsSelect[i].name);
@@ -56,10 +57,11 @@ window.onload = function(){
       arr.push(parseFloat(state.hotelsSelect[i].longitude));
       arr.push({type: 'hotel'})
       arr.push(state.hotelsSelect[i].shortDescription)
-
+      arr.push(state.hotelsSelect[i].thumbnailUrl)  
       dest.push(arr)
       arr=[]
     }  
+    // console.log(dest)
     populatehotel(dest)
   },10000);
     function populatehotel(arr){
@@ -71,6 +73,9 @@ window.onload = function(){
     if (state.selectedFlight.length === 0 || state.selectedHotel.length === 0) {
       alert("You haven't selected a valid flight and hotel. Please try again.");
     } else {
+      // var getSearchTable = document.getElementById('saved-search-display');
+      // location.href='#saved-search-display';
+      // getSearchTable.scrollIntoView();
       displaySavedSearch();
       var displayTable = document.getElementById('saved-search-display').style.display = 'inline-block';
     }
@@ -463,6 +468,7 @@ var clearFlightBorders = function(size) {
  var flightArray = [];
  for (var i = 0; i < size; i++) {
    flightArray[i] = document.getElementById('flight-result' + (i)).style.border="0";
+ }
 }
 
 var clearHotelBorders = function(size) {
@@ -470,3 +476,11 @@ var clearHotelBorders = function(size) {
   for (var i = 0; i < size; i++) {
     hotelArray[i] = document.getElementById('hotel-result' + (i)).style.border="0";
   }
+}
+
+
+
+
+
+
+

@@ -95,6 +95,7 @@
 	    place.populate(destination);
 	    dest=[]
 	    arr=[]
+	
 	    setTimeout(function(){
 	     for(i=0; i<state.hotelsSelect.length;i++){
 	      arr.push(state.hotelsSelect[i].name);
@@ -102,10 +103,11 @@
 	      arr.push(parseFloat(state.hotelsSelect[i].longitude));
 	      arr.push({type: 'hotel'})
 	      arr.push(state.hotelsSelect[i].shortDescription)
-	
+	      arr.push(state.hotelsSelect[i].thumbnailUrl)  
 	      dest.push(arr)
 	      arr=[]
 	    }  
+	    // console.log(dest)
 	    populatehotel(dest)
 	  },10000);
 	    function populatehotel(arr){
@@ -117,6 +119,9 @@
 	    if (state.selectedFlight.length === 0 || state.selectedHotel.length === 0) {
 	      alert("You haven't selected a valid flight and hotel. Please try again.");
 	    } else {
+	      // var getSearchTable = document.getElementById('saved-search-display');
+	      // location.href='#saved-search-display';
+	      // getSearchTable.scrollIntoView();
 	      displaySavedSearch();
 	      var displayTable = document.getElementById('saved-search-display').style.display = 'inline-block';
 	    }
@@ -506,9 +511,10 @@
 	}
 	
 	var clearFlightBorders = function(size) {
-	 
-	 var flightResult0 = document.getElementById('flight-result0').style.border="0";
-	
+	 var flightArray = [];
+	 for (var i = 0; i < size; i++) {
+	   flightArray[i] = document.getElementById('flight-result' + (i)).style.border="0";
+	 }
 	}
 	
 	var clearHotelBorders = function(size) {
@@ -516,11 +522,12 @@
 	  for (var i = 0; i < size; i++) {
 	    hotelArray[i] = document.getElementById('hotel-result' + (i)).style.border="0";
 	  }
-	 var hotelResult0 = document.getElementById('hotel-result0').style.border="0";
-	 var hotelResult1 = document.getElementById('hotel-result1').style.border="0";
 	}
 	
-	state.resultsArray[i] = document.getElementById('flight-result' + (i));
+	
+	
+	
+	
 	
 	
 
@@ -530,77 +537,94 @@
 /***/ function(module, exports) {
 
 	var Place = function(){
-	  var myLatLng = {lat: 55.9533, lng: -3.1883};
+	  var myLatLng = {lat: -25.363, lng: 131.044};
 	  this.map = new google.maps.Map(document.getElementById('map'), {
-	   zoom: 4,
-	   center: myLatLng
-	 })
+	    zoom: 4,
+	    center: myLatLng
+	  });
+	
+	  var leg = document.createElement("div");
+	  leg.setAttribute("id","legend");
+	
+	  var iconBase = 'http://maps.google.com/mapfiles/kml/pal2/';
+	
+	  var icons = {
+	    hotel: {
+	      name: 'Hotel',
+	      icon: iconBase + 'icon20.png'
+	    },
+	    Event: {
+	      name: 'Event',
+	      icon: iconBase + 'icon57.png'
+	    }
+	  };
 	}
 	
+	  Place.prototype = {
 	
-	Place.prototype = {
+	   initMap: function(locations) {
+	    for (var i = 0;i<locations.length; i++) {
+	     if(locations[i][3].type==='trip'){
+	       icon = "http://maps.google.com/mapfiles/kml/pal2/icon57.png"
+	     }else if (locations[i][3].type==='hotel') {
 	
-	  initMap: function(locations) {
-	   for (var i = 0;i<locations.length; i++) {
-	    if(locations[i][3].type==='trip'){
-	      icon = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-	    }else if (locations[i][3].type==='hotel') {
-	     icon = "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
-	   }
-	 }
-	 infowindow = new google.maps.InfoWindow();
-	 var bounds = new google.maps.LatLngBounds();
-	 for (i = 0; i < locations.length; i++){
-	  var marker = new google.maps.Marker({
-	    position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
-	    map: this.map,
-	    title: locations[i][0],
-	    animation: google.maps.Animation.DROP,
-	    icon: new google.maps.MarkerImage(icon)
-	  });
-	  
-	    // marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
-	    bounds.extend(marker.position);
-	    this.map.fitBounds(bounds);
-	    google.maps.event.addListener(marker, 'click',(function(marker,i){
-	     return function(){
-	      infowindow.setContent(locations[i][0]);
-	      infowindow.setOptions({maxWidth: 200});
-	      infowindow.open(map, marker)
+	      icon = "http://maps.google.com/mapfiles/kml/pal2/icon20.png"
 	    }
-	  })(marker,i));
-	    // Markers[locations[i][4]] = marker;
 	  }
+	
+	  infowindow = new google.maps.InfoWindow();
+	  var bounds = new google.maps.LatLngBounds();
+	  for (i = 0; i < locations.length; i++){
+	   var marker = new google.maps.Marker({
+	     position: new google.maps.LatLng(parseFloat(locations[i][1]), parseFloat(locations[i][2])),
+	     map: this.map,
+	       // title: locations[i][0],
+	       animation: google.maps.Animation.DROP,
+	       icon: new google.maps.MarkerImage(icon)
+	     });
+	   bounds.extend(marker.position);
+	   this.map.fitBounds(bounds);
+	   google.maps.event.addListener(marker, 'click',(function(marker,i){
+	    return function(){ 
+	     infowindow.setContent('<IMG BORDER="0" ALIGN="Left" SRC="http://images.travelnow.com'+locations[i][5]+'">' + " " +"<b>"+locations[i][0] + "</b>" +  "<p>" +locations[i][4]);
+	     infowindow.setOptions({maxWidth: 200});
+	     infowindow.open(map, marker)
+	
+	   }
+	 })(marker,i));
+	
+	 }
 	},
 	
 	populate : function(destination){
-	 var url = "http://terminal2.expedia.com/x/activities/search?location=" + destination + "&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos";
-	 var request = new XMLHttpRequest();
-	 request.open("GET", url);
-	 request.onload = function(){
-	   var jsonString = request.responseText;
-	   var info = JSON.parse(jsonString);
+	  var url = "http://terminal2.expedia.com/x/activities/search?location=" + destination + "&apikey=fZPSPARW8ZW6Yg738AzbASiN8VPFwVos";
+	  var request = new XMLHttpRequest();
+	  request.open("GET", url);
+	  request.onload = function(){
+	    var jsonString = request.responseText;
+	    var info = JSON.parse(jsonString);
 	
-	   var location=[]
-	   var arr=[]
-	   for (var i=0;i<info.activities.length;i++){
-	     var coor = info.activities[i].latLng.split(',')
-	     var lat = parseFloat(coor[0])
-	     var lang = parseFloat(coor[1])
-	     arr=[]
-	     arr.push(info.activities[i].title)
-	     arr.push(lat)
-	     arr.push(lang)
-	     arr.push({type: 'trip'})
-	     location.push(arr)
-	   }     
-	   this.initMap(location);
-	 }.bind(this);
+	    var location=[]
+	    var arr=[]
+	    for (var i=0;i<info.activities.length;i++){
+	      var coor = info.activities[i].latLng.split(',')
+	      var lat = parseFloat(coor[0])
+	      var lang = parseFloat(coor[1])
+	      arr=[]
+	      arr.push(info.activities[i].title)
+	      arr.push(lat)
+	      arr.push(lang)
+	      arr.push({type: 'trip'})
+	      arr.push("Event in town")
+	      arr.push("/hotels/11000000/10510000/10504400/10504306/10504306_46_n.jpg")
+	      location.push(arr)
+	    }     
+	    this.initMap(location);
+	  }.bind(this);
 	
-	 request.send(null);
+	  request.send(null);
 	}
 	}
-	
 	module.exports = Place;
 
 /***/ },
