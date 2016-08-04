@@ -82,7 +82,7 @@ window.onload = function(){
     }  
     // console.log(dest)
     populatehotel(dest)
-  },10000);
+  },7000);
     function populatehotel(arr){
       place.initMap(dest)
     }
