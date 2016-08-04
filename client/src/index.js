@@ -549,4 +549,3 @@ var clearHotelBorders = function(size) {
     hotelArray[i] = document.getElementById('hotel-result' + (i)).style.border="0";
   }
 }
-
