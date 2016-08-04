@@ -601,7 +601,7 @@
 /***/ function(module, exports) {
 
 	var Place = function(){
-	  var myLatLng = {lat: -25.363, lng: 131.044};
+	  var myLatLng = {lat: 55.9533, lng: -3.1883};
 	  this.map = new google.maps.Map(document.getElementById('map'), {
 	    zoom: 4,
 	    center: myLatLng
