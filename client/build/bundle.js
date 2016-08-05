@@ -595,8 +595,6 @@
 	    hotelArray[i] = document.getElementById('hotel-result' + (i)).style.border="0";
 	  }
 	}
-	
-
 
 /***/ },
 /* 1 */
